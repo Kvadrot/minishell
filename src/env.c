@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/21 15:35:06 by ssuchane         ###   ########.fr       */
+/*   Created: 2024/08/21 22:02:01 by gbuczyns          #+#    #+#             */
+/*   Updated: 2024/08/21 22:02:21 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_env	*environment_new_node(char *key, char *value)
 {

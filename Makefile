@@ -4,12 +4,23 @@ CC = gcc
 # Compiler flags
 WARNFLAGS = -Wall -Wextra -Werror
 RLFLAG = -lreadline -lm -g
-CFLAGS = -I./lib_ft -I./lib_ft_printf
+CFLAGS = -I./lib_ft -I./lib_ft_printf -g
 LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 
+SRC_DIR = src/
+OBJ_DIR = obj/
 # Default sources
-SRCS = main.c env.c
-OBJS = $(SRCS:.c=.o)
+SRC = main.c env.c minishell_free.c
+SRCS = $(addprefix ${SRC_DIR}, ${SRC})
+#OBJS = $(SRCS:.c=.o)
+# OBJS =	$(patsubst $(SRCS)%.c,$(OBJ_DIR)%.o,$(SRCS))
+ OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
+# Rule to compile .c files into .o files.
+$(OBJ_DIR)%.o:  $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS)"
+	$(CC) $(WARNFLAGS) $(CFLAGS) $< -c -o $@
+
 
 # Program Name
 NAME = minishell
@@ -42,7 +53,7 @@ clean:
 
 # Full clean up
 fclean: clean
-	rm $(NAME)
+	rm -f $(NAME)
 	make -C lib_ft fclean
 	make -C lib_ft_printf fclean
 

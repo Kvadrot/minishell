@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/21 17:28:52 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:14:15 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <unistd.h>
 
 # define PROMPT "MDshell > "
+#define YES 1
+#define NO 0
 
 // DRBUG_FIELD
 // DELETE ME befor release
@@ -35,6 +37,13 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
+
+typedef struct s_llist
+{
+	char				*content;
+	struct s_llist		*next;
+} 						t_llist;
+
 typedef struct s_data
 {
 	char				*input;
@@ -45,6 +54,7 @@ typedef struct s_data
 	t_env				*env;
 	struct termios		terminal;
 	struct s_minishell	*next;
+	t_llist				*tracker;
 }						t_data;
 
 void					minishell_loop(t_data *minishell);
@@ -56,6 +66,8 @@ void					init_environment(t_env **environment, char **env);
 void					environment_free_list(t_env *head);
 
 void					environment_free_list(t_env *head);
+
+void minishel_free(t_data *minishell, int flag);
 
 // tester functions
 void					print_environment(t_env *node);
