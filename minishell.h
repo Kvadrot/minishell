@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/21 21:14:15 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/21 22:21:36 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void					environment_free_list(t_env *head);
 
 void					environment_free_list(t_env *head);
 
-void minishel_free(t_data *minishell, int flag);
+void minishell_free(t_data *minishell, int flag);
 
 // tester functions
 void					print_environment(t_env *node);

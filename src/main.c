@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 22:05:31 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/21 22:22:37 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	minishell_loop(t_data *minishell)
 		minishell->input = readline(PROMPT);
 		if (minishell->input == NULL) {
             ft_putendl_fd("\nCaught EOF (Ctrl+D)\n", STDOUT_FILENO); // diagnostics only delete before realase EOF
-			minishel_free(minishell, YES);
+			minishell_free(minishell, YES);
             break;
         }
 	}
