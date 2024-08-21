@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 13:46:58 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:33:34 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	main(int argc, char **argv, char **env)
 	t_data	minishell;
 
 	init_minishell(&minishell, env);
-	init_environment(minishell.environment);
-	while (1)
-	{
-	}
+	init_environment(&minishell.env, minishell.envir);
+	print_environment(minishell.env);
+	// while (1)
+	// {
+	// }
 	return (0);
 }
