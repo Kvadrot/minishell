@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/21 13:48:43 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:35:06 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ void	environment_new_node_end(t_env **head, char *key, char *value)
 	}
 }
 
-void	init_environment(char **env)
+void	init_environment(t_env **environment, char **env)
 {
-	t_env	*environment;
 	char	*key;
 	char	*value;
 	char	*delimiter_pos;
 	int		i;
 
-	environment = NULL;
+	*environment = NULL;
 	i = 0;
 	while (env[i])
 	{
@@ -60,12 +59,12 @@ void	init_environment(char **env)
 		if (delimiter_pos != NULL)
 		{
 			key = ft_strndup(env[i], delimiter_pos - env[i]);
-			if (!key)
-				//
+			// if (!key)
+			// 	should we handle it?
 				value = ft_strdup(delimiter_pos + 1);
-			if (!value)
-				//
-				environment_new_node_end(&environment, key, value);
+			// if (!value)
+			// 	should we handle it?
+				environment_new_node_end(environment, key, value);
 			free(key);
 			free(value);
 		}
@@ -85,5 +84,18 @@ void	environment_free_list(t_env *head)
 		free(tmp->key);
 		free(tmp->value);
 		free(tmp);
+	}
+}
+
+// tester function
+void	print_environment(t_env *node)
+{
+	t_env	*current;
+
+	current = node;
+	while (current != NULL)
+	{
+		printf("%s=%s\n", current->key, current->value);
+		current = current->next;
 	}
 }
