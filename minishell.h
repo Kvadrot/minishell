@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/20 18:43:57 by itykhono         ###   ########.fr       */
+/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
+/*   Updated: 2024/08/20 21:48:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
-int	main (int argc, char **argv)
+# include <stdlib.h>
+
+typedef struct s_env
 {
-	while (1)
-	{
-	}
-	return (0);
-}
+	char			*key;
+	char			*value;
+	struct t_env	*next;
+}					t_env;
+
+#endif
