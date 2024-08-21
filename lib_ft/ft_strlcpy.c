@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 14:23:35 by itykhono         ###   ########.fr       */
+/*   Created: 2024/03/06 14:04:43 by itykhono          #+#    #+#             */
+/*   Updated: 2024/03/18 15:06:37 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell_header.h"
+#include "libft.h" 
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
-int	main (int argc, char **argv)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	while (1)
+	size_t	local_size;
+
+	if (!dst || !src)
+		return (0);
+	local_size = 0;
+	if (size < 1)
+		return (ft_strlen(src));
+	while (src[local_size] != '\0' && local_size < size - 1)
 	{
+		dst[local_size] = src[local_size];
+		local_size++;
 	}
-	return (0);
+	dst[local_size] = '\0';
+	return (ft_strlen(src));
 }
