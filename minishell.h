@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/21 15:33:55 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:37:42 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void					environment_new_node_end(t_env **head, char *key,
 void					init_environment(t_env **environment, char **env);
 void					environment_free_list(t_env *head);
 
-
+void					environment_free_list(t_env *head);
 
 // tester functions
 void					print_environment(t_env *node);
