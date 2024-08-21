@@ -3,11 +3,12 @@ CC = gcc
 
 # Compiler flags
 WARNFLAGS = -Wall -Wextra -Werror
+RLFLAG = -lreadline -lm -g
 CFLAGS = -I./lib_ft -I./lib_ft_printf
-LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf
+LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 
 # Default sources
-SRCS = main.c
+SRCS = main.c env.c
 OBJS = $(SRCS:.c=.o)
 
 # Program Name
