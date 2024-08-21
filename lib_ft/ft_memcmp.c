@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 14:23:35 by itykhono         ###   ########.fr       */
+/*   Created: 2024/03/08 13:51:01 by itykhono          #+#    #+#             */
+/*   Updated: 2024/03/18 21:00:43 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell_header.h"
+#include "libft.h"
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
-int	main (int argc, char **argv)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	while (1)
+	const unsigned char	*ss1;
+	const unsigned char	*ss2;
+	size_t				i;
+
+	i = 0;
+	ss1 = (const unsigned char *)s1;
+	ss2 = (const unsigned char *)s2;
+	while (i < n)
 	{
+		if (ss1[i] != ss2[i])
+			return (ss1[i] - ss2[i]);
+		i++;
 	}
 	return (0);
 }
