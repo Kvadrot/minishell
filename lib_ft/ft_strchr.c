@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 14:23:35 by itykhono         ###   ########.fr       */
+/*   Created: 2024/03/07 14:55:38 by itykhono          #+#    #+#             */
+/*   Updated: 2024/03/18 20:09:19 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell_header.h"
+#include "libft.h" 
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
-int	main (int argc, char **argv)
+char	*ft_strchr(const char *s, int c)
 {
-	while (1)
+	int		ind;
+	char	search_char;
+
+	ind = 0;
+	search_char = (char)c;
+	if (c == '\0')
+		return ((char *)&s[ft_strlen(s)]);
+	else
 	{
+		while (s[ind] != '\0')
+		{
+			if (s[ind] == search_char)
+				return ((char *)&s[ind]);
+			ind++;
+		}
 	}
-	return (0);
+	return (NULL);
 }

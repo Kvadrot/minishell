@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 14:23:35 by itykhono         ###   ########.fr       */
+/*   Created: 2024/02/28 18:36:36 by itykhono          #+#    #+#             */
+/*   Updated: 2024/06/04 14:48:50 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell_header.h"
+#include "libft.h"
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
-int	main (int argc, char **argv)
+size_t	ft_strlen(const char *str)
 {
-	while (1)
+	unsigned int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
+		i++;
 	}
-	return (0);
+	return (i);
 }

@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 14:23:35 by itykhono         ###   ########.fr       */
+/*   Created: 2024/03/08 14:48:39 by itykhono          #+#    #+#             */
+/*   Updated: 2024/03/10 15:01:31 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell_header.h"
+#include "libft.h"
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
-int	main (int argc, char **argv)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	while (1)
+	size_t	i;
+
+	if (*little == '\0')
+		return ((char *)big);
+	while (*big && len > 0)
 	{
+		if (*big == *little)
+		{
+			i = 0;
+			while (little[i] && big[i] && little[i] == big[i] && i < len)
+				i++;
+			if (little[i] == '\0')
+				return ((char *)big);
+		}
+		big++;
+		len--;
 	}
-	return (0);
+	return (NULL);
 }

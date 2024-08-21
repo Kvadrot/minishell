@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 14:23:35 by itykhono         ###   ########.fr       */
+/*   Created: 2024/03/08 11:51:00 by itykhono          #+#    #+#             */
+/*   Updated: 2024/03/08 13:36:09 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell_header.h"
+#include "libft.h"
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
-int	main (int argc, char **argv)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	while (1)
+	size_t			counter;
+	unsigned char	searchchr;
+
+	counter = 0;
+	searchchr = (unsigned char)c;
+	while (counter < n)
 	{
+		if (((unsigned char *)s)[counter] == searchchr)
+		{
+			return ((void *)&((const unsigned char *)s)[counter]);
+		}
+		counter++;
 	}
-	return (0);
+	return (NULL);
 }
