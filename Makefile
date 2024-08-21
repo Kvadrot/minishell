@@ -7,7 +7,9 @@ CFLAGS = -I./lib_ft -I./lib_ft_printf
 LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf
 
 # Default sources
-SRCS = main.c
+SRCS =	main.c \
+		./validate_input/validation.c \
+
 OBJS = $(SRCS:.c=.o)
 
 # Program Name
