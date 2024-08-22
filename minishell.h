@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/21 18:15:18 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:20:38 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,24 @@
 # include "./lib_ft_printf/ft_printf.h"
 //========================================================================================//
 
-bool	ft_input_is_valid(char **argv, int argc);
+typedef enum e_token_type
+{
+	T_TEXT,
+	T_LESS,
+	T_GREAT,
+	T_DLESS,
+	T_DGREAT,
+	T_PIPE,
+	T_NONE,
+}					t_token_type;
+
+typedef struct s_tokens
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+}					t_tokens;
+
 typedef struct s_env
 {
 	char				*key;
@@ -44,6 +61,7 @@ typedef struct s_data
 	char				*environment;
 	int					stdin;
 	int					stdout;
+	t_tokens			*tokens;
 	t_env				*env;
 	struct termios		terminal;
 	struct s_minishell	*next;
