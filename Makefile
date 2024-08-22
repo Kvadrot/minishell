@@ -4,7 +4,8 @@ CC = gcc
 # Compiler flags
 WARNFLAGS = -Wall -Wextra -Werror
 RLFLAG = -lreadline -lm -g
-CFLAGS = -I./lib_ft -I./lib_ft_printf -g
+CFLAGS = -g
+HEADERS = -I./lib_ft -I./lib_ft_printf -I./inc
 LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 
 SRC_DIR = src/
@@ -13,12 +14,11 @@ OBJ_DIR = obj/
 SRC = main.c env.c minishell_free.c
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 #OBJS = $(SRCS:.c=.o)
-# OBJS =	$(patsubst $(SRCS)%.c,$(OBJ_DIR)%.o,$(SRCS))
  OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 # Rule to compile .c files into .o files.
 $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
-	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS)"
+	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
 	$(CC) $(WARNFLAGS) $(CFLAGS) $< -c -o $@
 
 
@@ -35,7 +35,7 @@ FTPRINTF = ./lib_ft_printf/libftprintf.a
 all: $(LIBFT) $(FTPRINTF) $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(WARNFLAGS) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 # Make lib_ft
 $(LIBFT):

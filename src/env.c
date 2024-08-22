@@ -6,11 +6,11 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 22:02:01 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/08/21 22:02:21 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:04:30 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../inc/minishell.h"
 
 t_env	*environment_new_node(char *key, char *value)
 {

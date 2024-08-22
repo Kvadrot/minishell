@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 22:22:37 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:10:31 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //3) Lexer (String -> Tokens)
 //4) Parser (Tokens -> Logical_groups -> cmd_groups)
 
-#include "../minishell.h"
+#include "../inc/minishell.h"
 
 void	minishell_loop(t_data *minishell)
 {
