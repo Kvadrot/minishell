@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/08/22 15:14:45 by ssuchane         ###   ########.fr       */
+=======
+/*   Updated: 2024/08/22 13:36:16 by itykhono         ###   ########.fr       */
+>>>>>>> dev
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +53,9 @@ typedef struct s_data
 	struct termios		terminal;
 	struct s_minishell	*next;
 }						t_data;
+
+// Validate_input
+bool	ft_input_is_valid(char *input_str);
 
 void					minishell_loop(t_data *minishell);
 
