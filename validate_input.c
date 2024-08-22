@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:56:43 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/21 17:31:05 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:21:43 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	validate_input(char **av)
 	// IF av[last_argument][last_element] == """
 		// double_quote_flag++;
 	// IF single_quote_flag OR double_quote_flag != 0 OR != 2
-		// output errorma
+		// output error
 }
 
 int	main(int ac, char **av)
