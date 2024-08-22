@@ -1,14 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/22 21:10:31 by gbuczyns         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 //1) COPY ENV
 //2) Validate input
@@ -27,6 +20,7 @@ void	minishell_loop(t_data *minishell)
 			minishell_free(minishell, YES);
             break;
         }
+		ft_input_is_valid(minishell->input);
 	}
 }
 

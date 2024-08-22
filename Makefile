@@ -11,7 +11,7 @@ LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 SRC_DIR = src/
 OBJ_DIR = obj/
 # Default sources
-SRC = main.c env.c minishell_free.c
+SRC = main.c env.c minishell_free.c validation.c 
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 #OBJS = $(SRCS:.c=.o)
  OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
@@ -19,8 +19,7 @@ SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
-	$(CC) $(WARNFLAGS) $(CFLAGS) $< -c -o $@
-
+	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $< -c -o $@
 
 # Program Name
 NAME = minishell

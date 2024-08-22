@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/22 21:11:32 by gbuczyns         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+
 # include "../lib_ft/libft.h"
+# include "tokens.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -30,6 +27,7 @@
 //========================================================================================//
 # include "../lib_ft_printf/ft_printf.h"
 //========================================================================================//
+
 typedef struct s_env
 {
 	char				*key;
@@ -44,6 +42,7 @@ typedef struct s_llist
 	struct s_llist		*next;
 } 						t_llist;
 
+
 typedef struct s_data
 {
 	char				*input;
@@ -51,11 +50,15 @@ typedef struct s_data
 	char				*environment;
 	int					stdin;
 	int					stdout;
+	t_tokens			*tokens;
 	t_env				*env;
 	struct termios		terminal;
 	struct s_minishell	*next;
 	t_llist				*tracker;
 }						t_data;
+
+// Validate_input
+bool	ft_input_is_valid(char *input_str);
 
 void					minishell_loop(t_data *minishell);
 
@@ -68,6 +71,12 @@ void					environment_free_list(t_env *head);
 void					environment_free_list(t_env *head);
 
 void minishell_free(t_data *minishell, int flag);
+
+
+
+
+
+t_tokens	*convert_input_to_tokens(t_data *minishell);
 
 // tester functions
 void					print_environment(t_env *node);
