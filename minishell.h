@@ -6,13 +6,14 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/22 12:37:24 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:14:45 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "./tokens/tokens.h"
 # include "./lib_ft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -28,24 +29,6 @@
 //========================================================================================//
 # include "./lib_ft_printf/ft_printf.h"
 //========================================================================================//
-
-typedef enum e_token_type
-{
-	T_TEXT,
-	T_LESS,
-	T_GREAT,
-	T_DLESS,
-	T_DGREAT,
-	T_PIPE,
-	T_NONE,
-}					t_token_type;
-
-typedef struct s_tokens
-{
-	t_token_type	type;
-	char			*value;
-	struct s_token	*next;
-}					t_tokens;
 
 typedef struct s_env
 {
