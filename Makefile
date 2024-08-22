@@ -9,6 +9,7 @@ LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 
 # Default sources
 SRCS =	main.c \
+		env.c \
 		./validate_input/validation.c \
 
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/22 13:20:15 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:08:51 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 
 void	minishell_loop(t_data *minishell)
 {
-	ft_input_is_valid(argv, argc);
 	while (1)
 	{
 		minishell->input = readline(PROMPT);
+		ft_input_is_valid(minishell->input);
 	}
 }
 

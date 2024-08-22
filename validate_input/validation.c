@@ -6,38 +6,38 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:52:26 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/21 16:16:51 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:02:05 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static bool	ft_quotes_are_closed(char *str, int *i)
+static bool ft_quotes_are_closed(char *str, int *i)
 {
-	bool	result;
-	char	searchable_quote;
+    bool result = true;
+    char searchable_quote;
 
-	result = true;
-	while (ft_strlen(str) > i)
-	{
-		if (str[*i] == '\'' || str[*i] == '\"' )
-		{
-			result = false;
-			searchable_quote = str[*i];
-			while (ft_strlen(str) > *i)
-			{
-				if (str[*i] == searchable_quote)
-				{
-					result = true;
-					break;
-				}
-				(*i)++;
-			}
-		} else
-			(*i)++;
-	}
-	
-	return (result); 
+    while (str[*i])
+    {
+        if (str[*i] == '\'' || str[*i] == '\"')
+        {
+            result = false;
+            searchable_quote = str[*i];
+            (*i)++;
+            while (str[*i])
+            {
+                if (str[*i] == searchable_quote)
+                {
+                    result = true;
+                    break;
+                }
+                (*i)++;
+            }
+        }
+        (*i)++;
+    }
+
+    return result; 
 }
 
 /** TODO: ft_input_is_valid
@@ -52,16 +52,19 @@ static bool	ft_quotes_are_closed(char *str, int *i)
 //=======================================================================//
 * @returns: 
 */
-bool	ft_input_is_valid(char **argv, int argc)
+bool	ft_input_is_valid(char *input_str)
 {
 	int		i;
-	bool	result;
 	char	searchable_quote;
 
 	i = 0;
 	
-	if (ft_quotes_are_closed(argv[1], &i) == false)
+	if (input_str[0] == '|')
 		return (false);
-	
-	return (result);
+	else if (input_str[ft_strlen(input_str) -1] == '|')
+		return (false);
+	else if (ft_quotes_are_closed(input_str, &i) == false)
+		return (false);
+	else
+		return (true);
 }
