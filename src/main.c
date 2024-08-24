@@ -6,14 +6,14 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/24 20:12:50 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/24 20:10:06 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//1) COPY ENV
-//2) Validate input
-//3) Lexer (String -> Tokens)
-//4) Parser (Tokens -> Logical_groups -> cmd_groups)
+// 1) COPY ENV
+// 2) Validate input
+// 3) Lexer (String -> Tokens)
+// 4) Parser (Tokens -> Logical_groups -> cmd_groups)
 
 #include "../inc/minishell.h"
 

@@ -10,6 +10,8 @@ LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 # Default sources
 SRCS =	./src/main.c \
 		./src/env.c \
+		./src/tokens/tokens_semi_tested.c \
+		./src/tokens/tokens_utils.c \
 		./src/validate_input/validation.c \
 
 OBJS = $(SRCS:.c=.o)
