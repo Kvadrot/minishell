@@ -6,19 +6,15 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/22 15:14:45 by ssuchane         ###   ########.fr       */
-=======
-/*   Updated: 2024/08/22 13:36:16 by itykhono         ###   ########.fr       */
->>>>>>> dev
+/*   Updated: 2024/08/24 12:46:20 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./tokens/tokens.h"
-# include "./lib_ft/libft.h"
+# include "../src/tokens/tokens.h"
+# include "../lib_ft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -31,7 +27,7 @@
 // DRBUG_FIELD
 // DELETE ME befor release
 //========================================================================================//
-# include "./lib_ft_printf/ft_printf.h"
+# include "../lib_ft_printf/ft_printf.h"
 //========================================================================================//
 
 typedef struct s_env
