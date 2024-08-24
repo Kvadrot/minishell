@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 t_tokens	*init_new_node_token(char *value)
 {

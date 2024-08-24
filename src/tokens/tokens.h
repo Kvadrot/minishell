@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/22 15:17:38 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/24 12:48:56 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
 
-# include "minishell.h"
+# include "../../inc/minishell.h"
 
 typedef enum e_token_type
 {
@@ -35,6 +35,6 @@ typedef struct s_tokens
 	struct s_token	*next;
 }					t_tokens;
 
-t_tokens	*convert_input_to_tokens(t_data *minishell);
+// t_tokens	*convert_input_to_tokens(t_data *minishell);
 
 #endif
