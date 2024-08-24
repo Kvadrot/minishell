@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/24 12:39:59 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/24 20:12:50 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,14 @@ void	minishell_loop(t_data *minishell)
 	while (1)
 	{
 		minishell->input = readline(PROMPT);
-		ft_input_is_valid(minishell->input);
+		// init_tokens(minishell);
+		// while (minishell->tokens != NULL)
+		// {
+		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+		// 	minishell->tokens = minishell->tokens->next;
+		// }
+		// seg fault here (no input given)
+		// ft_input_is_valid(minishell->input);
 	}
 }
 
