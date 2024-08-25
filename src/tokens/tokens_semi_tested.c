@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_semi_tested.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/24 19:56:11 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:38:35 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ t_tokens	*get_token(char *input)
 	t_tokens	*token;
 
 	token = (t_tokens *)malloc(sizeof(t_tokens));
+	if (!token)
+		return (NULL);
+	token->value = NULL;
+	token->type = 0;
+	token->next = NULL;
 	if (*input)
 	{
 		if (!ft_strncmp(">>", input, 2))

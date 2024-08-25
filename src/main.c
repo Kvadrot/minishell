@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/24 20:10:06 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:02:02 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	minishell_loop(t_data *minishell)
 	while (1)
 	{
 		minishell->input = readline(PROMPT);
-		// init_tokens(minishell);
-		// while (minishell->tokens != NULL)
-		// {
-		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
-		// 	minishell->tokens = minishell->tokens->next;
-		// }
+		init_tokens(minishell);
+		while (minishell->tokens != NULL)
+		{
+			printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+			minishell->tokens = minishell->tokens->next;
+		}
 		// seg fault here (no input given)
-		// ft_input_is_valid(minishell->input);
+		ft_input_is_valid(minishell->input);
 	}
 }
 
@@ -39,12 +39,15 @@ void	init_minishell(t_data *minishell, char **env)
 	minishell->stdin = dup(0);
 	minishell->stdout = dup(1);
 	tcgetattr(STDIN_FILENO, &minishell->terminal);
+	minishell->tokens = NULL;
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_data	minishell;
 
+	(void)argc;
+	(void)argv;
 	init_minishell(&minishell, env);
 	init_environment(&minishell.env, minishell.envir);
 	// print_environment(minishell.env);

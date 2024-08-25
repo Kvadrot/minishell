@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:45:41 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/24 20:05:10 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:40:24 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strncpy(char *dest, char *src, int num)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < num && src[i] != '\0')
