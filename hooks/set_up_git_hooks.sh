@@ -6,7 +6,7 @@ echo "Installing Git hooks..."
 mkdir -p ../.git/hooks
 
 # Copy hooks from hooks/ to .git/hooks
-cp hooks/* ../.git/hooks/
+cp ./* ../.git/hooks/
 
 # Make hooks executable
 chmod +x ../.git/hooks/*
