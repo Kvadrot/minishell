@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/21 15:35:06 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/26 20:43:50 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 t_env	*environment_new_node(char *key, char *value)
 {
@@ -44,6 +44,20 @@ void	environment_new_node_end(t_env **head, char *key, char *value)
 	}
 }
 
+// SHLVL stands for Shell Level. So its should be increased each time you run any Shell.
+static char	*ft_increment_shlvl(char *current_val)
+{
+	int		curr_val;
+	char	*new_val;
+	
+	curr_val = ft_atoi(current_val);
+	curr_val += 1;
+	new_val = ft_itoa(curr_val);
+	if (!new_val)
+		return (NULL);
+	return (new_val);
+}
+
 void	init_environment(t_env **environment, char **env)
 {
 	char	*key;
@@ -64,7 +78,14 @@ void	init_environment(t_env **environment, char **env)
 				value = ft_strdup(delimiter_pos + 1);
 			// if (!value)
 			// 	should we handle it?
-				environment_new_node_end(environment, key, value);
+			if (ft_strncmp(key, "SHLVL", 5) == 0)
+			{
+				value = ft_increment_shlvl(value);
+				// if (!value)
+				//TODO:
+				// Terminate minishell with err handling
+			}
+			environment_new_node_end(environment, key, value);
 			free(key);
 			free(value);
 		}
