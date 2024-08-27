@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/24 12:39:59 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:46:55 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	main(int argc, char **argv, char **env)
 	t_data	minishell;
 
 	init_minishell(&minishell, env);
-	init_environment(&minishell.env, minishell.envir);
+	if (init_environment(&minishell.env, minishell.envir) < 0)
+	{
+		environment_free_list(minishell.env);
+		return (0);
+	}
 	// print_environment(minishell.env);
 	environment_free_list(minishell.env);
 	minishell_loop(&minishell);

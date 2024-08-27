@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/24 12:46:20 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:32:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "../lib_ft_printf/ft_printf.h"
 //========================================================================================//
 
+//Envvironment node
 typedef struct s_env
 {
 	char				*key;
@@ -37,6 +38,7 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
+// Main MINISHELL_OBJ
 typedef struct s_data
 {
 	char				*input;
@@ -47,7 +49,6 @@ typedef struct s_data
 	t_tokens			*tokens;
 	t_env				*env;
 	struct termios		terminal;
-	struct s_minishell	*next;
 }						t_data;
 
 // Validate_input
@@ -55,12 +56,11 @@ bool	ft_input_is_valid(char *input_str);
 
 void					minishell_loop(t_data *minishell);
 
+// Copy Environment
 t_env					*environment_new_node(char *key, char *value);
-void					environment_new_node_end(t_env **head, char *key,
+int						environment_new_node_end(t_env **head, char *key,
 							char *value);
-void					init_environment(t_env **environment, char **env);
-void					environment_free_list(t_env *head);
-
+int						init_environment(t_env **environment, char **env);
 void					environment_free_list(t_env *head);
 
 // tester functions
