@@ -3,7 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
+/*   Updated: 2024/08/27 20:51:28 by gbuczyns         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -58,7 +63,7 @@ typedef struct s_data
 }						t_data;
 
 // Validate_input
-bool	ft_input_is_valid(char *input_str);
+bool					ft_input_is_valid(char *input_str);
 
 void					minishell_loop(t_data *minishell);
 
@@ -80,5 +85,13 @@ t_tokens	*convert_input_to_tokens(t_data *minishell);
 
 // tester functions
 void					print_environment(t_env *node);
+
+// tokens
+void					init_tokens(t_data *minishell);
+
+//	new potential libft function
+char					*ft_strncpy(char *dest, char *src, int num);
+void					ft_skip_whitespace(char **s);
+bool					ft_is_whitespace(char c);
 
 #endif
