@@ -6,26 +6,11 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/27 14:32:03 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:01:49 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// first two inputs always give wrong values - its only happening
-// during the test in maing program loop - might be problem with printing loop
-// on the other hand while testing it in tokens_semi_tested_without_libft
-// it seems to be working well
-
-// in case of >>> or any other combination other than desired we should
-// return an error - 
-// ------------------------------EXAMPLE------------------------------
-// ssuchane@c3r13s3:~$ |>
-// bash: syntax error near unexpected token `|'
-// ssuchane@c3r13s3:~$ |<
-// bash: syntax error near unexpected token `|'
-// ssuchane@c3r13s3:~$ >><
-// bash: syntax error near unexpected token `<'
 
 t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 {
@@ -64,6 +49,7 @@ t_tokens	*update_token(t_tokens *token, char *input, int type)
 	// if (!token->value)
 		// return not sufficient memory error
 	ft_strncpy(token->value, input, ft_strlen(input));
+	token->value[ft_strlen(input)] = '\0';
 	token->type = type;
 	return (token);
 }
