@@ -5,16 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/28 13:39:03 by ssuchane         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/08/28 17:18:49 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "../lib_ft/libft.h"
 // # include "parsing.h"
+# include "tokens.h"
 # include "tokens.h"
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -66,5 +70,13 @@ void				environment_free_list(t_env *head);
 
 // tester functions
 void				print_environment(t_env *node);
+
+// tokens
+void					init_tokens(t_data *minishell);
+
+//	new potential libft function
+char					*ft_strncpy(char *dest, char *src, int num);
+void					ft_skip_whitespace(char **s);
+bool					ft_is_whitespace(char c);
 
 #endif

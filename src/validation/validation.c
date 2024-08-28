@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:52:26 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/22 14:02:05 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:45:44 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 static bool ft_quotes_are_closed(char *str, int *i)
 {
@@ -55,7 +55,7 @@ static bool ft_quotes_are_closed(char *str, int *i)
 bool	ft_input_is_valid(char *input_str)
 {
 	int		i;
-	char	searchable_quote;
+	// char	searchable_quote;
 
 	i = 0;
 	
