@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/28 13:11:11 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/28 21:09:36 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_command
 	char				*input_file;
 	char				*output_file;
 	char				*append_file;
-	char				*heredoc_content;
+	char				*heredoc_delimiter;
 	struct s_command	*next;
 }						t_command;
 

@@ -1,5 +1,98 @@
 #include "../../inc/minishell.h"
 
+void	parse_tokens(t_data *minishell)
+{
+	t_command *current = init_command();
+
+	while (minishell->tokens != NULL)
+	{
+		switch (minishell->tokens->type)
+		{
+		case T_WORD:
+			add_word_to_command(current, minishell->tokens->value);
+			break ;
+		case T_LESS:
+			minishell->tokens = minishell->tokens->next;
+			current->input_file = minishell->tokens->value;
+			break ;
+		case T_GREAT:
+			minishell->tokens = minishell->tokens->next;
+			current->output_file = minishell->tokens->value;
+			break ;
+		case T_DLESS:
+			minishell->tokens = minishell->tokens->next;
+			current->heredoc_delimiter = minishell->tokens->value;
+			break ;
+		case T_DGREAT:
+			minishell->tokens = minishell->tokens->next;
+			current->append_file = minishell->tokens->value;
+			break ;
+		case T_PIPE:
+			// Finalize current command and create a new command node
+			finalize_command(current);
+			current->next = init_command();
+			current = current->next;
+			break ;
+		default:
+			// Handle unexpected cases
+			break ;
+		}
+		minishell->tokens = minishell->tokens->next;
+	}
+	// Finalize the last command in the sequence
+	finalize_command(current);
+}
+
+void execute_command_tree(t_command_node *root) {
+    int pipe_fd[2];
+    int input_fd = STDIN_FILENO;
+
+    while (root) {
+        if (root->next) {
+            pipe(pipe_fd);
+        }
+
+        pid_t pid = fork();
+        if (pid == 0) { // Child process
+            if (root->input_redirection) {
+                int fd = open(root->input_redirection, O_RDONLY);
+                dup2(fd, STDIN_FILENO);
+                close(fd);
+            }
+
+            if (root->output_redirection) {
+                int fd = open(root->output_redirection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                dup2(fd, STDOUT_FILENO);
+                close(fd);
+            } else if (root->next) {
+                dup2(pipe_fd[1], STDOUT_FILENO);
+                close(pipe_fd[1]);
+            }
+
+            if (input_fd != STDIN_FILENO) {
+                dup2(input_fd, STDIN_FILENO);
+                close(input_fd);
+            }
+
+            execvp(root->args[0], root->args);
+            // Handle execvp error
+            exit(1);
+        } else {
+            if (input_fd != STDIN_FILENO) {
+                close(input_fd);
+            }
+            if (root->next) {
+                close(pipe_fd[1]);
+                input_fd = pipe_fd[0];
+            }
+            root = root->next;
+        }
+    }
+    while (wait(NULL) > 0); // Wait for all child processes
+}
+
+
+/*
 t_command	*create_command(void)
 {
 	t_command	*cmd;
@@ -35,6 +128,9 @@ t_command	*parse_tokens(t_tokens **tokens, int num_tokens)
 	t_command	*current;
 	t_tokens	*token;
 	int			i;
+	char		*delimiter;
+	size_t		buffer_size;
+			char line[256];
 
 	head = NULL;
 	current = NULL;
@@ -46,93 +142,82 @@ t_command	*parse_tokens(t_tokens **tokens, int num_tokens)
 		// in case the first token is of type T_WORD
 		if (token->type == T_WORD)
 		{
-			if 
-
-
-			// Start a new command if necessary
-			if (current == NULL)
-			{
-				current = create_command();
-				if (head == NULL)
+			if
+				// Start a new command if necessary
+				if (current == NULL)
 				{
-					head = current;
+					current = create_command();
+					if (head == NULL)
+					{
+						head = current;
+					}
 				}
-			}
 			// Add the token as an argument to the current command
 			add_argument(current, token->value);
 			break ;
 		}
-
-		case TOKEN_PIPE:
-			// Prepare for the next command in the pipeline
-			current->next = create_command();
-			current = current->next;
-			break ;
-
-		case TOKEN_REDIRECT_OUT:
-			// Set the output redirection file
-			if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
-			{
-				current->output_file = strdup(tokens[i]->value);
-			}
-			break ;
-
-		case TOKEN_APPEND_OUT:
-			// Set the output append redirection file
-			if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
-			{
-				current->append_file = strdup(tokens[i]->value);
-			}
-			break ;
-
-		case TOKEN_REDIRECT_IN:
-			// Set the input redirection file
-			if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
-			{
-				current->input_file = strdup(tokens[i]->value);
-			}
-			break ;
-
-		case TOKEN_HEREDOC:
-			// Handle here document (<<)
-			if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
-			{
-				char *delimiter = tokens[i]->value;
-				size_t buffer_size = 1024;
-				current->heredoc_content = malloc(buffer_size);
-				current->heredoc_content[0] = '\0';
-
-				char line[256];
-				printf("heredoc> ");
-				while (fgets(line, sizeof(line), stdin))
-				{
-					// Strip newline character from the input line
-					line[strcspn(line, "\n")] = '\0';
-					if (strcmp(line, delimiter) == 0)
-					{
-						break ; // End of heredoc
-					}
-					// Append the line to heredoc content
-					strncat(current->heredoc_content, line, buffer_size
-						- strlen(current->heredoc_content) - 1);
-					strncat(current->heredoc_content, "\n", buffer_size
-						- strlen(current->heredoc_content) - 1);
-					printf("heredoc> ");
-				}
-			}
-			break ;
-
-		default:
-			// Handle unexpected tokens (optional)
-			fprintf(stderr, "Unexpected token: %s\n", token->value);
-			break ;
+	case TOKEN_PIPE:
+		// Prepare for the next command in the pipeline
+		current->next = create_command();
+		current = current->next;
+		break ;
+	case TOKEN_REDIRECT_OUT:
+		// Set the output redirection file
+		if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
+		{
+			current->output_file = strdup(tokens[i]->value);
 		}
-		i++;
+		break ;
+	case TOKEN_APPEND_OUT:
+		// Set the output append redirection file
+		if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
+		{
+			current->append_file = strdup(tokens[i]->value);
+		}
+		break ;
+	case TOKEN_REDIRECT_IN:
+		// Set the input redirection file
+		if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
+		{
+			current->input_file = strdup(tokens[i]->value);
+		}
+		break ;
+	case TOKEN_HEREDOC:
+		// Handle here document (<<)
+		if (++i < num_tokens && tokens[i]->type == TOKEN_WORD)
+		{
+			delimiter = tokens[i]->value;
+			buffer_size = 1024;
+			current->heredoc_content = malloc(buffer_size);
+			current->heredoc_content[0] = '\0';
+			printf("heredoc> ");
+			while (fgets(line, sizeof(line), stdin))
+			{
+				// Strip newline character from the input line
+				line[strcspn(line, "\n")] = '\0';
+				if (strcmp(line, delimiter) == 0)
+				{
+					break ; // End of heredoc
+				}
+				// Append the line to heredoc content
+				strncat(current->heredoc_content, line, buffer_size
+					- strlen(current->heredoc_content) - 1);
+				strncat(current->heredoc_content, "\n", buffer_size
+					- strlen(current->heredoc_content) - 1);
+				printf("heredoc> ");
+			}
+		}
+		break ;
+	default:
+		// Handle unexpected tokens (optional)
+		fprintf(stderr, "Unexpected token: %s\n", token->value);
+		break ;
 	}
-
-	return (head);
+	i++;
 }
 
+return (head);
+}
 
 // case 1: token is a word
 if (token->type == T_WORD)
@@ -170,7 +255,6 @@ if (token->type == T_WORD)
 	{
 		// we are dealing with command for sure
 	}
-
 }
 
 // case 2: token is >
@@ -179,11 +263,12 @@ if (token->type == T_GREAT)
 	// check if next token is T_WORD
 	if (true)
 	{
-		// check whether we can create a file of that name, if there is enough space
+		// check whether we can create a file of that name,
+			if there is enough space
 		// on disk to do it, create the file with read/write properties
 	}
-	else 
-		// error
+	else
+	// error
 }
 
 // case 3: token is >>
@@ -192,15 +277,16 @@ if (token->type == T_DGREAT)
 	// check if next token is T_WORD
 	if (true)
 	{
-		// check whether the file of that name exists, whether we have rights to read/write
+		// check whether the file of that name exists,
+			whether we have rights to read/write
 		// to that file
 		// append output from what was before to the end of the file
 	}
-	else 
-		// error
+	else
+	// error
 }
 
-//case 4: token is |
+// case 4: token is |
 if (token->type == T_PIPE)
 {
 	// check whether the next token type is T_WORD
@@ -209,5 +295,8 @@ if (token->type == T_PIPE)
 		// feed the output from previous command to the input of new command
 	}
 	else
-		// error
+	// error
 }
+
+
+
