@@ -3,18 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/27 20:51:28 by gbuczyns         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/08/28 18:10:20 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 
 # include "../lib_ft/libft.h"
+// # include "parsing.h"
+# include "tokens.h"
 # include "tokens.h"
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -35,10 +40,10 @@
 
 typedef struct s_env
 {
-	char				*key;
-	char				*value;
-	struct s_env		*next;
-}						t_env;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
 
 
 typedef struct s_llist
@@ -63,17 +68,17 @@ typedef struct s_data
 }						t_data;
 
 // Validate_input
-bool					ft_input_is_valid(char *input_str);
+bool				ft_input_is_valid(char *input_str);
 
-void					minishell_loop(t_data *minishell);
+void				minishell_loop(t_data *minishell);
 
-t_env					*environment_new_node(char *key, char *value);
-void					environment_new_node_end(t_env **head, char *key,
-							char *value);
-void					init_environment(t_env **environment, char **env);
-void					environment_free_list(t_env *head);
+t_env				*environment_new_node(char *key, char *value);
+void				environment_new_node_end(t_env **head, char *key,
+						char *value);
+void				init_environment(t_env **environment, char **env);
+void				environment_free_list(t_env *head);
 
-void					environment_free_list(t_env *head);
+void				environment_free_list(t_env *head);
 
 void minishell_free(t_data *minishell, int flag);
 
@@ -84,7 +89,7 @@ void minishell_free(t_data *minishell, int flag);
 t_tokens	*convert_input_to_tokens(t_data *minishell);
 
 // tester functions
-void					print_environment(t_env *node);
+void				print_environment(t_env *node);
 
 // tokens
 void					init_tokens(t_data *minishell);

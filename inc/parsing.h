@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/28 18:10:38 by ja               ###   ########.fr       */
+/*   Updated: 2024/08/28 18:10:49 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#ifndef PARSING_H
+# define PARSING_H
 
-typedef enum e_token_type
-{
-	T_WORD,
-	T_LESS,
-	T_GREAT,
-	T_DLESS,
-	T_DGREAT,
-	T_PIPE,
-}					t_token_type;
+# define MAX_TOKENS 100
 
-typedef struct s_tokens
+# include "minishell.h"
+
+typedef struct s_command
 {
-	t_token_type	type;
-	char			*value;
-	struct s_tokens	*next;
-}					t_tokens;
+	char				**args;
+	char				*input_file;
+	char				*output_file;
+	char				*append_file;
+	char				*heredoc_content;
+	struct s_command	*next;
+}						t_command;
 
 #endif
