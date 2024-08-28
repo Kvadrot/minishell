@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/22 15:17:38 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:39:38 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,5 @@ typedef struct s_tokens
 	char			*value;
 	struct s_token	*next;
 }					t_tokens;
-
-t_tokens	*convert_input_to_tokens(t_data *minishell);
 
 #endif

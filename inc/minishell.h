@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/28 13:07:37 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:39:03 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../lib_ft/libft.h"
-# include "parsing.h"
+// # include "parsing.h"
 # include "tokens.h"
 # include <readline/history.h>
 # include <readline/readline.h>
