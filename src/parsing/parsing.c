@@ -1,98 +1,213 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 14:19:56 by ssuchane          #+#    #+#             */
+/*   Updated: 2024/08/29 15:05:04 by ssuchane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
+int	check_syntax(t_tokens *tokens)
+{
+	t_tokens	*current;
+	t_tokens	*previous;
+
+	current = tokens;
+	previous = NULL;
+	while (current)
+	{
+		if (current->type == T_PIPE)
+		{
+			if (!previous || previous->type == T_PIPE)
+			{
+				printf("minishell: syntax error near unexpected token `%s'\n",
+					current->value);
+				return (0);
+			}
+		}
+		else if (current->type == T_GREAT || current->type == T_DGREAT
+			|| current->type == T_LESS || current->type == T_DLESS)
+		{
+			if (!current->next || current->next->type == T_PIPE)
+			{
+				if (current->next)
+					printf("minishell: syntax error near unexpected token `newline'\n");
+				else
+					printf("minishell: syntax error near unexpected token `newline'\n");
+				return (0);
+			}
+		}
+		previous = current;
+		current = current->next;
+	}
+	if (previous && (previous->type == T_PIPE || previous->type == T_GREAT
+			|| previous->type == T_DGREAT || previous->type == T_LESS
+			|| previous->type == T_DLESS))
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (0);
+	}
+	return (1);
+}
+
+t_command	*init_command(void)
+{
+	t_command	*node;
+
+	node = (t_command *)malloc(sizeof(t_command));
+	if (!node)
+		return (NULL);
+	node->args = NULL;
+	node->input_redirection = NULL;
+	node->output_redirection = NULL;
+	node->heredoc_delimiter = NULL;
+	node->output_append = NULL;
+	node->next = NULL;
+	return (node);
+}
+
+void	add_word_to_command(t_command *command, char *word)
+{
+	char	**new_args;
+	int		i;
+	int		j;
+
+	i = 0;
+	if (command->args)
+	{
+		while (command->args[i])
+			i++;
+	}
+	new_args = (char **)malloc(sizeof(char *) * (i + 2));
+	if (!new_args)
+		return ;
+	j = -1;
+	while (++j < i)
+		new_args[j] = command->args[j];
+	new_args[i] = ft_strdup(word);
+	new_args[i + 1] = NULL;
+	if (command->args)
+		free(command->args);
+	command->args = new_args;
+}
+
+void	finalize_command(t_command *command)
+{
+	if (!command)
+		return ;
+	// Perform any necessary finalization steps here, if needed.
+	// For instance, you could validate the command structure, ensure that the
+	// redirections are set correctly, or handle special cases.
+	printf("Command:\n");
+	for (int i = 0; command->args && command->args[i]; i++)
+		printf("  arg[%d]: %s\n", i, command->args[i]);
+	if (command->input_redirection)
+		printf("  Input redirection: %s\n", command->input_redirection);
+	if (command->output_redirection)
+		printf("  Output redirection: %s\n", command->output_redirection);
+	if (command->heredoc_delimiter)
+		printf("  Heredoc delimiter: %s\n", command->heredoc_delimiter);
+	if (command->output_append)
+		printf("  Output append: %s\n", command->output_append);
+}
+
+// there might be issue with input where there are more than 1 redirector
+// resulting in overwriting the previous redirectiors file name
 void	parse_tokens(t_data *minishell)
 {
-	t_command *current = init_command();
+	t_command	*current;
 
+	current = init_command();
 	while (minishell->tokens != NULL)
 	{
-		switch (minishell->tokens->type)
-		{
-		case T_WORD:
+		if (minishell->tokens->type == T_WORD)
 			add_word_to_command(current, minishell->tokens->value);
-			break ;
-		case T_LESS:
+		else if (minishell->tokens->type == T_LESS)
+		{
 			minishell->tokens = minishell->tokens->next;
-			current->input_file = minishell->tokens->value;
-			break ;
-		case T_GREAT:
+			current->input_redirection = minishell->tokens->value;
+		}
+		else if (minishell->tokens->type == T_GREAT)
+		{
 			minishell->tokens = minishell->tokens->next;
-			current->output_file = minishell->tokens->value;
-			break ;
-		case T_DLESS:
+			current->output_redirection = minishell->tokens->value;
+		}
+		else if (minishell->tokens->type == T_DLESS)
+		{
 			minishell->tokens = minishell->tokens->next;
 			current->heredoc_delimiter = minishell->tokens->value;
-			break ;
-		case T_DGREAT:
+		}
+		else if (minishell->tokens->type == T_DGREAT)
+		{
 			minishell->tokens = minishell->tokens->next;
-			current->append_file = minishell->tokens->value;
-			break ;
-		case T_PIPE:
-			// Finalize current command and create a new command node
+			current->output_append = minishell->tokens->value;
+		}
+		else if (minishell->tokens->type == T_PIPE)
+		{
 			finalize_command(current);
 			current->next = init_command();
 			current = current->next;
-			break ;
-		default:
-			// Handle unexpected cases
-			break ;
 		}
 		minishell->tokens = minishell->tokens->next;
 	}
-	// Finalize the last command in the sequence
 	finalize_command(current);
 }
 
-void execute_command_tree(t_command_node *root) {
-    int pipe_fd[2];
-    int input_fd = STDIN_FILENO;
+/*
+void	execute_command_tree(t_command_node *root) {
+	int pipe_fd[2];
+	int input_fd = STDIN_FILENO;
 
-    while (root) {
-        if (root->next) {
-            pipe(pipe_fd);
-        }
+	while (root) {
+		if (root->next) {
+			pipe(pipe_fd);
+		}
 
-        pid_t pid = fork();
-        if (pid == 0) { // Child process
-            if (root->input_redirection) {
-                int fd = open(root->input_redirection, O_RDONLY);
-                dup2(fd, STDIN_FILENO);
-                close(fd);
-            }
+		pid_t pid = fork();
+		if (pid == 0) { // Child process
+			if (root->input_redirection) {
+				int fd = open(root->input_redirection, O_RDONLY);
+				dup2(fd, STDIN_FILENO);
+				close(fd);
+			}
 
-            if (root->output_redirection) {
-                int fd = open(root->output_redirection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-                dup2(fd, STDOUT_FILENO);
-                close(fd);
-            } else if (root->next) {
-                dup2(pipe_fd[1], STDOUT_FILENO);
-                close(pipe_fd[1]);
-            }
+			if (root->output_redirection) {
+				int fd = open(root->output_redirection,
+		O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				dup2(fd, STDOUT_FILENO);
+				close(fd);
+			} else if (root->next) {
+				dup2(pipe_fd[1], STDOUT_FILENO);
+				close(pipe_fd[1]);
+			}
 
-            if (input_fd != STDIN_FILENO) {
-                dup2(input_fd, STDIN_FILENO);
-                close(input_fd);
-            }
+			if (input_fd != STDIN_FILENO) {
+				dup2(input_fd, STDIN_FILENO);
+				close(input_fd);
+			}
 
-            execvp(root->args[0], root->args);
-            // Handle execvp error
-            exit(1);
-        } else {
-            if (input_fd != STDIN_FILENO) {
-                close(input_fd);
-            }
-            if (root->next) {
-                close(pipe_fd[1]);
-                input_fd = pipe_fd[0];
-            }
-            root = root->next;
-        }
-    }
-    while (wait(NULL) > 0); // Wait for all child processes
+			execvp(root->args[0], root->args);
+			// Handle execvp error
+			exit(1);
+		} else {
+			if (input_fd != STDIN_FILENO) {
+				close(input_fd);
+			}
+			if (root->next) {
+				close(pipe_fd[1]);
+				input_fd = pipe_fd[0];
+			}
+			root = root->next;
+		}
+	}
+	while (wait(NULL) > 0); // Wait for all child processes
 }
 
-
-/*
 t_command	*create_command(void)
 {
 	t_command	*cmd;
@@ -300,3 +415,4 @@ if (token->type == T_PIPE)
 
 
 
+*/
