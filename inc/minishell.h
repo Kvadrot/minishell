@@ -6,12 +6,9 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/08/28 21:08:28 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:53:25 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -19,7 +16,7 @@
 # include "../lib_ft/libft.h"
 # include "parsing.h"
 # include "tokens.h"
-# include "tokens.h"
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -72,11 +69,14 @@ void				environment_free_list(t_env *head);
 void				print_environment(t_env *node);
 
 // tokens
-void					init_tokens(t_data *minishell);
+void				init_tokens(t_data *minishell);
 
 //	new potential libft function
-char					*ft_strncpy(char *dest, char *src, int num);
-void					ft_skip_whitespace(char **s);
-bool					ft_is_whitespace(char c);
+char				*ft_strncpy(char *dest, char *src, int num);
+void				ft_skip_whitespace(char **s);
+bool				ft_is_whitespace(char c);
+
+void				parse_tokens(t_data *minishell);
+int					check_syntax(t_tokens *tokens);
 
 #endif
