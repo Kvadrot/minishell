@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/29 21:40:54 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/29 22:00:50 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ t_tokens	*get_token(char *input)
 		// echo tytyt"dads 'test' das">> test.txt
 		// echo tytyt"dads 'test' das" 44444>> test.txt
 		// echo tytyt"dads 'test' das" 44444 >> test.txt
+		// echo grep tytytdads" 'test' das" 44444>> test.txt
+		// echo grep tytytdads" 'test' das" 44444>> test.txt | grep 22 test.txt >> test_2
 		if (strlen(input) >= 2 && !strncmp(">>", input, 2))
 			return (update_token(token, ">>", T_DGREAT));
 		else if (strlen(input) >= 2 && !strncmp("<<", input, 2))
