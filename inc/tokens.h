@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/27 13:01:22 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:02:28 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,17 @@ typedef struct s_tokens
 	char			*value;
 	struct s_tokens	*next;
 }					t_tokens;
+
+typedef enum e_parse_err
+{
+	E_MEMORY = 1,
+	E_SYNTAXERR
+}					t_parse_err;
+
+typedef struct s_parse_error
+{
+	t_parse_err		type;
+	char			*str;
+}					t_parse_error;
 
 #endif

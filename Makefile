@@ -14,6 +14,7 @@ OBJ_DIR2 = obj/tokens/
 OBJ_DIR3 = obj/validation/
 # Default sources
 SRC = main.c env.c \
+	tokens/error_handling.c \
 	tokens/tokens_semi_tested.c \
 	tokens/tokens_utils.c \
 	validation/validation.c 

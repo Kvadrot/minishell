@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/27 19:18:01 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:18:36 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../lib_ft/libft.h"
 # include "tokens.h"
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -73,5 +74,7 @@ void					init_tokens(t_data *minishell);
 char					*ft_strncpy(char *dest, char *src, int num);
 void					ft_skip_whitespace(char **s);
 bool					ft_is_whitespace(char c);
+
+int						check_syntax(t_tokens *tokens);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/27 19:17:51 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:18:52 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	minishell_loop(t_data *minishell)
 	{
 		minishell->input = readline(PROMPT);
 		init_tokens(minishell);
+		check_syntax(minishell->tokens);
 		while (minishell->tokens != NULL)
 		{
 			printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
