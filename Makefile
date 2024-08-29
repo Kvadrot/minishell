@@ -12,6 +12,7 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 OBJ_DIR2 = obj/tokens/
 OBJ_DIR3 = obj/validation/
+OBJ_DIR4 = obj/parsing/
 # Default sources
 SRC = main.c env.c \
 	parsing/parsing.c \
@@ -25,6 +26,7 @@ $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR2)
 	@mkdir -p $(OBJ_DIR3)
+	@mkdir -p $(OBJ_DIR4)
 	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
 	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $< -c -o $@
 
