@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/29 20:18:33 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/30 22:00:06 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ void	minishell_loop(t_data *minishell)
 {
 	while (1)
 	{
+		minishell->tokens = NULL;
 		minishell->input = readline(PROMPT);
 		init_tokens(minishell);
 		check_syntax(minishell->tokens);
 		// break ;
-		parse_tokens(minishell);
+		minishell->commands = parse_tokens(minishell->tokens);
+		free_commands(minishell->commands);
+		minishell->commands = NULL;
 		// while (minishell->tokens != NULL)
 		// {
 		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
