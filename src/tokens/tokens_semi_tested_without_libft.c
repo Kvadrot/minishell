@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_semi_tested_without_libft.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/27 14:28:09 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/29 22:00:50 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 			i++;
 			while (input[i] && input[i] != quote)
 				i++;
-			if (input[i])
-				i++;
 		}
 		else if (ft_is_whitespace(input[i]))
 			break ;
@@ -58,8 +56,8 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 t_tokens	*update_token(t_tokens *token, char *input, int type)
 {
 	// updated from
-	token->value = (char *)malloc(3);
-	// token->value = (char *)malloc(ft_strlen(input) + 1);
+	// token->value = (char *)malloc(3);
+	token->value = (char *)malloc(ft_strlen(input) + 1);
 	// if (!token->value)
 	// return not sufficient memory error
 	ft_strncpy(token->value, input, strlen(input));
@@ -79,7 +77,13 @@ t_tokens	*get_token(char *input)
 	token->next = NULL;
 	if (*input)
 	{
-		// added ft_strlen(input) >= X &&
+		// added ft_strlen(input) >= X && // add handling to echo "dads test">> test.txt phrase -> should be splited
+		// split tokens if there is no space between T_WORD and operator
+		// echo tytyt"dads 'test' das">> test.txt
+		// echo tytyt"dads 'test' das" 44444>> test.txt
+		// echo tytyt"dads 'test' das" 44444 >> test.txt
+		// echo grep tytytdads" 'test' das" 44444>> test.txt
+		// echo grep tytytdads" 'test' das" 44444>> test.txt | grep 22 test.txt >> test_2
 		if (strlen(input) >= 2 && !strncmp(">>", input, 2))
 			return (update_token(token, ">>", T_DGREAT));
 		else if (strlen(input) >= 2 && !strncmp("<<", input, 2))

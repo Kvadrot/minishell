@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/28 18:10:49 by ja               ###   ########.fr       */
+/*   Updated: 2024/08/30 20:05:29 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 typedef struct s_command
 {
 	char				**args;
-	char				*input_file;
-	char				*output_file;
-	char				*append_file;
-	char				*heredoc_content;
+	char				*input_redirection;
+	char				*output_redirection;
+	char				*heredoc_delimiter;
+	char				*output_append;
+	int					pipe;
 	struct s_command	*next;
+	struct s_command	*prev;
 }						t_command;
 
 #endif

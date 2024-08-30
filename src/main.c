@@ -1,10 +1,10 @@
 
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/27 19:17:51 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:18:33 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ void	minishell_loop(t_data *minishell)
             break;
         }
 		init_tokens(minishell);
-		while (minishell->tokens != NULL)
-		{
-			printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
-			minishell->tokens = minishell->tokens->next;
-		}
+		check_syntax(minishell->tokens);
+		// break ;
+		parse_tokens(minishell);
+		// while (minishell->tokens != NULL)
+		// {
+		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+		// 	minishell->tokens = minishell->tokens->next;
+		// }
 		// seg fault here (no input given)
 		ft_input_is_valid(minishell->input);
 	}

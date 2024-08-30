@@ -12,12 +12,15 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 OBJ_DIR2 = obj/tokens/
 OBJ_DIR3 = obj/validation/
+OBJ_DIR4 = obj/parsing/
 # Default sources
 SRC = main.c env.c \
 	tokens/tokens_semi_tested.c \
 	tokens/tokens_utils.c \
 	validation/validation.c \
-	minishell_free.c
+	minishell_free.c\
+	parsing/parsing.c 
+
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 #OBJS = $(SRCS:.c=.o)
  OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
@@ -26,6 +29,7 @@ $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR2)
 	@mkdir -p $(OBJ_DIR3)
+	@mkdir -p $(OBJ_DIR4)
 	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
 	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $< -c -o $@
 

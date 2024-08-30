@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/28 13:01:49 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/30 13:59:47 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 		else if (ft_is_whitespace(input[i]))
 			break ;
 		else
+		{
 			i++;
+			if (ft_strchr("><|", input[i]))
+				break ;
+		}
 	}
 	token->value = (char *)malloc(i + 1);
 	// if (!token->value)
@@ -99,7 +103,11 @@ void	append_token(t_tokens **tokens, t_tokens *new_token)
 }
 
 // pontentially catch syntax errors and return error message
-// how to return error that we want?
+// how to return error we want?
+
+// check for pipe at the beginning and at the end
+// check for > and >> at the end
+// check for < << at the beginning 
 int	validate_tokens(t_tokens *tokens)
 {
 	t_tokens	*current;
