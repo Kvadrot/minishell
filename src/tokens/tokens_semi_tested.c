@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/28 13:01:49 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:48:23 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 		else if (ft_is_whitespace(input[i]))
 			break ;
 		else
+		{
 			i++;
+			if (ft_strchr("><|", input[i]))
+				break ;
+		}
 	}
 	token->value = (char *)malloc(i + 1);
 	// if (!token->value)
 		// return not sufficient memory error
-	strncpy(token->value, input, i);
+	ft_strncpy(token->value, input, i);
 	token->value[i] = '\0';
 	token->type = type;
 	return (token);
