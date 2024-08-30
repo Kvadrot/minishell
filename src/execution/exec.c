@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/08/30 21:03:55 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/30 22:43:35 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void execute_pipe(t_command *command, t_data *data)
 	else
 		execve(command->args[0], command->args, data->envir);
 }
+
+void exe
 
 void execute_commands(t_command *command, t_data *data)
 {
