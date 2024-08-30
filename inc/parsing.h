@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/29 13:36:38 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/30 13:37:13 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ typedef struct s_command
 	char				*output_redirection;
 	char				*heredoc_delimiter;
 	char				*output_append;
+	int					pipe;
 	struct s_command	*next;
+	struct s_command	*prev;
 }						t_command;
 
 #endif
