@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/08/29 14:53:25 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/30 21:00:59 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	int				stdout;
 	t_tokens		*tokens;
 	t_env			*env;
+	t_command		*commands;
 	struct termios	terminal;
 	struct s_data	*next;
 }					t_data;
@@ -76,7 +77,9 @@ char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
 bool				ft_is_whitespace(char c);
 
-void				parse_tokens(t_data *minishell);
+t_command			*parse_tokens(t_tokens *tokens);
 int					check_syntax(t_tokens *tokens);
+
+void				free_commands(t_command *command);
 
 #endif

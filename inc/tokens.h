@@ -6,14 +6,17 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/28 17:20:59 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:19:40 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
 
+# define MAX_ARGS 128
+
 # include "minishell.h"
+
 
 typedef enum e_token_type
 {
