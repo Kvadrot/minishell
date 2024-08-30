@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/08/30 20:05:40 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:12:35 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
+# include <sys/wait.h>
 
 # define PROMPT "MDshell > "
 #define YES 1
