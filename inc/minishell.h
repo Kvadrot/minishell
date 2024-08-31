@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/08/30 21:00:59 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:33:24 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,5 @@ bool				ft_is_whitespace(char c);
 
 t_command			*parse_tokens(t_tokens *tokens);
 int					check_syntax(t_tokens *tokens);
-
-void				free_commands(t_command *command);
 
 #endif

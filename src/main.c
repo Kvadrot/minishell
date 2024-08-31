@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/30 22:00:06 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:30:50 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	minishell_loop(t_data *minishell)
 		check_syntax(minishell->tokens);
 		// break ;
 		minishell->commands = parse_tokens(minishell->tokens);
-		free_commands(minishell->commands);
 		minishell->commands = NULL;
 		// while (minishell->tokens != NULL)
 		// {
