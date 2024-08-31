@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/31 20:32:39 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/31 22:54:39 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int	check_syntax(t_tokens *tokens)
 }
 
 t_command	*new_command(void);
-t_command	*handle_redirection_token(t_tokens **tokens);
+t_command	*handle_redirection_token(t_command *cmd, t_tokens **tokens);
 void		handle_word_token(t_command *cmd, t_tokens **tokens);
 void		handle_pipe_token(t_command *cmd, t_command **cmd_list);
 t_command	*parse_tokens(t_tokens *tokens);
 void		free_command_args(t_command *cmd);
 void		free_command_list(t_command *cmd);
-void		print_command(t_command *cmd);
+void		print_commands(t_command *cmd);
 
 // Function to create a new command node
 t_command	*new_command(void)
@@ -87,11 +87,8 @@ t_command	*new_command(void)
 }
 
 // Function to handle redirection tokens and return the updated command node
-t_command	*handle_redirection_token(t_tokens **tokens)
+t_command	*handle_redirection_token(t_command *cmd, t_tokens **tokens)
 {
-	t_command	*cmd;
-
-	cmd = new_command();
 	if (*tokens && ((*tokens)->type == T_GREAT || (*tokens)->type == T_DGREAT))
 	{
 		if ((*tokens)->type == T_GREAT)
@@ -102,7 +99,6 @@ t_command	*handle_redirection_token(t_tokens **tokens)
 		{
 			cmd->output_append = strdup((*tokens)->next->value);
 		}
-		*tokens = (*tokens)->next->next; // Move past redirection tokens
 	}
 	else if (*tokens && ((*tokens)->type == T_LESS
 			|| (*tokens)->type == T_DLESS))
@@ -115,7 +111,6 @@ t_command	*handle_redirection_token(t_tokens **tokens)
 		{
 			cmd->heredoc_delimiter = strdup((*tokens)->next->value);
 		}
-		*tokens = (*tokens)->next->next; // Move past redirection tokens
 	}
 	return (cmd);
 }
@@ -169,26 +164,40 @@ t_command	*parse_tokens(t_tokens *tokens)
 
 	cmd_list = NULL;
 	cmd_head = NULL;
+	cmd = new_command();
+	cmd_head = NULL;
+	cmd_list = NULL;
 	while (tokens)
 	{
-		cmd = NULL;
-		// Handle redirection tokens first
-		if (tokens->type == T_GREAT || tokens->type == T_DGREAT
-			|| tokens->type == T_LESS || tokens->type == T_DLESS)
+		if (cmd->input_redirection || cmd->output_redirection
+			|| cmd->output_append || cmd->heredoc_delimiter)
 		{
-			cmd = handle_redirection_token(&tokens);
+			if (cmd_list)
+			{
+				cmd_list->next = cmd;
+				cmd->prev = cmd_list;
+				cmd_list = cmd;
+			}
+			if (!cmd_list)
+				cmd_list = cmd;
+			if (!cmd_head)
+				cmd_head = cmd_list;
+			cmd = new_command();
 		}
-		// Handle command and arguments (T_WORD)
+		// Handle redirection tokens first
 		if (tokens && tokens->type == T_WORD)
 		{
-			if (cmd == NULL)
-			{
-				cmd = new_command();
-			}
 			handle_word_token(cmd, &tokens);
 		}
+		else if (tokens->type == T_GREAT || tokens->type == T_DGREAT
+			|| tokens->type == T_LESS || tokens->type == T_DLESS)
+		{
+			handle_redirection_token(cmd, &tokens);
+			tokens = tokens->next;
+		}
+		// Handle command and arguments (T_WORD)
 		// Handle pipe (T_PIPE)
-		if (tokens && tokens->type == T_PIPE)
+		else if (tokens && tokens->type == T_PIPE)
 		{
 			if (cmd == NULL)
 			{
@@ -197,25 +206,9 @@ t_command	*parse_tokens(t_tokens *tokens)
 			handle_pipe_token(cmd, &cmd_list);
 			tokens = tokens->next; // Move past the pipe token
 		}
-		else
-		{
-			if (cmd != NULL)
-			{
-				if (cmd_list)
-				{
-					cmd_list->next = cmd;
-					cmd->prev = cmd_list;
-				}
-				cmd_list = cmd;
-			}
-		}
-		// Set the head of the list if it's the first command
-		if (!cmd_head && cmd)
-		{
-			cmd_head = cmd;
-		}
 	}
-	print_command(cmd_head);
+	// Set the head of the list if it's the first command
+	print_commands(cmd_head);
 	return (cmd_head);
 }
 
@@ -251,35 +244,39 @@ void	free_command_list(t_command *cmd)
 }
 
 // Function to print the command structure for verification
-void	print_command(t_command *cmd)
+void	print_commands(t_command *cmd)
 {
-	printf("Command:\n");
-	if (cmd->args)
+	while (cmd)
 	{
-		for (int i = 0; cmd->args[i] != NULL; i++)
+		printf("Command:\n");
+		if (cmd->args)
 		{
-			printf("  Arg[%d]: %s\n", i, cmd->args[i]);
+			for (int i = 0; cmd->args[i] != NULL; i++)
+			{
+				printf("  Arg[%d]: %s\n", i, cmd->args[i]);
+			}
 		}
+		if (cmd->input_redirection)
+		{
+			printf("  Input Redirection: %s\n", cmd->input_redirection);
+		}
+		if (cmd->output_redirection)
+		{
+			printf("  Output Redirection: %s\n", cmd->output_redirection);
+		}
+		if (cmd->output_append)
+		{
+			printf("  Output Append: %s\n", cmd->output_append);
+		}
+		if (cmd->heredoc_delimiter)
+		{
+			printf("  Heredoc Delimiter: %s\n", cmd->heredoc_delimiter);
+		}
+		if (cmd->pipe)
+		{
+			printf("  Pipe: %d\n", cmd->pipe);
+		}
+		printf("\n");
+		cmd = cmd->next;
 	}
-	if (cmd->input_redirection)
-	{
-		printf("  Input Redirection: %s\n", cmd->input_redirection);
-	}
-	if (cmd->output_redirection)
-	{
-		printf("  Output Redirection: %s\n", cmd->output_redirection);
-	}
-	if (cmd->output_append)
-	{
-		printf("  Output Append: %s\n", cmd->output_append);
-	}
-	if (cmd->heredoc_delimiter)
-	{
-		printf("  Heredoc Delimiter: %s\n", cmd->heredoc_delimiter);
-	}
-	if (cmd->pipe)
-	{
-		printf("  Pipe: %d\n", cmd->pipe);
-	}
-	printf("\n");
 }
