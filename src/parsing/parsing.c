@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/30 22:40:50 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:32:39 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,27 @@ int	check_syntax(t_tokens *tokens)
 	return (1);
 }
 
-t_command	*init_command(void)
+t_command	*new_command(void);
+t_command	*handle_redirection_token(t_tokens **tokens);
+void		handle_word_token(t_command *cmd, t_tokens **tokens);
+void		handle_pipe_token(t_command *cmd, t_command **cmd_list);
+t_command	*parse_tokens(t_tokens *tokens);
+void		free_command_args(t_command *cmd);
+void		free_command_list(t_command *cmd);
+void		print_command(t_command *cmd);
+
+// Function to create a new command node
+t_command	*new_command(void)
 {
 	t_command	*cmd;
-	int	i;
 
-	i = -1;
 	cmd = (t_command *)malloc(sizeof(t_command));
-	cmd->args = (char **)malloc(MAX_ARGS * sizeof(char *));
-	while (++i > MAX_ARGS)
-		cmd->args[i] = NULL;
-	cmd->args[0] = NULL;
+	if (!cmd)
+	{
+		perror("Failed to allocate memory for command");
+		exit(EXIT_FAILURE);
+	}
+	cmd->args = NULL;
 	cmd->input_redirection = NULL;
 	cmd->output_redirection = NULL;
 	cmd->heredoc_delimiter = NULL;
@@ -76,215 +86,200 @@ t_command	*init_command(void)
 	return (cmd);
 }
 
-// Helper function to link the new command to the command list
-void	link_command(t_command **head, t_command *current)
+// Function to handle redirection tokens and return the updated command node
+t_command	*handle_redirection_token(t_tokens **tokens)
 {
-	t_command	*tmp;
+	t_command	*cmd;
 
-	if (*head == NULL)
+	cmd = new_command();
+	if (*tokens && ((*tokens)->type == T_GREAT || (*tokens)->type == T_DGREAT))
 	{
-		*head = current;
+		if ((*tokens)->type == T_GREAT)
+		{
+			cmd->output_redirection = strdup((*tokens)->next->value);
+		}
+		else if ((*tokens)->type == T_DGREAT)
+		{
+			cmd->output_append = strdup((*tokens)->next->value);
+		}
+		*tokens = (*tokens)->next->next; // Move past redirection tokens
 	}
-	else
+	else if (*tokens && ((*tokens)->type == T_LESS
+			|| (*tokens)->type == T_DLESS))
 	{
-		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = current;
-		current->prev = tmp;
+		if ((*tokens)->type == T_LESS)
+		{
+			cmd->input_redirection = strdup((*tokens)->next->value);
+		}
+		else if ((*tokens)->type == T_DLESS)
+		{
+			cmd->heredoc_delimiter = strdup((*tokens)->next->value);
+		}
+		*tokens = (*tokens)->next->next; // Move past redirection tokens
 	}
+	return (cmd);
 }
 
-// Helper function to handle T_WORD tokens and populate the args array
-void	handle_word_token(t_command *current, t_tokens *token)
+// Function to handle T_WORD tokens and build the args array in t_command
+void	handle_word_token(t_command *cmd, t_tokens **tokens)
 {
-	int	arg_count;
+	int	num_args;
 
-	arg_count = 0;
-	while (token && token->type == T_WORD)
+	num_args = 0;
+	// Traverse the tokens and add T_WORD tokens to the command args
+	while (*tokens && (*tokens)->type == T_WORD)
 	{
-		current->args[arg_count++] = strdup(token->value);
-		token = token->next;
+		cmd->args = realloc(cmd->args, sizeof(char *) * (num_args + 2));
+		if (!cmd->args)
+		{
+			perror("Failed to reallocate memory for args");
+			exit(EXIT_FAILURE);
+		}
+		cmd->args[num_args] = strdup((*tokens)->value);
+		if (!cmd->args[num_args])
+		{
+			perror("Failed to duplicate string for args");
+			exit(EXIT_FAILURE);
+		}
+		num_args++;
+		*tokens = (*tokens)->next;
 	}
-	current->args[arg_count] = NULL;
+	// Null-terminate the args array
+	cmd->args[num_args] = NULL;
 }
 
-// Helper function to handle redirection tokens (T_GREAT, T_DGREAT)
-t_command	*handle_output_redirection(t_tokens **token)
+// Function to handle T_PIPE token
+void	handle_pipe_token(t_command *cmd, t_command **cmd_list)
 {
-	t_command	*current;
-
-	current = init_command();
-	if ((*token)->type == T_GREAT)
+	cmd->pipe = 1;
+	if (*cmd_list)
 	{
-		*token = (*token)->next;
-		if (*token && (*token)->type == T_WORD)
-		{
-			current->output_redirection = strdup((*token)->value);
-		}
+		(*cmd_list)->next = cmd;
+		cmd->prev = *cmd_list;
 	}
-	else if ((*token)->type == T_DGREAT)
-	{
-		*token = (*token)->next;
-		if (*token && (*token)->type == T_WORD)
-		{
-			current->output_append = strdup((*token)->value);
-		}
-	}
-	return (current);
+	*cmd_list = cmd;
 }
 
-// Helper function to handle input redirection (T_LESS) and heredoc (T_DLESS)
-t_command	*handle_input_redirection(t_tokens **token)
-{
-	t_command	*current;
-
-	current = init_command();
-	if ((*token)->type == T_LESS)
-	{
-		*token = (*token)->next;
-		if (*token && (*token)->type == T_WORD)
-		{
-			current->input_redirection = strdup((*token)->value);
-		}
-	}
-	else if ((*token)->type == T_DLESS)
-	{
-		*token = (*token)->next;
-		if (*token && (*token)->type == T_WORD)
-		{
-			current->heredoc_delimiter = strdup((*token)->value);
-		}
-	}
-	return (current);
-}
-
-// Helper function to link the current command with the previous one if a pipe is encountered
-t_command	*handle_pipe(t_command *current)
-{
-	if (current)
-		current->pipe = 1;
-	return (NULL);
-	// Return NULL to indicate a new command should be initialized
-}
-
-void	print_commands(t_command *command)
-{
-	int	i;
-
-	while (command)
-	{
-		printf("Command:\n");
-		printf("  Args: ");
-		i = 0;
-		if (command->args)
-		{
-			while (command->args[i])
-			{
-				printf("%s ", command->args[i]);
-				i++;
-			}
-			printf("\n");
-		}
-		if (command->input_redirection)
-			printf("  Input Redirection: %s\n", command->input_redirection);
-		if (command->output_redirection)
-			printf("  Output Redirection: %s\n", command->output_redirection);
-		if (command->heredoc_delimiter)
-			printf("  Heredoc Delimiter: %s\n", command->heredoc_delimiter);
-		if (command->output_append)
-			printf("  Output Append: %s\n", command->output_append);
-		if (command->pipe)
-			printf("  Pipe: Yes\n");
-		command = command->next;
-	}
-}
-
-void free_commands(t_command *command)
-{
-	t_command	*current;
-	t_command	*next;
-
-	current = command;
-	while (current != NULL)
-	{
-		// Free args and its elements
-		if (current->args != NULL)
-		{
-			for (int i = 0; i < MAX_ARGS; ++i)
-			{
-				if (current->args[i] != NULL)
-				{
-					free(current->args[i]);
-				}
-			}
-			free(current->args);
-		}
-		// Free other allocated strings
-		if (current->input_redirection != NULL)
-		{
-			free(current->input_redirection);
-		}
-		if (current->output_redirection != NULL)
-		{
-			free(current->output_redirection);
-		}
-		if (current->heredoc_delimiter != NULL)
-		{
-			free(current->heredoc_delimiter);
-		}
-		if (current->output_append != NULL)
-		{
-			free(current->output_append);
-		}
-		// Move to the next node
-		next = current->next;
-		// Free the current node
-		free(current);
-		// Move to the next node in the list
-		current = next;
-	}
-}
-
-// Function to parse the tokens and construct the command list
+// Function to parse the list of tokens into a list of command nodes and return the head of the list
 t_command	*parse_tokens(t_tokens *tokens)
 {
-	t_command	*head;
-	t_tokens	*token;
-	t_command	*current;
+	t_command	*cmd_list;
+	t_command	*cmd_head;
+	t_command	*cmd;
 
-	head = NULL;
-	token = tokens;
-	while (token)
+	cmd_list = NULL;
+	cmd_head = NULL;
+	while (tokens)
 	{
-		current = NULL;
-		if (token->type == T_GREAT || token->type == T_DGREAT)
+		cmd = NULL;
+		// Handle redirection tokens first
+		if (tokens->type == T_GREAT || tokens->type == T_DGREAT
+			|| tokens->type == T_LESS || tokens->type == T_DLESS)
 		{
-			current = handle_output_redirection(&token);
+			cmd = handle_redirection_token(&tokens);
 		}
-		else if (token->type == T_WORD)
+		// Handle command and arguments (T_WORD)
+		if (tokens && tokens->type == T_WORD)
 		{
-			current = init_command();
-			handle_word_token(current, token);
+			if (cmd == NULL)
+			{
+				cmd = new_command();
+			}
+			handle_word_token(cmd, &tokens);
 		}
-		else if (token->type == T_LESS || token->type == T_DLESS)
+		// Handle pipe (T_PIPE)
+		if (tokens && tokens->type == T_PIPE)
 		{
-			current = handle_input_redirection(&token);
+			if (cmd == NULL)
+			{
+				cmd = new_command();
+			}
+			handle_pipe_token(cmd, &cmd_list);
+			tokens = tokens->next; // Move past the pipe token
 		}
-		else if (token->type == T_PIPE)
+		else
 		{
-			current = handle_pipe(current);
-			token = token->next;
-			continue ; // Continue to avoid linking a NULL command
+			if (cmd != NULL)
+			{
+				if (cmd_list)
+				{
+					cmd_list->next = cmd;
+					cmd->prev = cmd_list;
+				}
+				cmd_list = cmd;
+			}
 		}
-		// Link the command to the list
-		if (current != NULL)
+		// Set the head of the list if it's the first command
+		if (!cmd_head && cmd)
 		{
-			link_command(&head, current);
+			cmd_head = cmd;
 		}
-		// Move to the next token
-		token = token->next;
 	}
-	print_commands(head);
-	return (head);
+	print_command(cmd_head);
+	return (cmd_head);
+}
+
+// Function to free the args array in a command
+void	free_command_args(t_command *cmd)
+{
+	if (cmd->args)
+	{
+		for (int i = 0; cmd->args[i] != NULL; i++)
+		{
+			free(cmd->args[i]);
+		}
+		free(cmd->args);
+	}
+}
+
+// Function to free the entire command list
+void	free_command_list(t_command *cmd)
+{
+	t_command	*temp;
+
+	while (cmd)
+	{
+		temp = cmd;
+		cmd = cmd->next;
+		free_command_args(temp);
+		free(temp->input_redirection);
+		free(temp->output_redirection);
+		free(temp->heredoc_delimiter);
+		free(temp->output_append);
+		free(temp);
+	}
+}
+
+// Function to print the command structure for verification
+void	print_command(t_command *cmd)
+{
+	printf("Command:\n");
+	if (cmd->args)
+	{
+		for (int i = 0; cmd->args[i] != NULL; i++)
+		{
+			printf("  Arg[%d]: %s\n", i, cmd->args[i]);
+		}
+	}
+	if (cmd->input_redirection)
+	{
+		printf("  Input Redirection: %s\n", cmd->input_redirection);
+	}
+	if (cmd->output_redirection)
+	{
+		printf("  Output Redirection: %s\n", cmd->output_redirection);
+	}
+	if (cmd->output_append)
+	{
+		printf("  Output Append: %s\n", cmd->output_append);
+	}
+	if (cmd->heredoc_delimiter)
+	{
+		printf("  Heredoc Delimiter: %s\n", cmd->heredoc_delimiter);
+	}
+	if (cmd->pipe)
+	{
+		printf("  Pipe: %d\n", cmd->pipe);
+	}
+	printf("\n");
 }

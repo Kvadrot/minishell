@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:19:56 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/30 15:20:19 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:27:08 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,26 +157,6 @@ void parse_word_tokens(t_command *cmd, t_tokens **tokens)
     }
 }
 
-void	parse_redirection_tokens(t_command *cmd, t_tokens **tokens)
-{
-	t_token_type	type;
-
-	while (*tokens)
-	{
-		if ((*tokens)->type == T_GREAT || (*tokens)->type == T_DGREAT
-			|| (*tokens)->type == T_LESS || (*tokens)->type == T_DLESS)
-		{
-			type = (*tokens)->type;
-			*tokens = (*tokens)->next;
-			if (*tokens && (*tokens)->type == T_WORD)
-			{
-				set_redirection(cmd, type, (*tokens)->value);
-				*tokens = (*tokens)->next;
-			}
-		}
-		else
-		{
-			break ;
 		}
 	}
 }
