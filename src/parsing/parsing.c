@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/31 22:54:39 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/08/31 23:03:52 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,3 +280,13 @@ void	print_commands(t_command *cmd)
 		cmd = cmd->next;
 	}
 }
+
+
+// -------infinity loop--------
+//  sad dsd ads | fsdf sdfs > a
+
+// ---------no output----------
+//	ls | grep A
+
+// ------incomplete list-------
+//	cat << EOF grep test
