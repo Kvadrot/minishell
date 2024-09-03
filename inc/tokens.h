@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/30 20:14:27 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:52:40 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,17 @@ typedef struct s_tokens
 	t_command		*commands;
 	struct s_tokens	*next;
 }					t_tokens;
+
+typedef enum e_parse_err
+{
+	E_MEMORY = 1,
+	E_SYNTAXERR
+}					t_parse_err;
+
+typedef struct s_parse_error
+{
+	t_parse_err		type;
+	char			*str;
+}					t_parse_error;
 
 #endif

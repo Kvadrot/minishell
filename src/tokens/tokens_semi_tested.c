@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_semi_tested.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/30 13:59:47 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:52:24 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 	token->value = (char *)malloc(i + 1);
 	// if (!token->value)
 		// return not sufficient memory error
-	strncpy(token->value, input, i);
+	ft_strncpy(token->value, input, i);
 	token->value[i] = '\0';
 	token->type = type;
 	return (token);
