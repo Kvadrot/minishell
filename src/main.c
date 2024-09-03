@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/31 18:30:50 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:35:48 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,33 @@ void	minishell_loop(t_data *minishell)
 	{
 		minishell->tokens = NULL;
 		minishell->input = readline(PROMPT);
+		if (ft_input_is_valid(minishell->input) == false) //initial valisdation
+		{
+			//ERROR Occured
+			//TODO: free alocated mem, continue reading from line
+			printf("Mini_hell: syntax error\n");
+		}
 		init_tokens(minishell);
-		check_syntax(minishell->tokens);
-		// break ;
-		minishell->commands = parse_tokens(minishell->tokens);
-		minishell->commands = NULL;
-		// while (minishell->tokens != NULL)
-		// {
-		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
-		// 	minishell->tokens = minishell->tokens->next;
-		// }
-		// seg fault here (no input given)
-		ft_input_is_valid(minishell->input);
+		if (validate_tokens(minishell->tokens) < 0)
+		{
+			//ERROR Occured
+			// printing is inside the validate_tokens func
+			//TODO: free alocated mem, continue reading from line
+			//free()
+			// break;
+		}
+
+		// minishell->commands = parse_tokens(minishell->tokens);
+		// minishell->commands = NULL;
+
+		//Uncomment to Test Tokens
+//=================================================================================
+		while (minishell->tokens != NULL)
+		{
+			printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+			minishell->tokens = minishell->tokens->next;
+		}
+//=================================================================================
 	}
 }
 

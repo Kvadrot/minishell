@@ -3,57 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/03 13:40:48 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:34:11 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	check_syntax(t_tokens *tokens)
-{
-	t_tokens	*current;
-	t_tokens	*previous;
-
-	current = tokens;
-	previous = NULL;
-	while (current)
-	{
-		if (current->type == T_PIPE)
-		{
-			if (!previous || previous->type == T_PIPE)
-			{
-				printf("minishell: syntax error near unexpected token `%s'\n",
-					current->value);
-				return (0);
-			}
-		}
-		else if (current->type == T_GREAT || current->type == T_DGREAT
-			|| current->type == T_LESS || current->type == T_DLESS)
-		{
-			if (!current->next || current->next->type == T_PIPE)
-			{
-				if (current->next)
-					printf("minishell: syntax error near unexpected token `newline'\n");
-				else
-					printf("minishell: syntax error near unexpected token `newline'\n");
-				return (0);
-			}
-		}
-		previous = current;
-		current = current->next;
-	}
-	if (previous && (previous->type == T_PIPE || previous->type == T_GREAT
-			|| previous->type == T_DGREAT || previous->type == T_LESS
-			|| previous->type == T_DLESS))
-	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
-		return (0);
-	}
-	return (1);
-}
 
 t_command	*new_command(void);
 t_command	*handle_redirection_token(t_command *cmd, t_tokens **tokens);
