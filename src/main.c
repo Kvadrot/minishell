@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/03 15:51:54 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:06:05 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	minishell_loop(t_data *minishell)
 {
 	while (1)
 	{
+		minishell->tokens = NULL;
 		minishell->input = readline(PROMPT);
 		if (minishell->input == NULL) {
             ft_putendl_fd("\nCaught EOF (Ctrl+D)\n", STDOUT_FILENO); // diagnostics only delete before realase EOF
@@ -29,12 +30,14 @@ void	minishell_loop(t_data *minishell)
         }
 		init_tokens(minishell);
 		check_syntax(minishell->tokens);
-
-		while (minishell->tokens != NULL)
-		{
-			printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
-			minishell->tokens = minishell->tokens->next;
-		}
+		// break ;
+		minishell->commands = parse_tokens(minishell->tokens);
+		minishell->commands = NULL;
+		// while (minishell->tokens != NULL)
+		// {
+		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+		// 	minishell->tokens = minishell->tokens->next;
+		// }
 		// seg fault here (no input given)
 		ft_input_is_valid(minishell->input);
 	}

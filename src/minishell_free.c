@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 20:12:35 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/08/22 21:04:57 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:06:00 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void minishell_free(t_data *minishell, int flag)
 		{
 			ft_putendl_fd("\ninside while, freeing pointer\n", STDOUT_FILENO);
 			tmp = minishell->tracker;
-			minishell->tracker = minishell->tracker->next;
+			minishell->tracker = (minishell->tracker->next);
 			free(tmp->content);
 			free(tmp);
 		}

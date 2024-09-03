@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 18:02:50 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/29 18:17:45 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:12:17 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_syntax_error(t_parse_err error_type, const char *near_token)
 		printf("bash: unknown error\n");
 }
 
-int	check_syntax(t_tokens *tokens)
+/* int	check_syntax(t_tokens *tokens)
 {
 	t_tokens	*current = tokens;
 	t_tokens	*prev = NULL;
@@ -58,4 +58,4 @@ int	check_syntax(t_tokens *tokens)
 	}
 
 	return (0);
-}
+} */

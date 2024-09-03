@@ -6,12 +6,16 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/03 15:52:40 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:57:29 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
+
+# define MAX_ARGS 128
+
+# include "minishell.h"
 
 typedef enum e_token_type
 {
