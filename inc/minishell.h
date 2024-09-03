@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/08/31 18:33:24 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:34:31 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <termios.h>
 # include <unistd.h>
 
-# define PROMPT "MDshell > "
+# define PROMPT "Mini_hell > "
 
 // DRBUG_FIELD
 // DELETE ME befor release
@@ -71,6 +71,7 @@ void				print_environment(t_env *node);
 
 // tokens
 void				init_tokens(t_data *minishell);
+int					validate_tokens(t_tokens *tokens);
 
 //	new potential libft function
 char				*ft_strncpy(char *dest, char *src, int num);
@@ -78,6 +79,5 @@ void				ft_skip_whitespace(char **s);
 bool				ft_is_whitespace(char c);
 
 t_command			*parse_tokens(t_tokens *tokens);
-int					check_syntax(t_tokens *tokens);
 
 #endif

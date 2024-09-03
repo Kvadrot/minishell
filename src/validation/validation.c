@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:52:26 by itykhono          #+#    #+#             */
-/*   Updated: 2024/08/30 13:58:25 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:24:46 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ bool	ft_input_is_valid(char *input_str)
 	i = 0;
 
 	if (input_str[0] == '|')
-		return (false);
-	else if (input_str[ft_strlen(input_str) - 1] == '|')
 		return (false);
 	else if (ft_quotes_are_closed(input_str, &i) == false)
 		return (false);
