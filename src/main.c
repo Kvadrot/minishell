@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/03 16:06:05 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/03 22:07:47 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,38 @@
 
 void	minishell_loop(t_data *minishell)
 {
+	char	*buff;
+
 	while (1)
 	{
 		minishell->tokens = NULL;
 		minishell->input = readline(PROMPT);
-		if (minishell->input == NULL) {
-            ft_putendl_fd("\nCaught EOF (Ctrl+D)\n", STDOUT_FILENO); // diagnostics only delete before realase EOF
+		if (minishell->input == NULL)
+		{
+			ft_putendl_fd("\nCaught EOF (Ctrl+D)\n", STDOUT_FILENO);
+			// diagnostics only delete before realase EOF
 			minishell_free(minishell, YES);
-            break;
-        }
+			break ;
+		}
 		init_tokens(minishell);
 		check_syntax(minishell->tokens);
 		// break ;
 		minishell->commands = parse_tokens(minishell->tokens);
-		minishell->commands = NULL;
 		// while (minishell->tokens != NULL)
 		// {
-		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+		// 	printf("%s = %d\n", minishell->tokens->value,
+		// minishell->tokens->type);
 		// 	minishell->tokens = minishell->tokens->next;
 		// }
 		// seg fault here (no input given)
 		ft_input_is_valid(minishell->input);
+		if (minishell->commands && minishell->commands->args[0]) // cd /nfs/homes/gbuczyns/Documents/CommonCore/level_4 >> asdas 
+		{
+			buff = minishell->commands->args[0];
+			if (ft_strcmp(buff, "cd") == 0)
+				md_cd(minishell->commands->args[1], minishell);
+		}
+		print_environment(minishell->envlist);
 	}
 }
 
@@ -60,9 +71,9 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	init_minishell(&minishell, env);
-	init_environment(&minishell.env, minishell.envir);
-	// print_environment(minishell.env);
-	environment_free_list(minishell.env);
+	init_environment(&minishell.envlist, minishell.envir);
+	// print_environment(minishell.envlist);
 	minishell_loop(&minishell);
+	// environment_free_list(minishell.envlist);
 	return (0);
 }

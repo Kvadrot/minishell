@@ -12,7 +12,10 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 OBJ_DIR2 = obj/tokens/
 OBJ_DIR3 = obj/validation/
-OBJ_DIR4 = obj/parsing/
+OBJ_DIR4 = obj/parsing/ 
+OBJ_DIR5 = obj/env/ 
+OBJ_DIR6 = obj/builtin/
+
 # Default sources
 SRC = main.c env.c \
 	tokens/error_handling.c \
@@ -20,6 +23,9 @@ SRC = main.c env.c \
 	tokens/tokens_utils.c \
 	validation/validation.c \
 	minishell_free.c\
+	builtin/cd.c \
+	env/env_utils.c \
+	garbage_colector.c \
 	parsing/parsing.c 
 
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
@@ -31,6 +37,8 @@ $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR2)
 	@mkdir -p $(OBJ_DIR3)
 	@mkdir -p $(OBJ_DIR4)
+	@mkdir -p $(OBJ_DIR5)
+	@mkdir -p $(OBJ_DIR6)
 	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
 	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $< -c -o $@
 

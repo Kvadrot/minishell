@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/03 13:40:48 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 22:01:51 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ t_command	*new_command(void)
 // Function to handle redirection tokens and return the updated command node
 t_command	*handle_redirection_token(t_command *cmd, t_tokens **tokens)
 {
+	t_tokens	*temp;
+	temp = *tokens;
 	if (*tokens && ((*tokens)->type == T_GREAT || (*tokens)->type == T_DGREAT))
 	{
 		if ((*tokens)->type == T_GREAT)
@@ -97,7 +99,7 @@ t_command	*handle_redirection_token(t_command *cmd, t_tokens **tokens)
 		}
 		else if ((*tokens)->type == T_DGREAT)
 		{
-			cmd->output_append = strdup((*tokens)->next->value);
+			cmd->output_append = ft_strdup(temp->next->value);
 		}
 	}
 	else if (*tokens && ((*tokens)->type == T_LESS
@@ -105,7 +107,7 @@ t_command	*handle_redirection_token(t_command *cmd, t_tokens **tokens)
 	{
 		if ((*tokens)->type == T_LESS)
 		{
-			cmd->input_redirection = strdup((*tokens)->next->value);
+			cmd->input_redirection = ft_strdup((*tokens)->next->value);
 		}
 		else if ((*tokens)->type == T_DLESS)
 		{

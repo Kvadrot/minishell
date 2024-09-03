@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/03 16:12:20 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/03 21:25:10 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define PROMPT "MDshell > "
 # define YES 1
 # define NO 0
+# define ERROR -1
+# define SUCCESS 0
 
 // DRBUG_FIELD
 // DELETE ME befor release
@@ -56,7 +58,7 @@ typedef struct s_data
 	int				stdin;
 	int				stdout;
 	t_tokens		*tokens;
-	t_env			*env;
+	t_env			*envlist;
 	t_command		*commands;
 	t_llist			*tracker;
 	struct termios	terminal;
@@ -94,5 +96,12 @@ bool				ft_is_whitespace(char c);
 t_command			*parse_tokens(t_tokens *tokens);
 
 int					check_syntax(t_tokens *tokens);
+int					md_cd(char *path, t_data *minishell);
+void				ft_update_env_list(char *key, char *value, bool yes,
+						t_data *minishell);
+char				*ft_get_envlst_val(char *key, t_data *minishell);
+void				*gc_collector(void *list, bool free);
+void				ft_envlstadd_back(t_env *new, t_data *minishell);
+void				ft_lstclear(t_list **lst, void (*del)(void *));
 
 #endif
