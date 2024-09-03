@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/31 23:03:52 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/03 13:40:48 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ t_command	*parse_tokens(t_tokens *tokens)
 		// Handle pipe (T_PIPE)
 		else if (tokens && tokens->type == T_PIPE)
 		{
+			// this should never be the case
 			if (cmd == NULL)
 			{
 				cmd = new_command();
@@ -286,7 +287,10 @@ void	print_commands(t_command *cmd)
 //  sad dsd ads | fsdf sdfs > a
 
 // ---------no output----------
+//	only T_WORD 
 //	ls | grep A
+//	echo
 
 // ------incomplete list-------
-//	cat << EOF grep test
+//	cat << EOF grep test dsada
+
