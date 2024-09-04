@@ -6,16 +6,13 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/03 21:25:10 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/04 20:25:11 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../lib_ft/libft.h"
-# include "parsing.h"
-# include "tokens.h"
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -24,6 +21,11 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+
+# include "../lib_ft/libft.h"
+# include "parsing.h"
+# include "tokens.h"
+# include "cmd.h"
 
 # define PROMPT "MDshell > "
 # define YES 1
