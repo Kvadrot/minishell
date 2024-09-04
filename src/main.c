@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/09/03 16:35:48 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:11:46 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ void	minishell_loop(t_data *minishell)
 			// break;
 		}
 
-		// minishell->commands = parse_tokens(minishell->tokens);
-		// minishell->commands = NULL;
+		minishell->commands = parse_tokens(minishell->tokens);
+		minishell->commands = NULL;
 
 		//Uncomment to Test Tokens
-//=================================================================================
-		while (minishell->tokens != NULL)
-		{
-			printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
-			minishell->tokens = minishell->tokens->next;
-		}
-//=================================================================================
+// =================================================================================
+		// while (minishell->tokens != NULL)
+		// {
+		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+		// 	minishell->tokens = minishell->tokens->next;
+		// }
+// =================================================================================
 	}
 }
 
@@ -70,7 +70,11 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_minishell(&minishell, env);
 	init_environment(&minishell.env, minishell.envir);
+		//Uncomment to CheckUp ENV
+//=================================================================================
 	// print_environment(minishell.env);
+//=================================================================================
+
 	environment_free_list(minishell.env);
 	minishell_loop(&minishell);
 	return (0);

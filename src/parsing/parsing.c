@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/03 16:34:11 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:36:09 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,6 @@ t_command	*parse_tokens(t_tokens *tokens)
 	cmd_list = NULL;
 	cmd_head = NULL;
 	cmd = new_command();
-	cmd_head = NULL;
-	cmd_list = NULL;
 	while (tokens)
 	{
 		if (cmd->input_redirection || cmd->output_redirection
@@ -141,6 +139,7 @@ t_command	*parse_tokens(t_tokens *tokens)
 				cmd_head = cmd_list;
 			cmd = new_command();
 		}
+
 		// Handle redirection tokens first
 		if (tokens && tokens->type == T_WORD)
 		{
@@ -165,6 +164,7 @@ t_command	*parse_tokens(t_tokens *tokens)
 			tokens = tokens->next; // Move past the pipe token
 		}
 	}
+
 	// Set the head of the list if it's the first command
 	print_commands(cmd_head);
 	return (cmd_head);
@@ -206,37 +206,38 @@ void	print_commands(t_command *cmd)
 {
 	while (cmd)
 	{
-		printf("Command:\n");
+		ft_printf("Command:\n");
 		if (cmd->args)
 		{
 			for (int i = 0; cmd->args[i] != NULL; i++)
 			{
-				printf("  Arg[%d]: %s\n", i, cmd->args[i]);
+				ft_printf("  Arg[%d]: %s\n", i, cmd->args[i]);
 			}
 		}
 		if (cmd->input_redirection)
 		{
-			printf("  Input Redirection: %s\n", cmd->input_redirection);
+			ft_printf("  Input Redirection: %s\n", cmd->input_redirection);
 		}
 		if (cmd->output_redirection)
 		{
-			printf("  Output Redirection: %s\n", cmd->output_redirection);
+			ft_printf("  Output Redirection: %s\n", cmd->output_redirection);
 		}
 		if (cmd->output_append)
 		{
-			printf("  Output Append: %s\n", cmd->output_append);
+			ft_printf("  Output Append: %s\n", cmd->output_append);
 		}
 		if (cmd->heredoc_delimiter)
 		{
-			printf("  Heredoc Delimiter: %s\n", cmd->heredoc_delimiter);
+			ft_printf("  Heredoc Delimiter: %s\n", cmd->heredoc_delimiter);
 		}
 		if (cmd->pipe)
 		{
-			printf("  Pipe: %d\n", cmd->pipe);
+			ft_printf("  Pipe: %d\n", cmd->pipe);
 		}
-		printf("\n");
+		ft_printf("\n");
 		cmd = cmd->next;
 	}
+
 }
 
 
