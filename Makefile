@@ -8,39 +8,20 @@ CFLAGS = -g
 HEADERS = -I./lib_ft -I./lib_ft_printf -I./inc
 LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 
-SRC_DIR = src/
+
+# Object directory
 OBJ_DIR = obj/
-OBJ_DIR2 = obj/tokens/
-OBJ_DIR3 = obj/validation/
-OBJ_DIR4 = obj/parsing/ 
-OBJ_DIR5 = obj/env/ 
-OBJ_DIR6 = obj/builtin/
 
-# Default sources
-SRC = main.c env.c \
-	tokens/error_handling.c \
-	tokens/tokens_semi_tested.c \
-	tokens/tokens_utils.c \
-	validation/validation.c \
-	minishell_free.c\
-	builtin/cd.c \
-	env/env_utils.c \
-	garbage_colector.c \
-	parsing/parsing.c 
+# Source files
+SRCS = src/main.c \
+		src/builtin/cmd.c \
+		src/env/env_utils.c src/env/env.c \
+		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \
+		src/parsing/parsing.c src/parsing/parsing_utils.c\
+		src/tokens/error_handling.c src/tokens/tokens_semi_tested.c src/tokens/tokens_utils.c \
+		src/validation/validation.c
 
-SRCS = $(addprefix ${SRC_DIR}, ${SRC})
-#OBJS = $(SRCS:.c=.o)
- OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
-# Rule to compile .c files into .o files.
-$(OBJ_DIR)%.o:  $(SRC_DIR)%.c
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR2)
-	@mkdir -p $(OBJ_DIR3)
-	@mkdir -p $(OBJ_DIR4)
-	@mkdir -p $(OBJ_DIR5)
-	@mkdir -p $(OBJ_DIR6)
-	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
-	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $< -c -o $@
+OBJS = $(SRCS:.c=.o)
 
 # Program Name
 NAME = minishell
@@ -54,8 +35,22 @@ FTPRINTF = ./lib_ft_printf/libftprintf.a
 # Default rule
 all: $(LIBFT) $(FTPRINTF) $(NAME)
 
+#print:
+#	clear
+#	@echo $(OBJS)
+#	@echo "\n"
+#	@echo $(SRCS)
+
+
+	
+#$(LIBFT) $(FTPRINTF) $(NAME)
 $(NAME): $(OBJS)
+	clear
+	@echo "Linking objects into executable..."
 	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $(OBJS) -o $(NAME) $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) -c $< -o $@ 
 
 # Make lib_ft
 $(LIBFT):

@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/30 20:05:29 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:27:51 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define MAX_TOKENS 100
 
-# include "minishell.h"
 
 typedef struct s_command
 {

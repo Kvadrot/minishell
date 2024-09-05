@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/04 20:40:16 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:27:03 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ void	runcmd(struct s_cmd *cmd)
 {
 	if (cmd == 0)
 		exit(1);
-
 	if (cmd->type == 0)
 		exit(1);
-
 	if (cmd->type == EXEC)
 		do_exec(cmd);
 	else if (cmd->type == REDIR)

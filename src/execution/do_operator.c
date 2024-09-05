@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   do_operator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/04 20:22:41 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:38:41 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	do_redirect(t_cmd *cmd)
 void	do_exec(t_cmd *cmd)
 {
 	int			p[2];
-	pid_t		pid_l;
-	pid_t		pid_r;
 	t_execcmd	*ecmd;
 
 	ecmd = (struct execcmd *)cmd;

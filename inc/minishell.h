@@ -6,14 +6,19 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/04 20:25:11 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:22:45 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../lib_ft/libft.h"
+# include "cmd.h"
+# include "parsing.h"
+# include "tokens.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -21,11 +26,6 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-
-# include "../lib_ft/libft.h"
-# include "parsing.h"
-# include "tokens.h"
-# include "cmd.h"
 
 # define PROMPT "MDshell > "
 # define YES 1
@@ -105,5 +105,18 @@ char				*ft_get_envlst_val(char *key, t_data *minishell);
 void				*gc_collector(void *list, bool free);
 void				ft_envlstadd_back(t_env *new, t_data *minishell);
 void				ft_lstclear(t_list **lst, void (*del)(void *));
+int					peek(char **ps, char *es, char *toks);
+void				panic(char *s);
+t_cmd		*nulterminate(t_cmd *cmd);
+int					gettoken(char **ps, char *es, char **q, char **eq);
+
+// execution
+t_cmd		*execcmd(void);
+t_cmd		*redircmd(t_cmd *subcmd, char *file, char *efile,
+						int mode, int fd);
+t_cmd	*pipecmd(t_cmd *left, t_cmd *right);
+t_cmd	*listcmd(t_cmd *left, t_cmd *right);
+t_cmd	*backcmd(t_cmd *subcmd);
+
 
 #endif

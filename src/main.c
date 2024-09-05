@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/03 22:07:47 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:25:29 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	minishell_loop(t_data *minishell)
 			break ;
 		}
 		init_tokens(minishell);
-		check_syntax(minishell->tokens);
+		// check_syntax(minishell->tokens);
 		// break ;
-		minishell->commands = parse_tokens(minishell->tokens);
+		// minishell->commands = parse_tokens(minishell->tokens);
 		// while (minishell->tokens != NULL)
 		// {
 		// 	printf("%s = %d\n", minishell->tokens->value,
