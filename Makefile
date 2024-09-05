@@ -12,9 +12,12 @@ LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 # Object directory
 OBJ_DIR = obj/
 
+# src/builtin/ft_append.c 
+
 # Source files
 SRCS = src/main.c \
-		src/builtin/cmd.c \
+		src/builtin/cd.c \
+		src/cmd/cmd.c \
 		src/env/env_utils.c src/env/env.c \
 		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \
 		src/parsing/parsing.c src/parsing/parsing_utils.c\
