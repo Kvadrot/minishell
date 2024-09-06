@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/06 18:16:11 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/06 19:46:51 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	whitespace[] = " \t\r\n\v";
 char	symbols[] = "<|>&;()";
 
-// Function updates *ps to point to the next non-whitespace character in the string.
-// Returns true when when *s is in toks, false otherwise.
+// Returns true when when *s is in toks.
+// Function updates *ps to point to the next non-whitespace character.
 int	peek(char **ps, char *es, char *toks)
 {
 	char	*s;

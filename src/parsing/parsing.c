@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/06 17:54:50 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/06 19:49:55 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,18 +128,12 @@ t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es) //
 		tok = gettoken(ps, es, 0, 0);
 		if (gettoken(ps, es, &q, &eq) != 'a')
 			panic("missing file for redirection");
-		switch (tok)
-		{
-		case '<':
+		if (tok == '<')
 			cmd = redircmd(cmd, q, eq, O_RDONLY, 0);
-			break ;
-		case '>':
+		else if('>')
 			cmd = redircmd(cmd, q, eq, O_WRONLY | O_CREAT, 1);
-			break ;
-		case '+': // >>
+		else if ('+')
 			cmd = redircmd(cmd, q, eq, O_WRONLY | O_CREAT, 1);
-			break ;
-		}
 	}
 	return (cmd);
 }
