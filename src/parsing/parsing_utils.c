@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/06 19:46:51 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/06 20:53:50 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	panic(char *s)
 
 t_cmd	*nulterminate(t_cmd *cmd)
 {
-	int				i;
+	int			i;
 	t_backcmd	*bcmd;
 	t_execcmd	*ecmd;
 	t_listcmd	*lcmd;
@@ -75,13 +75,12 @@ t_cmd	*nulterminate(t_cmd *cmd)
 	return (cmd);
 }
 
-/* 
+/*
 ** Function gettoken returns the type of the token found in the string.
 ** It also updates the pointer to the string to point to the next token.
 ** It also updates the pointers to the beginning and end of the token.
 ** It returns the type of the token found.
- */
-
+*/
 int	gettoken(char **ps, char *es, char **q, char **eq)
 {
 	char *s;
@@ -93,32 +92,34 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	if (q)
 		*q = s;
 	ret = *s;
-	switch (*s)
-	{
-	case 0:
-		break ;
-	case '|':
-	case '(':
-	case ')':
-	case ';':
-	case '&':
-	case '<':
+
+	if (*s == 0)
+		return (0);
+	else if (peek(&s, es, "|();&"))
 		s++;
-		break ;
-	case '>':
+	else if (*s == '>')
+	{
 		s++;
 		if (*s == '>')
 		{
 			ret = '+';
 			s++;
 		}
-		break ;
-	default:
-		ret = 'a';
-		while (s < es && !strchr(whitespace, *s) && !strchr(symbols, *s))
-			s++;
-		break ;
 	}
+	else if (*s == '<')
+	{
+		s++;
+		if (*s == '<')
+		{
+			ret = '-';
+			s++;
+		}
+	}
+	else
+		ret = 'a';
+	
+	while (s < es && !strchr(whitespace, *s) && !strchr(symbols, *s))
+		s++;
 	if (eq)
 		*eq = s;
 
