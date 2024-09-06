@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/05 18:14:49 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:54:50 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_cmd	*parsecmd(char *s);
-t_cmd	*parseline(char **ps, char *es);
-t_cmd	*parsepipe(char **ps, char *es);
-t_cmd	*parseexec(char **ps, char *es);
-t_cmd	*parseblock(char **ps, char *es);
-t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es);
+
 
 t_cmd	*parsecmd(char *s)
 {
@@ -67,6 +62,16 @@ t_cmd	*parsepipe(char **ps, char *es)
 	return (cmd);
 }
 
+// 1 function look for block to parse
+// 2 function creaate execcmd struct
+// 3 function look for redirections and add previous execcmd as subcmd if redirection is found
+// 4 while there is no end of block pipe expander or semicolon, look for next string to put to argv
+// 4a add string to argv
+// 4b check if there is too many args in argv
+// 4c look for redirections and add previous execcmd as subcmd if redirection is found
+// 5 function put 0 terminate argv and eargv tables
+// 6 return execcmd struct
+
 t_cmd	*parseexec(char **ps, char *es)
 {
 	t_execcmd	*cmd;
@@ -76,11 +81,11 @@ t_cmd	*parseexec(char **ps, char *es)
 	int tok, argc;
 	if (peek(ps, es, "("))
 		return (parseblock(ps, es));
-	ret = execcmd();
-	cmd = (t_execcmd *)ret;
+	ret = ft_init_exec_cmd();  // ret is general return type
+	cmd = (t_execcmd *)ret;		// need to be casted to specific type // cmd stores current command
 	argc = 0;
-	ret = parseredirs(ret, ps, es);
-	while (!peek(ps, es, "|)&;"))
+	ret = parseredirs(ret, ps, es);  // parse redirections takes previous command and put it to redirections comand if redirection found 
+	while (!peek(ps, es, "|)&;")) // while there is no pipe, end of block, semicolon or ampersand
 	{
 		if ((tok = gettoken(ps, es, &q, &eq)) == 0)
 			break ;
@@ -113,12 +118,12 @@ t_cmd	*parseblock(char **ps, char *es)
 	return (cmd);
 }
 
-t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es)
+t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es) // 
 {
 	int tok;
 	char *q, *eq;
 
-	while (peek(ps, es, "<>"))
+	while (peek(ps, es, "<>"))	// szuka czy jest < lub > w stringu
 	{
 		tok = gettoken(ps, es, 0, 0);
 		if (gettoken(ps, es, &q, &eq) != 'a')

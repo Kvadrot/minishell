@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/05 20:23:17 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:16:11 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,43 +37,50 @@ void	panic(char *s)
 t_cmd	*nulterminate(t_cmd *cmd)
 {
 	int				i;
-	struct backcmd	*bcmd;
-	struct execcmd	*ecmd;
-	struct listcmd	*lcmd;
-	struct pipecmd	*pcmd;
-	struct redircmd	*rcmd;
+	t_backcmd	*bcmd;
+	t_execcmd	*ecmd;
+	t_listcmd	*lcmd;
+	t_pipecmd	*pcmd;
+	t_redircmd	*rcmd;
 
 	if (cmd == 0)
 		return (0);
 	switch (cmd->type)
 	{
 	case EXEC:
-		ecmd = (struct execcmd *)cmd;
+		ecmd = (t_execcmd *)cmd;
 		for (i = 0; ecmd->argv[i]; i++)
 			*ecmd->eargv[i] = 0;
 		break ;
 	case REDIR:
-		rcmd = (struct redircmd *)cmd;
+		rcmd = (t_redircmd *)cmd;
 		nulterminate(rcmd->cmd);
 		*rcmd->efile = 0;
 		break ;
 	case PIPE:
-		pcmd = (struct pipecmd *)cmd;
+		pcmd = (t_pipecmd *)cmd;
 		nulterminate(pcmd->left);
 		nulterminate(pcmd->right);
 		break ;
 	case LIST:
-		lcmd = (struct listcmd *)cmd;
+		lcmd = (t_listcmd *)cmd;
 		nulterminate(lcmd->left);
 		nulterminate(lcmd->right);
 		break ;
 	case BACK:
-		bcmd = (struct backcmd *)cmd;
+		bcmd = (t_backcmd *)cmd;
 		nulterminate(bcmd->cmd);
 		break ;
 	}
 	return (cmd);
 }
+
+/* 
+** Function gettoken returns the type of the token found in the string.
+** It also updates the pointer to the string to point to the next token.
+** It also updates the pointers to the beginning and end of the token.
+** It returns the type of the token found.
+ */
 
 int	gettoken(char **ps, char *es, char **q, char **eq)
 {

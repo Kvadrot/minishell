@@ -206,7 +206,7 @@ fork1(void)
 // Constructors
 
 struct s_cmd*
-execcmd(void)
+ft_init_exec_cmd(void)
 {
   struct execcmd *cmd;
 
@@ -445,7 +445,7 @@ parseexec(char **ps, char *es)
   if(peek(ps, es, "("))
     return parseblock(ps, es);
 
-  ret = execcmd();
+  ret = ft_init_exec_cmd();
   cmd = (struct execcmd*)ret;
 
   argc = 0;

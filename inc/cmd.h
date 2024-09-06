@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:08:04 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/04 20:30:33 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:04:44 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ typedef struct s_cmd {
   int type;
 }t_cmd;
 
-typedef struct execcmd {
+typedef struct s_execcmd {
   int type;
   char *argv[MAXARGS];
   char *eargv[MAXARGS];
 }t_execcmd;
 
-typedef struct redircmd {
+typedef struct s_redircmd {
   int type;
   struct s_cmd *cmd;
   char *file;
@@ -40,19 +40,19 @@ typedef struct redircmd {
   int fd;
 }t_redircmd;
 
-typedef struct pipecmd {
+typedef struct s_pipecmd {
   int type;
   struct s_cmd *left;
   struct s_cmd *right;
 }t_pipecmd;
 
-typedef struct listcmd {
+typedef struct s_listcmd {
   int type;
   struct s_cmd *left;
   struct s_cmd *right;
 }t_listcmd;
 
-typedef struct backcmd {
+typedef struct s_backcmd {
   int type;
   struct s_cmd *cmd;
 }t_backcmd;

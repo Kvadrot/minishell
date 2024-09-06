@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/05 20:22:45 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:37:53 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,20 @@ t_cmd		*nulterminate(t_cmd *cmd);
 int					gettoken(char **ps, char *es, char **q, char **eq);
 
 // execution
-t_cmd		*execcmd(void);
+t_cmd		*ft_init_exec_cmd(void);
 t_cmd		*redircmd(t_cmd *subcmd, char *file, char *efile,
 						int mode, int fd);
 t_cmd	*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd	*listcmd(t_cmd *left, t_cmd *right);
 t_cmd	*backcmd(t_cmd *subcmd);
+void runcmd(struct s_cmd *cmd);
+t_cmd	*parsecmd(char *s);
+t_cmd	*parseline(char **ps, char *es);
+t_cmd	*parsepipe(char **ps, char *es);
+t_cmd	*parseexec(char **ps, char *es);
+t_cmd	*parseblock(char **ps, char *es);
+t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es);
+pid_t fork1(void);
 
 
 #endif
