@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/07 17:09:15 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/07 20:07:51 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ int	peek(char **ps, char *es, char *toks)
 	return (*s && strchr(toks, *s));
 }
 
-void	panic(char *s)
-{
-	printf("%s\n", s);
-	exit(1);
-}
 
 t_cmd	*nulterminate(t_cmd *cmd)
 {

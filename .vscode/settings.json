@@ -3,6 +3,9 @@
 		"1": "c",
 		"minishell.h": "c",
 		"libft.h": "c",
-		"struct_iovec.h": "c"
+		"struct_iovec.h": "c",
+		"ft_printf.h": "c",
+		"features.h": "c",
+		"cdefs.h": "c"
 	}
 }

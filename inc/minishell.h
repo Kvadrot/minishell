@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/06 17:37:53 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/07 18:22:51 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@
 //========================================================================================//
 # include "../lib_ft_printf/ft_printf.h"
 //========================================================================================//
+
+#ifndef FCNTL_LINUX_H
+# define O_RDONLY 0
+# define O_WRONLY 1
+# define O_RDWR 2
+# define O_CREAT 64
+# define O_APPEND 1024
+# define O_TRUNC 512
+#endif
+
 
 typedef struct s_env
 {
@@ -125,6 +135,12 @@ t_cmd	*parseexec(char **ps, char *es);
 t_cmd	*parseblock(char **ps, char *es);
 t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es);
 pid_t fork1(void);
+void	do_exec(t_cmd *cmd);
+void	do_pipe(t_cmd *cmd);
+void	do_redirect(t_cmd *cmd);
+void	do_exec(t_cmd *cmd);
+void	do_list(t_cmd *cmd);
+void	do_back(t_cmd *cmd);
 
 
 #endif

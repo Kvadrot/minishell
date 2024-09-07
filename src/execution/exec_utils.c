@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_operator.c                                      :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/05 14:38:41 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/07 20:11:45 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+// #include <fcntl-linux.h>
 
 void	do_pipe(t_cmd *cmd)
 {
@@ -45,21 +47,55 @@ void	do_pipe(t_cmd *cmd)
 	return (0);
 }
 
+void	do_out_redirect(t_cmd *cmd)
+{
+	int			p[2];
+	pid_t		pid_l;
+	pid_t		pid_r;
+	t_redircmd	*rcmd;
+	int			fd;
+
+	rcmd = (struct redircmd *)cmd;
+	if (fork1() == 0)
+	{
+		close(rcmd->fd);
+		if ((fd = open(rcmd->file, O_WRONLY | O_CREAT, 0644)) < 0)
+		{
+			panic("open");
+		}
+		if (fork1() == 0)
+		{
+			runcmd(rcmd->cmd);
+		}
+		wait(0);
+		// printf("waiting for kid to finish\n");
+		close(fd);
+	}
+}
+
 void	do_redirect(t_cmd *cmd)
 {
 	int			p[2];
 	pid_t		pid_l;
 	pid_t		pid_r;
 	t_redircmd	*rcmd;
+	pid_t		pid;
 
 	rcmd = (struct redircmd *)cmd;
-	close(rcmd->fd);
-	if (open(rcmd->file, rcmd->mode) < 0)
+	if (pipe(p) < 0)
+		panic("pipe");
+	pid = fork1();
+	if (pid == 0)
 	{
-		printf("open %s failed\n", rcmd->file);
-		exit(1);
+		close(rcmd->fd);
+		if (open(rcmd->file, rcmd->mode) < 0)
+		{
+			printf("open %s failed\n", rcmd->file);
+			printf("\n");
+			exit(1);
+		}
+		runcmd(rcmd->cmd);
 	}
-	runcmd(rcmd->cmd);
 }
 
 void	do_exec(t_cmd *cmd)
@@ -71,7 +107,7 @@ void	do_exec(t_cmd *cmd)
 	if (ecmd->argv[0] == 0)
 		exit(1);
 	execve(ecmd->argv[0], ecmd->argv, 0);
-	printf("exec %s failed\n", ecmd->argv[0]);
+	printf("exec %s failed\n", ecmd->argv[0]);	
 }
 
 void	do_list(t_cmd *cmd)
@@ -96,6 +132,16 @@ void	do_back(t_cmd *cmd)
 	bcmd = (struct backcmd *)cmd;
 	if (fork1() == 0)
 		runcmd(bcmd->cmd);
+}
+
+pid_t	fork1(void)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		panic("fork");
+	return (pid);
 }
 
 /* void execute_pipe(t_command *command, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/06 19:51:04 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/07 20:11:30 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 
 #include "../inc/minishell.h"
 
-/* void minishell_loop(t_data *minishell)
+void minishell_loop(t_data *minishell)
 {
 	char *buff;
 
 	while (1)
 	{
-		minishell->tokens = NULL;
+		// minishell->tokens = NULL;
+		// printf("before prompt\n");
 		minishell->input = readline(PROMPT);
 		if (minishell->input == NULL)
 		{
@@ -32,7 +33,13 @@
 			minishell_free(minishell, YES);
 			break;
 		}
-		init_tokens(minishell);
+		// printf("after prompt\n");
+		
+		char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
+		runcmd(parsecmd(minishell->input));
+		// runcmd(parsecmd(buff));
+		free(minishell->input);
+		// init_tokens(minishell);
 		// check_syntax(minishell->tokens);
 		// break ;
 		// minishell->commands = parse_tokens(minishell->tokens);
@@ -43,17 +50,17 @@
 		// 	minishell->tokens = minishell->tokens->next;
 		// }
 		// seg fault here (no input given)
-		ft_input_is_valid(minishell->input);
-		if (minishell->commands && minishell->commands->args[0]) // cd /nfs/homes/gbuczyns/Documents/CommonCore/level_4 >> asdas
-		{
-			buff = minishell->commands->args[0];
-			if (ft_strcmp(buff, "cd") == 0)
-				md_cd(minishell->commands->args[1], minishell);
-		}
-		print_environment(minishell->envlist);
+		// ft_input_is_valid(minishell->input);
+		// if (minishell->commands && minishell->commands->args[0]) // cd /nfs/homes/gbuczyns/Documents/CommonCore/level_4 >> asdas
+		// {
+		// 	buff = minishell->commands->args[0];
+		// 	if (ft_strcmp(buff, "cd") == 0)
+		// 		md_cd(minishell->commands->args[1], minishell);
+		// }
+		// print_environment(minishell->envlist);
 	}
 }
- */
+
 
 void init_minishell(t_data *minishell, char **env)
 {
@@ -67,20 +74,17 @@ void init_minishell(t_data *minishell, char **env)
 
 int main(int argc, char **argv, char **env)
 {
-	// t_data	minishell;
+	t_data	minishell;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	char buff[] = "echo tav > test"; //>> tak.txt | ls > ls";
+	// char buff[] = "echo tav > test"; //>> tak.txt | ls > ls";
 
-	runcmd(parsecmd(buff));
-	while(1)
-	{};
-	// init_minishell(&minishell, env);
+	init_minishell(&minishell, env);
 	// init_environment(&minishell.envlist, minishell.envir);
 	// print_environment(minishell.envlist);
-	// minishell_loop(&minishell);
+	minishell_loop(&minishell);
 	// environment_free_list(minishell.envlist);
 	return (0);
 }

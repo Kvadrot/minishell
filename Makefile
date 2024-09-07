@@ -14,10 +14,13 @@ OBJ_DIR = obj/
 
 # src/builtin/ft_append.c 
 
+#src/cmd/cmd.c \
 # Source files
 SRCS = src/main.c \
 		src/builtin/cd.c \
-		src/cmd/cmd.c \
+		src/execution/exec.c \
+		src/execution/exec_utils.c \
+		src/error/error.c \
 		src/env/env_utils.c src/env/env.c \
 		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \
 		src/parsing/parsing.c src/parsing/parsing_utils.c\
