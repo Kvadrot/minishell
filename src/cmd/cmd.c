@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 18:18:23 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/07 17:33:54 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/07 19:07:56 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	runcmd(t_cmd *cmd)
 	}
 	else if (cmd->type == BUILTIN)
 	{
-		if (fork() == 0)
+		if (fork() == 0);
 			// function executing builtins
 	}
 	else if (cmd->type == OUTREDIR)
