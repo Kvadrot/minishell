@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 18:18:23 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/07 17:18:27 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/07 17:33:54 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,13 @@ void	runcmd(t_cmd *cmd)
 		ecmd = (t_execcmd *)cmd;
 		if (ecmd->argv[0] == 0)
 			exit(1);
-		
 		execve(ecmd->argv[0], ecmd->argv, 0);
 		printf("exec %s failed\n", ecmd->argv[0]);
+	}
+	else if (cmd->type == BUILTIN)
+	{
+		if (fork() == 0)
+			// function executing builtins
 	}
 	else if (cmd->type == OUTREDIR)
 	{
