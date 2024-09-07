@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 18:18:23 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/06 18:14:28 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/07 16:18:35 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void runcmd(t_cmd *cmd)
 	t_execcmd *ecmd;
 	t_listcmd *lcmd;
 	t_pipecmd *pcmd;
-	t_redircmd *rcmd;
+	t_redircmd *rcmd; int fd;
 
 	if (cmd == 0)
 		exit(1);
@@ -102,12 +102,15 @@ void runcmd(t_cmd *cmd)
 	{
 		rcmd = (t_redircmd *)cmd;
 		close(rcmd->fd);
-		if (open(rcmd->file, rcmd->mode) < 0)
+		if ((fd = open(rcmd->file, rcmd->mode)) < 0)
 		{
 			printf("open %s failed\n", rcmd->file);
 			exit(1);
 		}
+		chmod(rcmd->file, 0666);
+		dup2(fd, rcmd->fd);
 		runcmd(rcmd->cmd);
+		close(fd);
 	}
 
 	else if (cmd->type == LIST)
