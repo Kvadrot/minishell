@@ -2,6 +2,7 @@
 	"files.associations": {
 		"1": "c",
 		"minishell.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"struct_iovec.h": "c"
 	}
 }

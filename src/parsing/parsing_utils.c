@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/06 20:53:50 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/07 17:09:15 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ t_cmd	*nulterminate(t_cmd *cmd)
 		for (i = 0; ecmd->argv[i]; i++)
 			*ecmd->eargv[i] = 0;
 		break ;
-	case REDIR:
+	case OUTREDIR:
+		rcmd = (t_redircmd *)cmd;
+		nulterminate(rcmd->cmd);
+		*rcmd->efile = 0;
+		break ;
+	case INREDIR:
 		rcmd = (t_redircmd *)cmd;
 		nulterminate(rcmd->cmd);
 		*rcmd->efile = 0;
@@ -117,7 +122,7 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	}
 	else
 		ret = 'a';
-	
+
 	while (s < es && !strchr(whitespace, *s) && !strchr(symbols, *s))
 		s++;
 	if (eq)
