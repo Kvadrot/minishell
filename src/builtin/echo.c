@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/07 19:05:58 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/07 20:04:16 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ int	do_echo(t_execcmd builtin)
 
 void do_builtin(t_execcmd * builtins)
 {
-	// check if the command exists with /path
+	// before getting into this function check if the command exists with /path
+	// use function check_builtin 
 	if (builtins->type == ECHO)
 		do_echo(builtins);
 	else if (builtins->type == CD)
