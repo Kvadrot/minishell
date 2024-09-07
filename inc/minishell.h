@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/03 16:34:31 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/07 12:42:44 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 # include "../lib_ft/libft.h"
-# include "parsing.h"
 # include "tokens.h"
+# include "parsing.h"
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -78,6 +78,8 @@ char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
 bool				ft_is_whitespace(char c);
 
-t_command			*parse_tokens(t_tokens *tokens);
+
+
+
 
 #endif

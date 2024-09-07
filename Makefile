@@ -15,9 +15,12 @@ OBJ_DIR3 = obj/validation/
 OBJ_DIR4 = obj/parsing/
 # Default sources
 SRC = main.c env.c \
+	parsing/parsing_utils.c \
 	parsing/parsing.c \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \
-	validation/validation.c 
+	validation/validation.c \
+	
+
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 #OBJS = $(SRCS:.c=.o)
  OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
