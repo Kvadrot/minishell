@@ -3,80 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/07 20:14:04 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/07 20:33:08 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-typedef struct s_execcmd
+// builtins functionality
+int	check_flags(t_cmd *cmd, bool *new_line)
 {
-	int		type;
-	char	*argv[MAXARGS];
-	char	*eargv[MAXARGS];
-	char	*paths;
-	char	*flag;
-}			t_execcmd;
+	int			i;
+	t_bcmd	*bcmd;
 
-char	**get_paths(char *path_env)
-{
-	int		paths_count;
-	int		i;
-	char	**paths;
-
-	if (path_env == NULL)
-		return (NULL);
-	paths_count = 1;
-	i = -1;
-	while (path_env[++i] != '\0')
-		if (path_env[i] == ':')
-			paths_count++;
-	paths = malloc((paths_count + 1) * sizeof(char *));
-	if (paths == NULL)
-		return (NULL);
-	paths = ft_split(path_env, ":");
-	return (paths);
-}
-
-bool	check_builtin(t_cmd *execcmd, char **paths)
-{
-	int		i;
-	char	*full_path;
-	int		path_len;
-	int		cmd_len;
-
-	i = 0;
-	full_path = NULL;
-	if (cmd == NULL || cmd->argv[0] == NULL || paths == NULL)
-		return (false);
-	while (paths[i] != NULL)
-	{
-		path_len = strlen(paths[i]);
-		cmd_len = strlen(cmd->argv[0]);
-		full_path = malloc(path_len + 1 + cmd_len + 1);
-		if (full_path == NULL)
-			return (false);
-		strcpy(full_path, paths[i]);
-		strcat(full_path, "/");
-		strcat(full_path, cmd->argv[0]);
-		if (access(full_path, X_OK) == 0)
-		{
-			free(full_path);
-			return (true);
-		}
-		free(full_path);
-		i++;
-	}
-	return (false);
-}
-
-int	check_flags(t_execcmd builtin, bool *new_line)
-{
-	int	i;
-
+	bcmd = (t_execcmd *)cmd;
 	i = 0;
 	if (builtin->flag)
 	{
@@ -93,7 +35,7 @@ int	check_flags(t_execcmd builtin, bool *new_line)
 	}
 	return (0);
 }
-
+// builtin echo
 int	do_echo(t_execcmd builtin)
 {
 	int		i;
