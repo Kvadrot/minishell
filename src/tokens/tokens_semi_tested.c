@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/03 16:31:27 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/08 16:35:28 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,17 @@ void	append_token(t_tokens **tokens, t_tokens *new_token)
 	t_tokens	*current;
 
 	if (*tokens == NULL)
+	{
+		new_token->prev = NULL;
 		*tokens = new_token;
+	}
 	else
 	{
 		current = *tokens;
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_token;
+		new_token->prev = current;
 	}
 	new_token->next = NULL;
 }

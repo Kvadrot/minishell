@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/07 12:27:06 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:46:59 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,6 @@ bool	ft_check_token_exists(t_tokens *tokens, t_token_type searchable_token)
 	return (false);
 }
 
-
-
-t_command	*ft_find_root(t_tokens *tokens);
-
-/**
- * @brief: looks for the first token due to prioritization:
- * 1) | left right
- * 2) > < >> << : left right
- * 3) Word : char **args
- * 
- * there are some special rules for filling left and right in redirections cases
- * @input: t_tokens **Tokens_list
- * @return: initialize CMD_node
-*/
-t_command	*ft_find_root(t_tokens *start_token)
-{
-	t_command		*branch;
-	// t_tokens		*temp_token;
-	t_tokens	*searchable_token;
-
-	searchable_token = ft_get_searchebale_token(start_token);
-
-	//TODO: switch initializing properties due to retured type
-	// if (searchable_token == T_WORD)
-	// {
-	// 	while (searchable_token)
-	// }
-
-	branch = init_branch(NULL, searchable_token->type, NULL, NULL);
-	return (branch);
-}
-
 /**
  * @brief: Recursive func that converts list of tokens into AST
  * each AST_node = t_command
@@ -82,17 +50,25 @@ t_command	*ft_find_root(t_tokens *start_token)
  * @input: t_tokens **Tokens_list, pointer to the node that limits our func
  * @return: AST - tree made from t_commands nods 
 */
-t_command	*parse_tokens(t_tokens *tokens)
+t_command	*parse_tokens(t_tokens *start_token, t_tokens *end_token)
 {
-	// t_tokens	*temp_token;
+	t_tokens	*temp_token;
+	t_tokens	*root_token;
 	t_command	*root_branch;
 
-	// temp_token = tokens;
-	//TODO: ft_find_root(tokens )
-	// func that searches for root token keeping prioritized sequence: 1) PIPE 2) first redir 3) WORD
-	root_branch = ft_find_root(tokens);
-	ft_printf("%i", root_branch->type);
-	//
+	temp_token = start_token;
+	//TODO:
+	root_token = ft_find_root_token(start_token, end_token);
+	root_branch = init_branch(root_token->value, root_token->type, NULL, NULL);
+	if (root_token != T_WORD)
+	{
+		// TODO:
+		// finish parsing for left side of pipe | redir
+		// root_branch->left = parse_tokens(root_token, NULL);
+		root_branch->right = parse_tokens(root_token, NULL);
+		root_branch->right = NULL;
+	}
+
 	return (root_branch);
 }
 

@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/07 12:19:42 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/08 16:34:14 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_tokens
 	t_token_type	type;
 	char			*value;
 	struct s_tokens	*next;
+	struct s_tokens *prev;
 }					t_tokens;
 
 #endif
