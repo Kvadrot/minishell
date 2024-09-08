@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/07 18:22:51 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/08 16:16:21 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@
 //========================================================================================//
 # include "../lib_ft_printf/ft_printf.h"
 //========================================================================================//
+# define FILE_CONTROL_G 0
 
-#ifndef FCNTL_LINUX_H
-# define O_RDONLY 0
-# define O_WRONLY 1
-# define O_RDWR 2
-# define O_CREAT 64
-# define O_APPEND 1024
-# define O_TRUNC 512
-#endif
-
+# ifndef FILE_CONTROL_G
+#  define O_RDONLY 0
+#  define O_WRONLY 1
+#  define O_RDWR 2
+#  define O_CREAT 64
+#  define O_APPEND 1024
+#  define O_TRUNC 512
+# endif
 
 typedef struct s_env
 {
@@ -117,30 +117,33 @@ void				ft_envlstadd_back(t_env *new, t_data *minishell);
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 int					peek(char **ps, char *es, char *toks);
 void				panic(char *s);
-t_cmd		*nulterminate(t_cmd *cmd);
+t_cmd				*nulterminate(t_cmd *cmd);
 int					gettoken(char **ps, char *es, char **q, char **eq);
 
 // execution
-t_cmd		*ft_init_exec_cmd(void);
-t_cmd		*redircmd(t_cmd *subcmd, char *file, char *efile,
-						int mode, int fd);
-t_cmd	*pipecmd(t_cmd *left, t_cmd *right);
-t_cmd	*listcmd(t_cmd *left, t_cmd *right);
-t_cmd	*backcmd(t_cmd *subcmd);
-void runcmd(struct s_cmd *cmd);
-t_cmd	*parsecmd(char *s);
-t_cmd	*parseline(char **ps, char *es);
-t_cmd	*parsepipe(char **ps, char *es);
-t_cmd	*parseexec(char **ps, char *es);
-t_cmd	*parseblock(char **ps, char *es);
-t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es);
-pid_t fork1(void);
-void	do_exec(t_cmd *cmd);
-void	do_pipe(t_cmd *cmd);
-void	do_redirect(t_cmd *cmd);
-void	do_exec(t_cmd *cmd);
-void	do_list(t_cmd *cmd);
-void	do_back(t_cmd *cmd);
-
+t_cmd				*ft_init_exec_cmd(void);
+t_cmd				*redircmd(t_cmd *subcmd, char *file, char *efile, int mode,
+						int fd);
+t_cmd				*pipecmd(t_cmd *left, t_cmd *right);
+t_cmd				*listcmd(t_cmd *left, t_cmd *right);
+t_cmd				*backcmd(t_cmd *subcmd);
+void				runcmd(struct s_cmd *cmd, t_data *minishell);
+t_cmd				*parsecmd(char *s);
+t_cmd				*parseline(char **ps, char *es);
+t_cmd				*parsepipe(char **ps, char *es);
+t_cmd				*parseexec(char **ps, char *es);
+t_cmd				*parseblock(char **ps, char *es);
+t_cmd				*parseredirs(t_cmd *cmd, char **ps, char *es);
+pid_t				fork1(void);
+void				do_exec(t_cmd *cmd, t_data *minishell);
+void				do_pipe(t_cmd *cmd, t_data *minishell);
+void				do_out_redirect(t_cmd *cmd, t_data *minishell);
+void				do_list(t_cmd *cmd, t_data *minishell);
+void				do_back(t_cmd *cmd, t_data *minishell);
+int					is_builtin(char **argv);
+void				ft_expand_dolar(char **argv, t_data *minishell);
+void				do_redirect(t_cmd *cmd, t_data *minishell);
+void				do_builtin(char **argv);
+int					ft_echo(char **argv);
 
 #endif

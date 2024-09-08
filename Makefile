@@ -18,6 +18,8 @@ OBJ_DIR = obj/
 # Source files
 SRCS = src/main.c \
 		src/builtin/cd.c \
+		src/builtin/builtin_utils.c \
+		src/builtin/echo.c \
 		src/execution/exec.c \
 		src/execution/exec_utils.c \
 		src/error/error.c \
@@ -51,7 +53,7 @@ all: $(LIBFT) $(FTPRINTF) $(NAME)
 	
 #$(LIBFT) $(FTPRINTF) $(NAME)
 $(NAME): $(OBJS)
-	clear
+#	clear
 	@echo "Linking objects into executable..."
 	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $(OBJS) -o $(NAME) $(LDFLAGS)
 

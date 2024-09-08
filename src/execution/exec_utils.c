@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/07 20:11:45 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/08 16:00:06 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 // #include <fcntl-linux.h>
 
-void	do_pipe(t_cmd *cmd)
+void	do_pipe(t_cmd *cmd, t_data *minishell)
 {
 	int			p[2];
 	pid_t		pid_l;
 	pid_t		pid_r;
 	t_pipecmd	*pcmd;
 
-	pcmd = (struct pipecmd *)cmd;
+	pcmd = (t_pipecmd *)cmd;
 	if (pipe(p) < 0)
 		panic("pipe");
 	if ((pid_l = fork1()) == 0)
@@ -30,7 +30,7 @@ void	do_pipe(t_cmd *cmd)
 		dup(p[1]);
 		close(p[0]);
 		close(p[1]);
-		runcmd(pcmd->left);
+		runcmd(pcmd->left, minishell);
 	}
 	if ((pid_r = fork1()) == 0)
 	{
@@ -38,24 +38,24 @@ void	do_pipe(t_cmd *cmd)
 		dup(p[0]);
 		close(p[0]);
 		close(p[1]);
-		runcmd(pcmd->right);
+		runcmd(pcmd->right, minishell);
 	}
 	close(p[0]);
 	close(p[1]);
 	wait(&pid_l);
 	wait(&pid_r);
-	return (0);
+	return ;
 }
 
-void	do_out_redirect(t_cmd *cmd)
+void	do_out_redirect(t_cmd *cmd, t_data *minishell)
 {
-	int			p[2];
-	pid_t		pid_l;
-	pid_t		pid_r;
+	// int			p[2];
+	// pid_t		pid_l;
+	// pid_t		pid_r;
 	t_redircmd	*rcmd;
 	int			fd;
 
-	rcmd = (struct redircmd *)cmd;
+	rcmd = (t_redircmd *)cmd;
 	if (fork1() == 0)
 	{
 		close(rcmd->fd);
@@ -65,7 +65,7 @@ void	do_out_redirect(t_cmd *cmd)
 		}
 		if (fork1() == 0)
 		{
-			runcmd(rcmd->cmd);
+			runcmd(rcmd->cmd, minishell);
 		}
 		wait(0);
 		// printf("waiting for kid to finish\n");
@@ -73,15 +73,15 @@ void	do_out_redirect(t_cmd *cmd)
 	}
 }
 
-void	do_redirect(t_cmd *cmd)
+void	do_redirect(t_cmd *cmd, t_data *minishell)
 {
 	int			p[2];
-	pid_t		pid_l;
-	pid_t		pid_r;
+	// pid_t		pid_l;
+	// pid_t		pid_r;
 	t_redircmd	*rcmd;
 	pid_t		pid;
 
-	rcmd = (struct redircmd *)cmd;
+	rcmd = (t_redircmd *)cmd;
 	if (pipe(p) < 0)
 		panic("pipe");
 	pid = fork1();
@@ -94,44 +94,50 @@ void	do_redirect(t_cmd *cmd)
 			printf("\n");
 			exit(1);
 		}
-		runcmd(rcmd->cmd);
+		runcmd(rcmd->cmd, minishell);
 	}
 }
 
-void	do_exec(t_cmd *cmd)
+void	do_exec(t_cmd *cmd, t_data *minishell)
 {
-	int			p[2];
+	// int			p[2];
 	t_execcmd	*ecmd;
 
-	ecmd = (struct execcmd *)cmd;
+	ecmd = (t_execcmd *)cmd;
 	if (ecmd->argv[0] == 0)
 		exit(1);
-	execve(ecmd->argv[0], ecmd->argv, 0);
-	printf("exec %s failed\n", ecmd->argv[0]);	
+	ft_expand_dolar(ecmd->argv, minishell);
+	if (is_builtin(ecmd->argv))
+		do_builtin(ecmd->argv);
+	else
+	{
+		execve(ecmd->argv[0], ecmd->argv, 0);
+		printf("exec %s failed\n", ecmd->argv[0]);
+	}
 }
 
-void	do_list(t_cmd *cmd)
+void	do_list(t_cmd *cmd, t_data *minishell)
 {
-	int			p[2];
+	// int			p[2];
 	pid_t		pid_l;
-	pid_t		pid_r;
+	// pid_t		pid_r;
 	t_listcmd	*lcmd;
 
-	lcmd = (struct listcmd *)cmd;
+	lcmd = (t_listcmd *)cmd;
 	if ((pid_l = fork1()) == 0)
-		runcmd(lcmd->left);
+		runcmd(lcmd->left, minishell);
 	wait(&pid_l);
-	runcmd(lcmd->right);
+	runcmd(lcmd->right, minishell);
 }
 
-void	do_back(t_cmd *cmd)
+void	do_back(t_cmd *cmd, t_data *minishell)
 {
-	int			pid;
+	// int			pid;
 	t_backcmd	*bcmd;
 
-	bcmd = (struct backcmd *)cmd;
+	bcmd = (t_backcmd *)cmd;
 	if (fork1() == 0)
-		runcmd(bcmd->cmd);
+		runcmd(bcmd->cmd, minishell);
 }
 
 pid_t	fork1(void)
@@ -142,6 +148,27 @@ pid_t	fork1(void)
 	if (pid == -1)
 		panic("fork");
 	return (pid);
+}
+
+void ft_expand_dolar(char **argv, t_data *minishell)
+{
+	int		i;
+	char	*value;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (argv[i][0] == '$')
+		{
+			value = ft_get_envlst_val(argv[i] + 1, minishell);
+			if (value)
+			{
+				free(argv[i]);
+				argv[i] = value;
+			}
+		}
+		i++;
+	}
 }
 
 /* void execute_pipe(t_command *command, t_data *data)

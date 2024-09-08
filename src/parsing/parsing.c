@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/06 21:07:44 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:39:09 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ t_cmd	*parsepipe(char **ps, char *es)
 * 5 function put 0 terminate argv and eargv tables
 * 6 return general cmd struct independly of type
 */
-t_cmd	*parseexec2(char **ps, char *es)
-{
-	t_execcmd	*cmd;
-	t_cmd		*ret;
+// t_cmd	*parseexec2(char **ps, char *es)
+// {
+// 	t_execcmd	*cmd;
+// 	t_cmd		*ret;
 
-	char *q, *eq;
-	int tok, argc;
-}
+// 	char *q, *eq;
+// 	int tok, argc;
+// }
 t_cmd	*parseexec(char **ps, char *es)
 {
 	t_execcmd	*cmd;

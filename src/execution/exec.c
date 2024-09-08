@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/07 20:11:08 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:34:38 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_cmd	*backcmd(t_cmd *subcmd)
 	return ((t_cmd *)cmd);
 }
 
-void	runcmd(struct s_cmd *cmd)
+void	runcmd(struct s_cmd *cmd, t_data *minishell)
 {
 	// printf("in run cmd\n");
 	if (cmd == 0)
@@ -80,17 +80,17 @@ void	runcmd(struct s_cmd *cmd)
 	if (cmd->type == 0)
 		exit(1);
 	if (cmd->type == EXEC)
-		do_exec(cmd);
+		do_exec(cmd, minishell);
 	else if (cmd->type == OUTREDIR)
-		do_out_redirect(cmd);
+		do_out_redirect(cmd, minishell);
 	else if (cmd->type == INREDIR)
-		do_redirect(cmd);
+		do_redirect(cmd, minishell);
 	else if (cmd->type == LIST)
-		do_list(cmd);
+		do_list(cmd, minishell);
 	else if (cmd->type == PIPE)
-		do_pipe(cmd);
+		do_pipe(cmd, minishell);
 	else if (cmd->type == BACK)
-		do_back(cmd);
+		do_back(cmd, minishell);
 	else
 		exit(1);
 	// printf("exit runcmd\n");

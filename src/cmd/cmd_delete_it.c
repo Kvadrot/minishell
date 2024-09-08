@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   cmd_delete_it.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 18:18:23 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/07 17:56:03 by gbuczyns         ###   ########.fr       */
+/*   Created: 2024/09/08 14:42:33 by gbuczyns          #+#    #+#             */
+/*   Updated: 2024/09/08 16:09:56 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,6 @@ t_cmd	*backcmd(t_cmd *subcmd)
 	return ((t_cmd *)cmd);
 }
 
-
-
-
-
-
-
-
-
-
-
 void	runcmd(t_cmd *cmd)
 {
 	int			p[2];
@@ -102,10 +92,20 @@ void	runcmd(t_cmd *cmd)
 		ecmd = (t_execcmd *)cmd;
 		if (ecmd->argv[0] == 0)
 			exit(1);
+<<<<<<< HEAD
 		if ((pid_l = fork1()) == 0)
 			execve(ecmd->argv[0], ecmd->argv, 0);
 		wait(0);
+=======
+		execve(ecmd->argv[0], ecmd->argv, 0);
+>>>>>>> builtin
 		printf("exec %s failed\n", ecmd->argv[0]);
+	}
+	else if (cmd->type == BUILTIN)
+	{
+		if (fork() == 0)
+			;
+		// function executing builtins
 	}
 	else if (cmd->type == OUTREDIR)
 	{
@@ -179,4 +179,3 @@ void	runcmd(t_cmd *cmd)
 	}
 	exit(0);
 }
-
