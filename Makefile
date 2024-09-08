@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-WARNFLAGS = -Wall -Wextra #-Werror
+WARNFLAGS = -Wall -Wextra -Werror
 RLFLAG = -lreadline -lm -g
 CFLAGS = -g
 HEADERS = -I./lib_ft -I./lib_ft_printf -I./inc

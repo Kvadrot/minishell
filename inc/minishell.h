@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/08 16:16:21 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:56:48 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,9 @@ void				do_pipe(t_cmd *cmd, t_data *minishell);
 void				do_out_redirect(t_cmd *cmd, t_data *minishell);
 void				do_list(t_cmd *cmd, t_data *minishell);
 void				do_back(t_cmd *cmd, t_data *minishell);
-int					is_builtin(char **argv);
+int					is_builtin_done(char **argv);
 void				ft_expand_dolar(char **argv, t_data *minishell);
 void				do_redirect(t_cmd *cmd, t_data *minishell);
-void				do_builtin(char **argv);
 int					ft_echo(char **argv);
 
 #endif

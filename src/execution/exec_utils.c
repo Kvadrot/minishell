@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 16:00:06 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:32:05 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,38 +49,41 @@ void	do_pipe(t_cmd *cmd, t_data *minishell)
 
 void	do_out_redirect(t_cmd *cmd, t_data *minishell)
 {
-	// int			p[2];
-	// pid_t		pid_l;
-	// pid_t		pid_r;
 	t_redircmd	*rcmd;
 	int			fd;
 
+	// int			p[2];
+	// pid_t		pid_l;
+	// pid_t		pid_r;
 	rcmd = (t_redircmd *)cmd;
 	if (fork1() == 0)
 	{
 		close(rcmd->fd);
-		if ((fd = open(rcmd->file, O_WRONLY | O_CREAT, 0644)) < 0)
+		if ((fd = open(rcmd->file, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
 		{
 			panic("open");
 		}
 		if (fork1() == 0)
 		{
 			runcmd(rcmd->cmd, minishell);
+			// close(fd);
+			exit(0);
 		}
 		wait(0);
 		// printf("waiting for kid to finish\n");
 		close(fd);
+		exit(0);
 	}
 }
 
 void	do_redirect(t_cmd *cmd, t_data *minishell)
 {
 	int			p[2];
-	// pid_t		pid_l;
-	// pid_t		pid_r;
 	t_redircmd	*rcmd;
 	pid_t		pid;
 
+	// pid_t		pid_l;
+	// pid_t		pid_r;
 	rcmd = (t_redircmd *)cmd;
 	if (pipe(p) < 0)
 		panic("pipe");
@@ -100,15 +103,15 @@ void	do_redirect(t_cmd *cmd, t_data *minishell)
 
 void	do_exec(t_cmd *cmd, t_data *minishell)
 {
-	// int			p[2];
 	t_execcmd	*ecmd;
 
+	// int			p[2];
 	ecmd = (t_execcmd *)cmd;
 	if (ecmd->argv[0] == 0)
 		exit(1);
 	ft_expand_dolar(ecmd->argv, minishell);
-	if (is_builtin(ecmd->argv))
-		do_builtin(ecmd->argv);
+	if (is_builtin_done(ecmd->argv) == 1)
+		return ;
 	else
 	{
 		execve(ecmd->argv[0], ecmd->argv, 0);
@@ -118,11 +121,11 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 
 void	do_list(t_cmd *cmd, t_data *minishell)
 {
-	// int			p[2];
 	pid_t		pid_l;
-	// pid_t		pid_r;
 	t_listcmd	*lcmd;
 
+	// int			p[2];
+	// pid_t		pid_r;
 	lcmd = (t_listcmd *)cmd;
 	if ((pid_l = fork1()) == 0)
 		runcmd(lcmd->left, minishell);
@@ -132,9 +135,9 @@ void	do_list(t_cmd *cmd, t_data *minishell)
 
 void	do_back(t_cmd *cmd, t_data *minishell)
 {
-	// int			pid;
 	t_backcmd	*bcmd;
 
+	// int			pid;
 	bcmd = (t_backcmd *)cmd;
 	if (fork1() == 0)
 		runcmd(bcmd->cmd, minishell);
@@ -150,7 +153,7 @@ pid_t	fork1(void)
 	return (pid);
 }
 
-void ft_expand_dolar(char **argv, t_data *minishell)
+void	ft_expand_dolar(char **argv, t_data *minishell)
 {
 	int		i;
 	char	*value;

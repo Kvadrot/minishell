@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/08 16:16:06 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:54:11 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_echo(char **argv)
 	}
 	if (new_line)
 		ft_putstr_fd("\n", 1);
-	return (0);
+	return (1);
 }
 
 // {
