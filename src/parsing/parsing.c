@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/08 17:46:59 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:50:31 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ bool	ft_check_token_exists(t_tokens *tokens, t_token_type searchable_token)
 */
 t_command	*parse_tokens(t_tokens *start_token, t_tokens *end_token)
 {
-	t_tokens	*temp_token;
+	// t_tokens	*temp_token;
 	t_tokens	*root_token;
 	t_command	*root_branch;
 
-	temp_token = start_token;
+	// temp_token = start_token;
 	//TODO:
 	root_token = ft_find_root_token(start_token, end_token);
-	root_branch = init_branch(root_token->value, root_token->type, NULL, NULL);
+	root_branch = init_branch(NULL, root_token->type, NULL, NULL);
 	if (root_token != T_WORD)
 	{
 		// TODO:
