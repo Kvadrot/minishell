@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 20:21:24 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:23:51 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,4 +153,5 @@ void	runcmd(struct s_cmd *cmd, t_data *minishell)
 		exit(1);
 	// printf("exit runcmd\n");
 	return ;
-} // fcntl-linux.h
+} 
+// fcntl-linux.h

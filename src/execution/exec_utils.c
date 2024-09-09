@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 20:08:27 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:24:10 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,30 @@ void	do_redirect(t_cmd *cmd, t_data *minishell)
 	}
 }
 
-void	do_redirect(t_cmd *cmd, t_data *minishell)
-{
-	int			p[2];
-	t_redircmd	*rcmd;
-	pid_t		pid;
+// void	do_redirect(t_cmd *cmd, t_data *minishell)
+// {
+// 	int			p[2];
+// 	t_redircmd	*rcmd;
+// 	pid_t		pid;
 
-	// pid_t		pid_l;
-	// pid_t		pid_r;
-	rcmd = (t_redircmd *)cmd;
-	if (pipe(p) < 0)
-		panic("pipe");
-	pid = fork1();
-	if (pid == 0)
-	{
-		close(rcmd->fd);
-		if (open(rcmd->file, rcmd->mode) < 0)
-		{
-			printf("open %s failed\n", rcmd->file);
-			printf("\n");
-			exit(1);
-		}
-		runcmd(rcmd->cmd, minishell);
-	}
-}
+// 	// pid_t		pid_l;
+// 	// pid_t		pid_r;
+// 	rcmd = (t_redircmd *)cmd;
+// 	if (pipe(p) < 0)
+// 		panic("pipe");
+// 	pid = fork1();
+// 	if (pid == 0)
+// 	{
+// 		close(rcmd->fd);
+// 		if (open(rcmd->file, rcmd->mode) < 0)
+// 		{
+// 			printf("open %s failed\n", rcmd->file);
+// 			printf("\n");
+// 			exit(1);
+// 		}
+// 		runcmd(rcmd->cmd, minishell);
+// 	}
+// }
 
 void	do_exec(t_cmd *cmd, t_data *minishell)
 {

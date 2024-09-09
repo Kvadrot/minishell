@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/03 21:27:48 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:35:34 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,13 @@ void	init_environment(t_env **environment, char **env)
 	i = 0;
 	while (env[i])
 	{
+		// use get_key_and_value(); function for readibility
 		delimiter_pos = ft_strchr(env[i], '=');
 		if (delimiter_pos != NULL)
 		{
 			key = ft_strndup(env[i], delimiter_pos - env[i]);
-			// if (!key)
-			// 	should we handle it?
-				value = ft_strdup(delimiter_pos + 1);
-			// if (!value)
-			// 	should we handle it?
-				environment_new_node_end(environment, key, value);
+			value = ft_strdup(delimiter_pos + 1);
+			environment_new_node_end(environment, key, value);
 			free(key);
 			free(value);
 		}
