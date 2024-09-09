@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:08:04 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 16:02:10 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:43:47 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # define MAXARGS 100
 
 # define EXEC 1
+# define HERE_DOC 11
 # define BUILTIN 2
 # define INREDIR 21
 # define OUTREDIR 22
 # define PIPE 3
 # define LIST 4
 # define BACK 5
-
 
 # define ECHO 31
 # define CD 32
@@ -38,6 +38,12 @@ typedef struct s_execcmd
 	char			*argv[MAXARGS];
 	char			*eargv[MAXARGS];
 }					t_execcmd;
+
+typedef struct s_heredoc_cmd
+{
+	int				type;
+	char			**argv;
+}					t_heredoc_cmd;
 
 typedef struct s_redircmd
 {
@@ -68,7 +74,5 @@ typedef struct s_backcmd
 	int				type;
 	struct s_cmd	*cmd;
 }					t_backcmd;
-
-
 
 #endif

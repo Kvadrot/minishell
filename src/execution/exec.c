@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 16:12:15 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:21:24 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,64 @@ t_cmd	*ft_init_exec_cmd(void)
 	memset(cmd, 0, sizeof(*cmd));
 	cmd->type = EXEC;
 	return ((t_cmd *)cmd);
+}
+
+t_cmd	*here_doc_cmd(char **ps, char *es)
+{
+	t_heredoc_cmd	*cmd;
+
+	cmd = malloc(sizeof(*cmd));
+	memset(cmd, 0, sizeof(*cmd));
+	cmd->type = HERE_DOC;
+	take_input(cmd, ps, es);
+	return ((t_cmd *)cmd);
+}
+
+void take_input(t_heredoc_cmd *cmd, char **ps, char *es)
+{
+    char *s;
+    char *q;
+    char *eq;
+    char *token;
+    char *line;
+
+    s = *ps;
+    if (peek(ps, es, "<|>&;()"))
+        panic("parse error");
+    gettoken(ps, es, &q, &eq);
+    token = ft_strncpy(malloc(eq - q + 1), q, eq - q);
+    token[eq - q] = '\0';  // Ensure null-termination
+
+    // Initialize cmd->argv if it's NULL
+    if (cmd->argv == NULL) {
+        cmd->argv = malloc(sizeof(char *));
+        cmd->argv[0] = strdup("");
+    }
+
+    while (1) {
+        line = readline("heredoc> ");
+        if (line == NULL) {
+            // EOF reached
+            break;
+        }
+        if (strcmp(line, token) == 0) {
+            // Delimiter found, exit loop
+            free(line);
+            break;
+        }
+        // Append the line to cmd->argv[0]
+        char *temp = ft_strjoin(cmd->argv[0], line);
+        free(cmd->argv[0]);
+        cmd->argv[0] = temp;
+        
+        temp = ft_strjoin(cmd->argv[0], "\n");
+        free(cmd->argv[0]);
+        cmd->argv[0] = temp;
+
+        free(line);
+    }
+
+    free(token);
 }
 
 t_cmd	*redircmd(t_cmd *subcmd, char *file, char *efile, int mode, int fd)
@@ -94,5 +152,5 @@ void	runcmd(struct s_cmd *cmd, t_data *minishell)
 	else
 		exit(1);
 	// printf("exit runcmd\n");
-	return;
-} //fcntl-linux.h
+	return ;
+} // fcntl-linux.h

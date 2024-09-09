@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 17:25:42 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:08:27 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 	if (ecmd->argv[0] == 0)
 		exit(1);
 	ft_expand_dolar(ecmd->argv, minishell);
-	if (is_builtin_done(ecmd->argv) == 1, minishell)
+	if (is_builtin_done(ecmd->argv, minishell) == 1)
 		exit(0);
 	else
 	{

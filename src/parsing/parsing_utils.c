@@ -6,14 +6,11 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/07 20:07:51 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 18:50:28 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	whitespace[] = " \t\r\n\v";
-char	symbols[] = "<|>&;()";
 
 // Returns true when when *s is in toks.
 // Function updates *ps to point to the next non-whitespace character.
@@ -22,7 +19,7 @@ int	peek(char **ps, char *es, char *toks)
 	char	*s;
 
 	s = *ps;
-	while (s < es && strchr(whitespace, *s))
+	while (s < es && strchr(" \t\r\n\v", *s))
 		s++;
 	*ps = s;
 	return (*s && strchr(toks, *s));
@@ -87,7 +84,7 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	int ret;
 
 	s = *ps;
-	while (s < es && strchr(whitespace, *s))
+	while (s < es && strchr(" \t\r\n\v", *s))
 		s++;
 	if (q)
 		*q = s;
@@ -118,12 +115,12 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	else
 		ret = 'a';
 
-	while (s < es && !strchr(whitespace, *s) && !strchr(symbols, *s))
+	while (s < es && !strchr(" \t\r\n\v", *s) && !strchr("<|>&;()", *s))
 		s++;
 	if (eq)
 		*eq = s;
 
-	while (s < es && strchr(whitespace, *s))
+	while (s < es && strchr(" \t\r\n\v", *s))
 		s++;
 	*ps = s;
 	return (ret);
