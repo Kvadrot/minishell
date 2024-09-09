@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 18:50:28 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:43:28 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,11 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 		{
 			ret = '-';
 			s++;
+			ps = &s;
+			// printf("heredocGGG %s\n", s);
+			
+		here_doc_cmd(ps, es);
+		// *ps = *ps + 2;
 		}
 	}
 	else

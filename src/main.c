@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 15:36:47 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 21:06:25 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int main(int argc, char **argv, char **env)
 	// char buff[] = "echo tav > test"; //>> tak.txt | ls > ls";
 
 	init_minishell(&minishell, env);
-	// init_environment(&minishell.envlist, minishell.envir);
+	init_environment(&minishell.envlist, minishell.envir);
 	// print_environment(minishell.envlist);
 	minishell_loop(&minishell);
 	// environment_free_list(minishell.envlist);

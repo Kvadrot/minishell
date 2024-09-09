@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/09 20:26:41 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:27:48 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,6 @@ char				**get_key_and_value(char *argument);
 int					ft_unset(char **argv, t_data *minishell);
 int					ft_export(char **argv, t_data *minishell);
 int					ft_pwd(char **argv);
+t_cmd				*here_doc_cmd(char **ps, char *es);
 
 #endif

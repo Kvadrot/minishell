@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 20:23:51 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:31:53 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,14 @@ t_cmd	*ft_init_exec_cmd(void)
 	return ((t_cmd *)cmd);
 }
 
-t_cmd	*here_doc_cmd(char **ps, char *es)
-{
-	t_heredoc_cmd	*cmd;
-
-	cmd = malloc(sizeof(*cmd));
-	memset(cmd, 0, sizeof(*cmd));
-	cmd->type = HERE_DOC;
-	take_input(cmd, ps, es);
-	return ((t_cmd *)cmd);
-}
 
 void take_input(t_heredoc_cmd *cmd, char **ps, char *es)
 {
-    char *s;
     char *q;
     char *eq;
     char *token;
     char *line;
 
-    s = *ps;
     if (peek(ps, es, "<|>&;()"))
         panic("parse error");
     gettoken(ps, es, &q, &eq);
@@ -78,6 +66,18 @@ void take_input(t_heredoc_cmd *cmd, char **ps, char *es)
     }
 
     free(token);
+}
+
+t_cmd	*here_doc_cmd(char **ps, char *es)
+{
+	t_heredoc_cmd	*cmd;
+
+	cmd = malloc(sizeof(*cmd));
+	memset(cmd, 0, sizeof(*cmd));
+	cmd->type = HERE_DOC;
+	take_input(cmd, ps, es);
+	printf("%s\n", cmd->argv[0]);
+	return ((t_cmd *)cmd);
 }
 
 t_cmd	*redircmd(t_cmd *subcmd, char *file, char *efile, int mode, int fd)

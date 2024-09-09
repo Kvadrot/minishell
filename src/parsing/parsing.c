@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 20:26:22 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:31:02 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es)
 		{
 			cmd = here_doc_cmd(ps, es);
 			printf("update heredoc logic\n");
-			// cmd = here_doc_cmd(cmd, q, eq);
+			
 		}
 	}
 	return (cmd);

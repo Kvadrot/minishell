@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:14:02 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/09 20:14:14 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:52:24 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_pwd(char **argv)
 	if (argv[1])
 	{
 		// syntax error
-		printf("Too many arguments\n");
+		printf("too many arguments\n");
 		return (3);
 	}
 	path = getcwd(NULL, 0);
