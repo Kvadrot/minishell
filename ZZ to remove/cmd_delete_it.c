@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 14:42:33 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 16:09:56 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:41:17 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,10 @@ void	runcmd(t_cmd *cmd)
 		ecmd = (t_execcmd *)cmd;
 		if (ecmd->argv[0] == 0)
 			exit(1);
-<<<<<<< HEAD
 		if ((pid_l = fork1()) == 0)
 			execve(ecmd->argv[0], ecmd->argv, 0);
 		wait(0);
-=======
 		execve(ecmd->argv[0], ecmd->argv, 0);
->>>>>>> builtin
 		printf("exec %s failed\n", ecmd->argv[0]);
 	}
 	else if (cmd->type == BUILTIN)

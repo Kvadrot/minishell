@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 18:32:05 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:33:39 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	do_pipe(t_cmd *cmd, t_data *minishell)
 	return ;
 }
 
-void	do_out_redirect(t_cmd *cmd, t_data *minishell)
+void	do_redirect(t_cmd *cmd, t_data *minishell)
 {
 	t_redircmd	*rcmd;
 	int			fd;
@@ -59,7 +59,7 @@ void	do_out_redirect(t_cmd *cmd, t_data *minishell)
 	if (fork1() == 0)
 	{
 		close(rcmd->fd);
-		if ((fd = open(rcmd->file, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
+		if ((fd = open(rcmd->file, rcmd->mode, 0644)) < 0) // O_CREAT | O_WRONLY | O_TRUNC
 		{
 			panic("open");
 		}
@@ -111,7 +111,7 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 		exit(1);
 	ft_expand_dolar(ecmd->argv, minishell);
 	if (is_builtin_done(ecmd->argv) == 1)
-		return ;
+		exit(0);
 	else
 	{
 		execve(ecmd->argv[0], ecmd->argv, 0);

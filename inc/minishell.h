@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/08 17:56:48 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:36:51 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@
 # define PROMPT "MDshell > "
 # define YES 1
 # define NO 0
-# define ERROR -1
-# define SUCCESS 0
+# define FERROR 0
+# define FSUCCESS 1
+# define PERROR -1
+# define PSUCCESS 0
 
 // DRBUG_FIELD
 // DELETE ME befor release

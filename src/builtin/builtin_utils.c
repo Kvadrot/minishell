@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:04:01 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 17:56:20 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:38:18 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ int	is_builtin_done(char **argv)
 	ret = 0;
 	if (strcmp(argv[0], "cd") == 0)
 		return (1);
-	if (strcmp(argv[0], "echo") == 0)
+	else if (strcmp(argv[0], "echo") == 0)
 		ret = ft_echo(argv);
-	if (strcmp(argv[0], "env") == 0)
+	else if (strcmp(argv[0], "env") == 0)
 		return (1);
-	if (strcmp(argv[0], "export") == 0)
+	else if (strcmp(argv[0], "export") == 0)
 		return (1);
-	if (strcmp(argv[0], "pwd") == 0)
+	else if (strcmp(argv[0], "pwd") == 0)
 		return (1);
-	if (strcmp(argv[0], "unset") == 0)
+	else if (strcmp(argv[0], "unset") == 0)
 		return (1);
 	return (ret);
 }

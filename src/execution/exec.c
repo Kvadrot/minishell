@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 15:34:38 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:12:15 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	runcmd(struct s_cmd *cmd, t_data *minishell)
 	if (cmd->type == EXEC)
 		do_exec(cmd, minishell);
 	else if (cmd->type == OUTREDIR)
-		do_out_redirect(cmd, minishell);
+		do_redirect(cmd, minishell);
 	else if (cmd->type == INREDIR)
 		do_redirect(cmd, minishell);
 	else if (cmd->type == LIST)
