@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:15:20 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 16:03:34 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:11:39 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_cd_home(t_data *minishell)
 	home = ft_get_envlst_val("HOME", minishell);
 	if (!home)
 		return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 1);
-	if (chdir(home) == SUCCESS)
+	if (chdir(home) == FSUCCESS)
 		return (ft_update_env_list("PWD", home, false, minishell), 0);
 	return (0);
 }
@@ -48,7 +48,7 @@ int	md_cd(char *path, t_data *minishell)
 {
 	if (!path)
 		return (ft_cd_home(minishell));
-	if (chdir(path) != SUCCESS)
+	if (chdir(path) != FSUCCESS)
 		return (ft_cd_err_msg(path));
 	ft_update_env_list("OLDPWD",
 		ft_get_envlst_val("PWD", minishell), false, minishell);

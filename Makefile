@@ -20,6 +20,9 @@ SRCS = src/main.c \
 		src/builtin/cd.c \
 		src/builtin/builtin_utils.c \
 		src/builtin/echo.c \
+		src/builtin/pwd.c \
+		src/builtin/export.c \
+		src/builtin/unset.c \
 		src/execution/exec.c \
 		src/execution/exec_utils.c \
 		src/error/error.c \

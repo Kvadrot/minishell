@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/09 16:36:51 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:16:31 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,13 @@ void				do_pipe(t_cmd *cmd, t_data *minishell);
 void				do_out_redirect(t_cmd *cmd, t_data *minishell);
 void				do_list(t_cmd *cmd, t_data *minishell);
 void				do_back(t_cmd *cmd, t_data *minishell);
-int					is_builtin_done(char **argv);
+int					is_builtin_done(char **argv, t_data *minishell);
 void				ft_expand_dolar(char **argv, t_data *minishell);
 void				do_redirect(t_cmd *cmd, t_data *minishell);
 int					ft_echo(char **argv);
+char				**get_key_and_value(char *argument);
+int					ft_unset(char **argv, t_data *minishell);
+int					ft_export(char **argv, t_data *minishell);
+int					ft_pwd(char **argv);
 
 #endif
