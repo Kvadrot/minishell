@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:04:01 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 16:38:18 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 17:26:10 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ int	is_builtin(char **argv)
 	return (0);
 } */
 
-int	is_builtin_done(char **argv)
+int	is_builtin_done(char **argv, t_data *minishell)
 {
 	int ret;
 
+	(void)minishell;
 	ret = 0;
 	if (strcmp(argv[0], "cd") == 0)
 		return (1);
