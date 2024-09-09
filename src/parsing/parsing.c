@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 17:07:26 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:19:43 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es)
 		else if ('-')
 		{
 			printf("update heredoc logic\n");
-			cmd = here_doc_cmd(cmd, q, eq);
+			// cmd = here_doc_cmd(cmd, q, eq);
 		}
 	}
 	return (cmd);

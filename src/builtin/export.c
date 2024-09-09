@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/09 20:15:13 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:20:45 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	print_sorted_env_vars(t_env **env_array, size_t count)
 	}
 }
 
-void	print_environment(t_env *node)
+void	print_environment_sorted(t_env *node)
 {
 	size_t	count;
 	t_env	**env_array;
@@ -177,7 +177,7 @@ int	ft_export(char **argv, t_data *minishell)
 
 	if (argv[1] == NULL)
 	{
-		print_environment(minishell->envlist);
+		print_environment_sorted(minishell->envlist);
 		return (0);
 	}
 	i = 1;
