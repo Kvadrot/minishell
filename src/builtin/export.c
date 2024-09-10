@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/09 20:20:45 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:47:27 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,11 @@ int	update_or_add_env_var(t_data *minishell, char **key_value)
 		if (strcmp(key_value[0], env->key) == 0)
 		{
 			free(env->value);
-			env->value = key_value[1];
+			env->value = ft_strdup(key_value[1]);
+			if (!env->value)
+				return (0);
 			updated = 1;
-			break ;
+			return (1);
 		}
 		env = env->next;
 	}
@@ -153,6 +155,7 @@ int	update_or_add_env_var(t_data *minishell, char **key_value)
 	{
 		environment_new_node_end(&minishell->envlist, key_value[0],
 			key_value[1]);
+		return (1);
 	}
 	return (0);
 }
@@ -172,13 +175,13 @@ int	process_export_argument(char *arg, t_data *minishell)
 
 int	ft_export(char **argv, t_data *minishell)
 {
-	int	i;
-	int	result;
+	int i;
+	int result;
 
 	if (argv[1] == NULL)
 	{
 		print_environment_sorted(minishell->envlist);
-		return (0);
+		return (1);
 	}
 	i = 1;
 	while (argv[i] != NULL)

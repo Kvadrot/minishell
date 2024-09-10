@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/09 21:12:25 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:54:42 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	find_and_remove_env(t_env **env_list, const char *key)
+void	find_and_remove_env(t_env **env_list, const char *key)
 {
 	t_env	*env;
 	t_env	*prev;
@@ -30,18 +30,16 @@ int	find_and_remove_env(t_env **env_list, const char *key)
 			free(env->key);
 			free(env->value);
 			free(env);
-			return (1);
 		}
 		prev = env;
 		env = env->next;
 	}
-	return (0);
 }
 
+// There isn't input validation for incorrect syntax
 int	ft_unset(char **argv, t_data *minishell)
 {
 	char	*key;
-	int		result;
 
 	if (!argv || !argv[0])
 	{
@@ -51,6 +49,6 @@ int	ft_unset(char **argv, t_data *minishell)
 	key = argv[1];
 	if (!key)
 		return (0);
-	result = find_and_remove_env(&minishell->envlist, key);
-	return (result);
+	find_and_remove_env(&minishell->envlist, key);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 20:24:10 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:55:25 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	do_redirect(t_cmd *cmd, t_data *minishell)
 	if (fork1() == 0)
 	{
 		close(rcmd->fd);
-		if ((fd = open(rcmd->file, rcmd->mode, 0644)) < 0) // O_CREAT | O_WRONLY | O_TRUNC
+		if ((fd = open(rcmd->file, rcmd->mode, 0644)) < 0)
+		// O_CREAT | O_WRONLY | O_TRUNC
 		{
 			panic("open");
 		}
@@ -101,23 +102,183 @@ void	do_redirect(t_cmd *cmd, t_data *minishell)
 // 	}
 // }
 
+char	**get_paths(char *path_env)
+{
+	int		paths_count;
+	int		i;
+	char	**paths;
+
+	paths_count = 1;
+	i = -1;
+	if (path_env == NULL)
+		return (NULL);
+	while (path_env[++i] != '\0')
+		if (path_env[i] == ':')
+			paths_count++;
+	paths = malloc((paths_count + 1) * sizeof(char *));
+	if (paths == NULL)
+		return (NULL);
+	paths = ft_split(path_env, ':');
+	return (paths);
+}
+
+char *construct_full_path(const char *base_path, const char *cmd)
+{
+    char *full_path;
+    size_t base_len = strlen(base_path);
+    size_t cmd_len = strlen(cmd);
+
+    full_path = malloc(base_len + 1 + cmd_len + 1); // +1 for '/' and +1 for '\0'
+    if (full_path == NULL)
+        return NULL;
+
+    strcpy(full_path, base_path);
+    strcat(full_path, "/");
+    strcat(full_path, cmd);
+
+    return full_path;
+}
+
+bool is_executable(const char *path)
+{
+    return (access(path, X_OK) == 0);
+}
+
+
+char	*find_binary_path(t_cmd *cmd, char **paths)
+{
+	int			i;
+	char		*full_path;
+	t_execcmd	*ecmd;
+
+	ecmd = (t_execcmd *)cmd;
+	if (ecmd == NULL || ecmd->argv[0] == NULL || paths == NULL)
+		return (NULL);
+	for (i = 0; paths[i] != NULL; i++)
+	{
+		full_path = construct_full_path(paths[i], ecmd->argv[0]);
+		if (full_path == NULL)
+			return (NULL);
+		if (is_executable(full_path))
+			return (full_path); // Found executable
+		free(full_path); // Not executable, free memory
+	}
+	return (NULL); // Not found
+}
+
+void	handle_exec_error(const char *msg, const char *arg)
+{
+	write(2, msg, strlen(msg));
+	write(2, arg, strlen(arg));
+	write(2, "\n", 1);
+}
+
+void	clean_up(char *binary_path, char **paths)
+{
+	int	i;
+
+	i = 0;
+	if (binary_path)
+		free(binary_path);
+	if (paths)
+	{
+		while (paths[i] != NULL)
+		{
+			free(paths[i]);
+			i++;
+		}
+		free(paths);
+	}
+}
+
+void	expand_variables(t_execcmd *ecmd, t_data *minishell)
+{
+	ft_expand_dolar(ecmd->argv, minishell);
+}
+
+bool	check_and_handle_builtin(t_execcmd *ecmd, t_data *minishell)
+{
+	return (is_builtin_done(ecmd->argv, minishell));
+}
+
+char	**retrieve_paths(void)
+{
+	char	*path_env;
+	char	**paths;
+
+	path_env = getenv("PATH");
+	if (path_env == NULL)
+	{
+		handle_exec_error("PATH environment variable not found", "");
+		exit(1);
+	}
+	paths = get_paths(path_env);
+	if (paths == NULL)
+	{
+		handle_exec_error("Failed to get paths", "");
+		exit(1);
+	}
+	return (paths);
+}
+
+char	*find_executable_path(t_execcmd *ecmd, char **paths)
+{
+	char	*binary_path;
+
+	binary_path = find_binary_path((t_cmd *)ecmd, paths);
+	if (binary_path == NULL)
+	{
+		handle_exec_error("command not found: ", ecmd->argv[0]);
+		clean_up(NULL, paths);
+		exit(1);
+	}
+	return (binary_path);
+}
+
+void	execute_command(char *binary_path, t_execcmd *ecmd)
+{
+	execve(binary_path, ecmd->argv, 0);
+	handle_exec_error("execve failed for: ", binary_path);
+	clean_up(binary_path, NULL);
+	exit(1);
+}
+
 void	do_exec(t_cmd *cmd, t_data *minishell)
 {
 	t_execcmd	*ecmd;
+	char		**paths;
+	char		*binary_path;
 
-	// int			p[2];
 	ecmd = (t_execcmd *)cmd;
-	if (ecmd->argv[0] == 0)
+	if (ecmd->argv[0] == NULL)
 		exit(1);
-	ft_expand_dolar(ecmd->argv, minishell);
-	if (is_builtin_done(ecmd->argv, minishell) == 1)
-		exit(0);
-	else
-	{
-		execve(ecmd->argv[0], ecmd->argv, 0);
-		printf("exec %s failed\n", ecmd->argv[0]);
-	}
+	expand_variables(ecmd, minishell);
+	if (is_builtin_done(ecmd->argv, minishell))
+		return ;
+	paths = retrieve_paths();
+	binary_path = find_executable_path(ecmd, paths);
+	execute_command(binary_path, ecmd);
+	clean_up(binary_path, paths);
 }
+
+// void	do_exec(t_cmd *cmd, t_data *minishell)
+// {
+// 	t_execcmd	*ecmd;
+
+// 	// int			p[2];
+// 	ecmd = (t_execcmd *)cmd;
+// 	if (ecmd->argv[0] == 0)
+// 		exit(1);
+// 	ft_expand_dolar(ecmd->argv, minishell);
+// 	if (is_builtin_done(ecmd->argv, minishell) == 1)
+// 		return ;
+// 	else
+// 	{
+// 		// how to pass it to this function here?
+// 		execve(ecmd->argv[0], ecmd->argv, 0);
+// 		printf("exec %s failed\n", ecmd->argv[0]);
+// 	}
+// }
 
 void	do_list(t_cmd *cmd, t_data *minishell)
 {

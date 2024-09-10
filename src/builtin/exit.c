@@ -1,53 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/10 18:08:37 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:10:14 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// echo prints quotes
-
-void	remove_quotes(char *str)
+int	ft_exit(void)
 {
-	int	len;
-
-	len = strlen(str);
-	if ((len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
-		|| (len >= 2 && str[0] == '"' && str[len - 1] == '"'))
-	{
-		memmove(str, str + 1, len - 2);
-		str[len - 2] = '\0';
-	}
-}
-
-int	ft_echo(char **argv)
-{
-	int		i;
-	bool	new_line;
-
-	i = 1;
-	new_line = true;
-	if (argv[i] && argv[i][0] == '-' && argv[i][1] == 'n')
-	{
-		new_line = false;
-		i++;
-	}
-	while (argv[i])
-	{
-		remove_quotes(argv[i]);
-		ft_putstr_fd(argv[i], 1);
-		i++;
-		if (argv[i])
-			ft_putstr_fd(" ", 1);
-	}
-	if (new_line)
-		ft_putstr_fd("\n", 1);
+	kill(getpid(), SIGUSR1);
 	return (1);
 }

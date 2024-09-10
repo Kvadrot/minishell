@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/10 14:40:27 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:11:44 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,6 @@ int					ft_export(char **argv, t_data *minishell);
 int					ft_pwd(char **argv);
 t_cmd				*here_doc_cmd(t_cmd *subcmd, char *q, char *eq);
 void				take_input(t_heredoc_cmd *cmd, char *token);
+int					ft_exit(void);
 
 #endif
