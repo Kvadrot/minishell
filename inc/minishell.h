@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/10 20:14:30 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/10 20:33:22 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ typedef struct s_env
 
 typedef struct s_llist
 {
-	char			*content;
+	void			*content;
+	struct s_llist	*previous;
 	struct s_llist	*next;
 }					t_llist;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/10 19:03:24 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/10 20:43:48 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,31 +76,6 @@ void	do_redirect(t_cmd *cmd, t_data *minishell)
 		exit(0);
 	}
 }
-
-// void	do_redirect(t_cmd *cmd, t_data *minishell)
-// {
-// 	int			p[2];
-// 	t_redircmd	*rcmd;
-// 	pid_t		pid;
-
-// 	// pid_t		pid_l;
-// 	// pid_t		pid_r;
-// 	rcmd = (t_redircmd *)cmd;
-// 	if (pipe(p) < 0)
-// 		panic("pipe");
-// 	pid = fork1();
-// 	if (pid == 0)
-// 	{
-// 		close(rcmd->fd);
-// 		if (open(rcmd->file, rcmd->mode) < 0)
-// 		{
-// 			printf("open %s failed\n", rcmd->file);
-// 			printf("\n");
-// 			exit(1);
-// 		}
-// 		runcmd(rcmd->cmd, minishell);
-// 	}
-// }
 
 char	**get_paths(char *path_env)
 {
@@ -258,7 +233,10 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 		return ;
 	paths = retrieve_paths();
 	binary_path = find_executable_path(ecmd, paths);
-	execute_command(binary_path, ecmd);
+	if(fork1() == 0)	
+		execute_command(binary_path, ecmd);
+	else
+		wait(0);
 	clean_up(binary_path, paths);
 }
 
