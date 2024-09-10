@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/10 18:55:25 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/10 19:03:24 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,28 +122,27 @@ char	**get_paths(char *path_env)
 	return (paths);
 }
 
-char *construct_full_path(const char *base_path, const char *cmd)
+char	*construct_full_path(const char *base_path, const char *cmd)
 {
-    char *full_path;
-    size_t base_len = strlen(base_path);
-    size_t cmd_len = strlen(cmd);
+	char	*full_path;
+	size_t	base_len;
+	size_t	cmd_len;
 
-    full_path = malloc(base_len + 1 + cmd_len + 1); // +1 for '/' and +1 for '\0'
-    if (full_path == NULL)
-        return NULL;
-
-    strcpy(full_path, base_path);
-    strcat(full_path, "/");
-    strcat(full_path, cmd);
-
-    return full_path;
+	base_len = strlen(base_path);
+	cmd_len = strlen(cmd);
+	full_path = malloc(base_len + 1 + cmd_len + 1);
+	if (full_path == NULL)
+		return (NULL);
+	strcpy(full_path, base_path);
+	strcat(full_path, "/");
+	strcat(full_path, cmd);
+	return (full_path);
 }
 
-bool is_executable(const char *path)
+bool	is_executable(const char *path)
 {
-    return (access(path, X_OK) == 0);
+	return (access(path, X_OK) == 0);
 }
-
 
 char	*find_binary_path(t_cmd *cmd, char **paths)
 {
@@ -154,16 +153,18 @@ char	*find_binary_path(t_cmd *cmd, char **paths)
 	ecmd = (t_execcmd *)cmd;
 	if (ecmd == NULL || ecmd->argv[0] == NULL || paths == NULL)
 		return (NULL);
-	for (i = 0; paths[i] != NULL; i++)
+	i = 0;
+	while (paths[i] != NULL)
 	{
 		full_path = construct_full_path(paths[i], ecmd->argv[0]);
 		if (full_path == NULL)
 			return (NULL);
 		if (is_executable(full_path))
-			return (full_path); // Found executable
-		free(full_path); // Not executable, free memory
+			return (full_path);
+		free(full_path);
+		i++;
 	}
-	return (NULL); // Not found
+	return (NULL);
 }
 
 void	handle_exec_error(const char *msg, const char *arg)
