@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 20:31:02 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:28:23 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,12 @@ t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es)
 			panic("missing file for redirection");
 		if (tok == '<')
 			cmd = redircmd(cmd, q, eq, O_RDONLY, 0);
-		else if ('>')
+		else if (tok == '>')
 			cmd = redircmd(cmd, q, eq, O_CREAT | O_WRONLY | O_TRUNC, 1);
-		else if ('+')
-			cmd = redircmd(cmd, q, eq,  O_WRONLY | O_CREAT | O_APPEND, 1);
-		else if ('-')
-		{
-			cmd = here_doc_cmd(ps, es);
-			printf("update heredoc logic\n");
-			
-		}
+		else if (tok == '+')
+			cmd = redircmd(cmd, q, eq, O_WRONLY | O_CREAT | O_APPEND, 1);
+		else if (tok == '-')
+			cmd = here_doc_cmd(cmd, q, eq);
 	}
 	return (cmd);
 }

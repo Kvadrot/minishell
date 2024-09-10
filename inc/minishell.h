@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/09 20:27:48 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:40:27 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_cmd				*parseredirs(t_cmd *cmd, char **ps, char *es);
 pid_t				fork1(void);
 void				do_exec(t_cmd *cmd, t_data *minishell);
 void				do_pipe(t_cmd *cmd, t_data *minishell);
-void				do_out_redirect(t_cmd *cmd, t_data *minishell);
+
 void				do_list(t_cmd *cmd, t_data *minishell);
 void				do_back(t_cmd *cmd, t_data *minishell);
 int					is_builtin_done(char **argv, t_data *minishell);
@@ -150,6 +150,7 @@ char				**get_key_and_value(char *argument);
 int					ft_unset(char **argv, t_data *minishell);
 int					ft_export(char **argv, t_data *minishell);
 int					ft_pwd(char **argv);
-t_cmd				*here_doc_cmd(char **ps, char *es);
+t_cmd				*here_doc_cmd(t_cmd *subcmd, char *q, char *eq);
+void				take_input(t_heredoc_cmd *cmd, char *token);
 
 #endif
