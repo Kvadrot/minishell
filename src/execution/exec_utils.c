@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/11 19:13:21 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:11:40 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,13 @@ void	do_redirect(t_cmd *cmd, t_data *minishell)
 // 	}
 // }
 
-
 void	execute_command(char *binary_path, t_execcmd *ecmd)
 {
-	execve(binary_path, ecmd->argv, 0);
+	// need access to envlist here or somewhere else, potentially only 
+	// after using export/import functions 
+	// ecmd->eargv = environment_list_to_array(minishell->envlist);
+	// execve(binary_path, ecmd->argv, ecmd->eargv);
+	execve(binary_path, ecmd->argv, 0); // to be updated with above
 	handle_exec_error("execve failed for: ", binary_path);
 	clean_up(binary_path, NULL);
 	exit(1);
@@ -126,7 +129,7 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 	paths = retrieve_paths();
 	binary_path = find_executable_path(ecmd, paths);
 	execute_command(binary_path, ecmd);
-	clean_up(binary_path, paths);
+	clean_up(binary_path, paths); // potentially replaced with gc_collector
 }
 
 // void	do_exec(t_cmd *cmd, t_data *minishell)

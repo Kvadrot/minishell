@@ -29,10 +29,9 @@ SRCS = src/main.c \
 		src/execution/find_bin_cmd.c \
 		src/execution/find_bin_cmd_utils.c \
 		src/error/error.c \
-		src/env/env_utils.c src/env/env.c \
+		src/env/env_utils.c src/env/env.c src/env/envlist_to_array.c\
 		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \
-		src/parsing/heredoc.c \
-		src/parsing/parsing.c src/parsing/parsing_utils.c\
+		src/parsing/heredoc.c src/parsing/parsing.c src/parsing/parsing_utils.c\
 		src/tokens/error_handling.c src/tokens/tokens_semi_tested.c src/tokens/tokens_utils.c \
 		src/validation/validation.c
 

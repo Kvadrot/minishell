@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/11 19:24:31 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:02:22 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,6 @@ void				handle_exec_error(const char *msg, const char *arg);
 void				clean_up(char *binary_path, char **paths);
 char				**retrieve_paths(void);
 char				*find_executable_path(t_execcmd *ecmd, char **paths);
+char				**environment_list_to_array(t_env *environment);
 
 #endif
