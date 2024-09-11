@@ -26,6 +26,8 @@ SRCS = src/main.c \
 		src/builtin/unset.c \
 		src/execution/exec.c \
 		src/execution/exec_utils.c \
+		src/execution/find_bin_cmd.c \
+		src/execution/find_bin_cmd_utils.c \
 		src/error/error.c \
 		src/env/env_utils.c src/env/env.c \
 		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \

@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/10 17:47:27 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:35:21 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	sort_env_vars(t_env **env_array, size_t count)
 		j = 0;
 		while (j < count - i - 1)
 		{
-			if (strcmp(env_array[j]->key, env_array[j + 1]->key) > 0)
+			if (ft_strcmp(env_array[j]->key, env_array[j + 1]->key) > 0)
 			{
 				temp = env_array[j];
 				env_array[j] = env_array[j + 1];
@@ -140,7 +140,7 @@ int	update_or_add_env_var(t_data *minishell, char **key_value)
 	updated = 0;
 	while (env != NULL)
 	{
-		if (strcmp(key_value[0], env->key) == 0)
+		if (ft_strcmp(key_value[0], env->key) == 0)
 		{
 			free(env->value);
 			env->value = ft_strdup(key_value[1]);
