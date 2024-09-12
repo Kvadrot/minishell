@@ -1,0 +1,14 @@
+a
+allowed_functions.txt
+echo
+inc
+lib_ft
+lib_ft_printf
+Makefile
+Makefile copy
+minishell
+printenv
+README.txt
+src
+test.c
+XV6_os_shell

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:18:13 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/08 15:19:27 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:54:04 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static t_env	*ft_envlist_new(char *key, char *value)
 	new->next = NULL;
 	return (new);
 }
+
 void	ft_update_env_list(char *key, char *value, bool yes,
 		t_data *minishell)
 {

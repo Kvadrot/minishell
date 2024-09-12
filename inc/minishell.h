@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/10 22:47:45 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/12 17:56:20 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,10 @@ int					ft_pwd(char **argv);
 t_cmd				*here_doc_cmd(t_cmd *subcmd, char *q, char *eq);
 void				take_input(t_heredoc_cmd *cmd, char *token);
 int					ft_exit(void);
+void				handle_exec_error(const char *msg, const char *arg);
+void				clean_up(char *binary_path, char **paths);
+char				**retrieve_paths(void);
+char				*find_executable_path(t_execcmd *ecmd, char **paths);
+char				**environment_list_to_array(t_env *environment);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/10 14:03:30 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:32:25 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_cmd	*ft_init_exec_cmd(void)
 	t_execcmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
-	memset(cmd, 0, sizeof(*cmd));
+	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = EXEC;
 	return ((t_cmd *)cmd);
 }
@@ -28,7 +28,7 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, char *efile, int mode, int fd)
 	t_redircmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
-	memset(cmd, 0, sizeof(*cmd));
+	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = OUTREDIR;
 	cmd->cmd = subcmd;
 	cmd->file = file;
@@ -43,7 +43,7 @@ t_cmd	*pipecmd(t_cmd *left, t_cmd *right)
 	t_pipecmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
-	memset(cmd, 0, sizeof(*cmd));
+	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = PIPE;
 	cmd->left = left;
 	cmd->right = right;
@@ -55,7 +55,7 @@ t_cmd	*listcmd(t_cmd *left, t_cmd *right)
 	t_listcmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
-	memset(cmd, 0, sizeof(*cmd));
+	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = LIST;
 	cmd->left = left;
 	cmd->right = right;
@@ -67,7 +67,7 @@ t_cmd	*backcmd(t_cmd *subcmd)
 	t_backcmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
-	memset(cmd, 0, sizeof(*cmd));
+	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = BACK;
 	cmd->cmd = subcmd;
 	return ((t_cmd *)cmd);

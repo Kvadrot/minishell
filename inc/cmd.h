@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:08:04 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 19:43:47 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:24:53 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ typedef struct s_cmd
 
 typedef struct s_execcmd
 {
-	int				type;
-	char			*argv[MAXARGS];
-	char			*eargv[MAXARGS];
-}					t_execcmd;
+	int		type;
+	char	*argv[MAXARGS];
+	char	*eargv[MAXARGS];
+	char	*paths;
+	char	*flag;
+}			t_execcmd;
 
 typedef struct s_heredoc_cmd
 {

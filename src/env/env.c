@@ -6,11 +6,14 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/09 19:35:34 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:14:26 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+// interchangeable use of functions in env and env_utils which
+// pretty much do the same stuff
 
 t_env	*environment_new_node(char *key, char *value)
 {
