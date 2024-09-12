@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/12 17:56:20 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:22:25 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_data
 {
 	char			*input;
 	char 			**cinput;
-	t_list			**pipe_list;
+	t_list			*pipe_list;
 	char			**envir;
 	char			*environment;
 	int				stdin;

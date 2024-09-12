@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:08:04 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/11 19:24:53 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:53:33 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_redircmd
 typedef struct s_pipecmd
 {
 	int				type;
+	unsigned int 	index;
+	int 			pipe[2];
 	struct s_cmd	*left;
 	struct s_cmd	*right;
 }					t_pipecmd;
