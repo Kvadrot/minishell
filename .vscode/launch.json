@@ -26,7 +26,6 @@
 					"text": "-gdb-set disassembly-flavor intel",
 					"ignoreFailures": true
 				},
-				{"text": "-gdb-set follow-fork-mode child"}
 			]
 		}
 

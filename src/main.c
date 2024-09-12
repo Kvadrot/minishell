@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 21:06:25 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:07:17 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ void minishell_loop(t_data *minishell)
 			ft_putendl_fd("\nCaught EOF (Ctrl+D)\n", STDOUT_FILENO);
 			// diagnostics only delete before realase EOF
 			minishell_free(minishell, YES);
-			break;
+			break ;
 		}
+		if (minishell->input)
+			add_history(minishell->input);
 		// printf("after prompt\n");
 		
 		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
-		runcmd(parsecmd(minishell->input), minishell); //
+		runcmd(parsecmd(minishell->input), minishell);
 		// runcmd(parsecmd(buff));
 		free(minishell->input);
 		// init_tokens(minishell);
