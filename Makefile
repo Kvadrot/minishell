@@ -24,6 +24,8 @@ SRCS = src/main.c \
 		src/builtin/pwd.c \
 		src/builtin/export.c \
 		src/builtin/unset.c \
+		src/execution/pipes.c \
+		src/execution/forks.c \
 		src/execution/exec.c \
 		src/execution/exec_utils.c \
 		src/execution/find_bin_cmd.c \

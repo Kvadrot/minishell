@@ -3,30 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/10 14:28:23 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:10:35 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_cmd	*parsecmd(char *s)
+void	alloc_mem_for_commands(t_data *minishell)
 {
-	char	*es;
-	t_cmd	*cmd;
+	char	*input;
+	int		pipe_count;
 
-	es = s + strlen(s);
-	cmd = parseline(&s, es);
-	peek(&s, es, "");
-	if (s != es)
+	pipe_count = 0;
+	input = minishell->input;
+	while (*input)
 	{
-		printf("leftovers: %s\n", s);
-		panic("syntax");
+		if (*input == '|')
+			pipe_count++;
+		input++;
 	}
-	nulterminate(cmd);
-	return (cmd);
+	minishell->commands = (t_cmd **)malloc(sizeof(t_cmd *) * (pipe_count + 2));
+	if (minishell->commands == NULL)
+		panic("malloc");
+	minishell->commands[pipe_count + 1] = NULL;
+}
+
+void	parsecmd(t_data *minishell)
+{
+	int 	i;
+	t_cmd	*cmd;
+	char	*es;
+	char	*ps;
+
+	i = 0;
+	ps = minishell->input;
+	es = minishell->input + ft_strlen(minishell->input);
+	while (ps <= es)
+	{
+		cmd = parseexec(&ps, es);
+		if (cmd)
+			minishell->commands[i] = cmd;
+		peek(&ps, es, "|");
+		ps++;
+		i++;
+	}
 }
 
 t_cmd	*parseline(char **ps, char *es)
@@ -72,14 +95,7 @@ t_cmd	*parsepipe(char **ps, char *es)
 * 5 function put 0 terminate argv and eargv tables
 * 6 return general cmd struct independly of type
 */
-// t_cmd	*parseexec2(char **ps, char *es)
-// {
-// 	t_execcmd	*cmd;
-// 	t_cmd		*ret;
 
-// 	char *q, *eq;
-// 	int tok, argc;
-// }
 t_cmd	*parseexec(char **ps, char *es)
 {
 	t_execcmd	*cmd;
@@ -87,11 +103,9 @@ t_cmd	*parseexec(char **ps, char *es)
 
 	char *q, *eq;
 	int tok, argc;
-	if (peek(ps, es, "("))
-		return (parseblock(ps, es));
+	
 	ret = ft_init_exec_cmd(); /* ret is general return type */
-	cmd = (t_execcmd *)ret;   /* need to be casted to specific type
-			cmd stores current command */
+	cmd = (t_execcmd *)ret;   /* need to be casted to specific type cmd stores current command */
 	argc = 0;
 	ret = parseredirs(ret, ps, es);
 	/* parse redirections takes previous command and put it to redirections comand if redirection found  */

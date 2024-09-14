@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/14 18:19:31 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:06:19 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_data
 	int				stdout;
 	int				exit_status;
 	t_tokens		*tokens;
-	unsigned int	number_of_commands;
+	int				number_of_commands;
 	t_env			*envlist;
 	t_cmd			**commands;
 	t_llist			*tracker;
@@ -136,7 +136,7 @@ t_cmd				*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd				*listcmd(t_cmd *left, t_cmd *right);
 t_cmd				*backcmd(t_cmd *subcmd);
 void				runcmd(struct s_cmd *cmd, t_data *minishell);
-t_cmd				*parsecmd(char *s);
+void				parsecmd(t_data *minishell);
 t_cmd				*parseline(char **ps, char *es);
 t_cmd				*parsepipe(char **ps, char *es);
 t_cmd				*parseexec(char **ps, char *es);
@@ -167,5 +167,6 @@ char				**environment_list_to_array(t_env *environment);
 void				make_forks(t_data *minishell);
 void				create_pipes(t_data *minishell);
 void				run_with_pipes(t_data *minishell);
+void				alloc_mem_for_commands(t_data *minishell);
 
 #endif

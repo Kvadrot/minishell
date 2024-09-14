@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 18:27:31 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:52:12 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void minishell_loop(t_data *minishell)
 			minishell_free(minishell, YES);
 			break;
 		}
+		alloc_mem_for_commands(minishell);
 		parsecmd(minishell);
 		run_with_pipes(minishell);
 		free(minishell->input);
-		
 		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
 		// runcmd(parsecmd(buff));
 		// init_tokens(minishell);

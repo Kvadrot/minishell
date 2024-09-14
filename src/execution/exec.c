@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/11 18:32:25 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:47:21 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void	runcmd(struct s_cmd *cmd, t_data *minishell)
 		do_redirect(cmd, minishell);
 	else if (cmd->type == LIST)
 		do_list(cmd, minishell);
-	else if (cmd->type == PIPE)
-		do_pipe(cmd, minishell);
 	else if (cmd->type == BACK)
 		do_back(cmd, minishell);
 	else

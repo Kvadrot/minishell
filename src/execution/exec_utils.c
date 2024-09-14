@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 18:16:52 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:46:39 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 
 
-void	do_single_comand(void)
-{
+// void	do_single_comand(void)
+// {
 	// t_cmd	*cmd;
 	// t_execcmd	*ecmd;
 
@@ -31,153 +31,153 @@ void	do_single_comand(void)
 	// 	do_list(cmd, minishell);
 	// else if (ecmd->type == BACK)
 	// 	do_back(cmd, minishell);
-}
+// }
 
-void	do_pipe(t_cmd *cmd, t_data *minishell)
-{
-	int			p[2];
-	pid_t		pid_l;
-	pid_t		pid_r;
-	t_list		*node;
-	int			i;
-	t_execcmd	*cmd1;
-	t_execcmd	*cmd2;
-	t_execcmd	*cmd3;
-	t_pipecmd	*pcmd;
-	t_pipecmd	*pcmd1;
-	t_pipecmd	*pcmd2;
-	int			p1[2];
+// void	do_pipe(t_cmd *cmd, t_data *minishell)
+// {
+// 	int			p[2];
+// 	pid_t		pid_l;
+// 	pid_t		pid_r;
+// 	t_list		*node;
+// 	int			i;
+// 	t_execcmd	*cmd1;
+// 	t_execcmd	*cmd2;
+// 	t_execcmd	*cmd3;
+// 	t_pipecmd	*pcmd;
+// 	t_pipecmd	*pcmd1;
+// 	t_pipecmd	*pcmd2;
+// 	int			p1[2];
 
-	i = 0;
-	// cmd1
-	cmd1 = malloc(sizeof(*cmd1));
-	ft_memset(cmd1, 0, sizeof(*cmd1));
-	cmd1->type = EXEC;
-	cmd1->argv[0] = "ls";
-	cmd1->argv[1] = NULL;
-	// cmd2
-	cmd2 = malloc(sizeof(*cmd1));
-	ft_memset(cmd2, 0, sizeof(*cmd1));
-	cmd2->type = EXEC;
-	cmd2->argv[0] = "grep";
-	cmd2->argv[1] = "m";
-	cmd2->argv[2] = NULL;
-	// cmd3
-	cmd3 = malloc(sizeof(*cmd1));
-	ft_memset(cmd2, 0, sizeof(*cmd1));
-	cmd3->type = EXEC;
-	cmd3->argv[0] = "grep";
-	cmd3->argv[1] = "s";
-	cmd3->argv[2] = NULL;
-	// pcmd1
-	pcmd1 = malloc(sizeof(*pcmd1));
-	ft_memset(pcmd1, 0, sizeof(*pcmd1));
-	pcmd1->type = PIPE;
-	pcmd1->index = 0;
-	// asign pcmd1->pipe[] in loop
-	pcmd1->left = cmd1;
-	pcmd1->right = cmd2;
-	minishell->pipe_list = ft_lstnew(pcmd1);
-	minishell->pipe_list->next->content = ft_lstnew(cmd);
-	pcmd2 = malloc(sizeof(*pcmd2));
-	ft_memset(pcmd2, 0, sizeof(*pcmd2));
-	pcmd2->type = PIPE;
-	pcmd1->index = 0;
-	pcmd2->left = cmd1;
-	pcmd2->right = cmd2;
-	// put pipe struct into current node
-	node = minishell->pipe_list;
-	while (minishell->pipe_list)
-	{
-		if (pipe(((t_pipecmd *)(node->content))->pipe) < 0)
-			panic("pipe");
-		if ((pid_l = fork1()) == 0)
-		{
-			close(1);
-			dup(p1[1]);
-			close(p1[0]);
-			close(p1[1]);
-			runcmd(pcmd1->left, minishell);
-			exit(0);
-		}
-		if ((pid_r = fork1()) == 0)
-		{
-			close(0);
-			dup(p1[0]);
-			close(p1[0]);
-			close(p1[1]);
-			runcmd(pcmd1->right, minishell);
-			exit(0);
-		}
-		close(p1[0]);
-		close(p1[1]);
-		wait(&pid_l);
-		wait(&pid_r);
-		minishell->pipe_list = minishell->pipe_list->next;
-	}
-	// minishell->pipe_list = ft_lstnew(cmd);
-	if (minishell->pipe_list)
-	{
-		node = minishell->pipe_list;
-		pcmd = (t_pipecmd *)(node->content);
-	}
-	while (pcmd)
-	{
-		if (pipe(p) < 0)
-			panic("pipe");
-		if ((pid_l = fork1()) == 0)
-		{
-			close(1);
-			dup(p[1]);
-			close(p[0]);
-			close(p[1]);
-			runcmd(pcmd->left, minishell);
-			exit(0);
-		}
-		if ((pid_r = fork1()) == 0)
-		{
-			close(0);
-			dup(p[0]);
-			close(p[0]);
-			close(p[1]);
-			runcmd(pcmd->right, minishell);
-			exit(0);
-		}
-		close(p[0]);
-		close(p[1]);
-		wait(&pid_l);
-		wait(&pid_r);
-		i++;
-		node = node->next;
-		pcmd = (t_pipecmd *)node->content;
-	}
-	pcmd = (t_pipecmd *)cmd;
-	if (pipe(p) < 0)
-		panic("pipe");
-	if ((pid_l = fork1()) == 0)
-	{
-		close(1);
-		dup(p[1]);
-		close(p[0]);
-		close(p[1]);
-		runcmd(pcmd->left, minishell);
-		exit(0);
-	}
-	if ((pid_r = fork1()) == 0)
-	{
-		close(0);
-		dup(p[0]);
-		close(p[0]);
-		close(p[1]);
-		runcmd(pcmd->right, minishell);
-		exit(0);
-	}
-	close(p[0]);
-	close(p[1]);
-	wait(&pid_l);
-	wait(&pid_r);
-	return ;
-}
+// 	i = 0;
+// 	// cmd1
+// 	cmd1 = malloc(sizeof(*cmd1));
+// 	ft_memset(cmd1, 0, sizeof(*cmd1));
+// 	cmd1->type = EXEC;
+// 	cmd1->argv[0] = "ls";
+// 	cmd1->argv[1] = NULL;
+// 	// cmd2
+// 	cmd2 = malloc(sizeof(*cmd1));
+// 	ft_memset(cmd2, 0, sizeof(*cmd1));
+// 	cmd2->type = EXEC;
+// 	cmd2->argv[0] = "grep";
+// 	cmd2->argv[1] = "m";
+// 	cmd2->argv[2] = NULL;
+// 	// cmd3
+// 	cmd3 = malloc(sizeof(*cmd1));
+// 	ft_memset(cmd2, 0, sizeof(*cmd1));
+// 	cmd3->type = EXEC;
+// 	cmd3->argv[0] = "grep";
+// 	cmd3->argv[1] = "s";
+// 	cmd3->argv[2] = NULL;
+// 	// pcmd1
+// 	pcmd1 = malloc(sizeof(*pcmd1));
+// 	ft_memset(pcmd1, 0, sizeof(*pcmd1));
+// 	pcmd1->type = PIPE;
+// 	pcmd1->index = 0;
+// 	// asign pcmd1->pipe[] in loop
+// 	pcmd1->left = cmd1;
+// 	pcmd1->right = cmd2;
+// 	minishell->pipe_list = ft_lstnew(pcmd1);
+// 	minishell->pipe_list->next->content = ft_lstnew(cmd);
+// 	pcmd2 = malloc(sizeof(*pcmd2));
+// 	ft_memset(pcmd2, 0, sizeof(*pcmd2));
+// 	pcmd2->type = PIPE;
+// 	pcmd1->index = 0;
+// 	pcmd2->left = cmd1;
+// 	pcmd2->right = cmd2;
+// 	// put pipe struct into current node
+// 	node = minishell->pipe_list;
+// 	while (minishell->pipe_list)
+// 	{
+// 		if (pipe(((t_pipecmd *)(node->content))->pipe) < 0)
+// 			panic("pipe");
+// 		if ((pid_l = fork1()) == 0)
+// 		{
+// 			close(1);
+// 			dup(p1[1]);
+// 			close(p1[0]);
+// 			close(p1[1]);
+// 			runcmd(pcmd1->left, minishell);
+// 			exit(0);
+// 		}
+// 		if ((pid_r = fork1()) == 0)
+// 		{
+// 			close(0);
+// 			dup(p1[0]);
+// 			close(p1[0]);
+// 			close(p1[1]);
+// 			runcmd(pcmd1->right, minishell);
+// 			exit(0);
+// 		}
+// 		close(p1[0]);
+// 		close(p1[1]);
+// 		wait(&pid_l);
+// 		wait(&pid_r);
+// 		minishell->pipe_list = minishell->pipe_list->next;
+// 	}
+// 	// minishell->pipe_list = ft_lstnew(cmd);
+// 	if (minishell->pipe_list)
+// 	{
+// 		node = minishell->pipe_list;
+// 		pcmd = (t_pipecmd *)(node->content);
+// 	}
+// 	while (pcmd)
+// 	{
+// 		if (pipe(p) < 0)
+// 			panic("pipe");
+// 		if ((pid_l = fork1()) == 0)
+// 		{
+// 			close(1);
+// 			dup(p[1]);
+// 			close(p[0]);
+// 			close(p[1]);
+// 			runcmd(pcmd->left, minishell);
+// 			exit(0);
+// 		}
+// 		if ((pid_r = fork1()) == 0)
+// 		{
+// 			close(0);
+// 			dup(p[0]);
+// 			close(p[0]);
+// 			close(p[1]);
+// 			runcmd(pcmd->right, minishell);
+// 			exit(0);
+// 		}
+// 		close(p[0]);
+// 		close(p[1]);
+// 		wait(&pid_l);
+// 		wait(&pid_r);
+// 		i++;
+// 		node = node->next;
+// 		pcmd = (t_pipecmd *)node->content;
+// 	}
+// 	pcmd = (t_pipecmd *)cmd;
+// 	if (pipe(p) < 0)
+// 		panic("pipe");
+// 	if ((pid_l = fork1()) == 0)
+// 	{
+// 		close(1);
+// 		dup(p[1]);
+// 		close(p[0]);
+// 		close(p[1]);
+// 		runcmd(pcmd->left, minishell);
+// 		exit(0);
+// 	}
+// 	if ((pid_r = fork1()) == 0)
+// 	{
+// 		close(0);
+// 		dup(p[0]);
+// 		close(p[0]);
+// 		close(p[1]);
+// 		runcmd(pcmd->right, minishell);
+// 		exit(0);
+// 	}
+// 	close(p[0]);
+// 	close(p[1]);
+// 	wait(&pid_l);
+// 	wait(&pid_r);
+// 	return ;
+// }
 
 void	do_redirect(t_cmd *cmd, t_data *minishell)
 {
