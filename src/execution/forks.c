@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:59:52 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 18:28:06 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:50:04 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	make_forks(t_data *minishell)
 			minishell->exit_status = WEXITSTATUS(status);
 		j++;
 	}
+	// close_pipes(pipe_argv, commands);
 }
 
 static void	close_pipes(int **pipe_argv, int commands)

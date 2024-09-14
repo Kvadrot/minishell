@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 19:10:35 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:39:48 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	alloc_mem_for_commands(t_data *minishell)
 
 void	parsecmd(t_data *minishell)
 {
-	int 	i;
+	int		i;
 	t_cmd	*cmd;
 	char	*es;
 	char	*ps;
@@ -45,7 +45,10 @@ void	parsecmd(t_data *minishell)
 	{
 		cmd = parseexec(&ps, es);
 		if (cmd)
+		{
 			minishell->commands[i] = cmd;
+			minishell->number_of_commands++;
+		}
 		peek(&ps, es, "|");
 		ps++;
 		i++;
@@ -96,6 +99,98 @@ t_cmd	*parsepipe(char **ps, char *es)
 * 6 return general cmd struct independly of type
 */
 
+char	*substring(const char *start, const char *end)
+{
+	size_t	length;
+	char	*result;
+
+	// Calculate the length of the substring
+	length = end - start;
+	// Allocate memory for the substring (+1 for null terminator)
+	result = malloc(length + 1);
+	if (result == NULL)
+	{
+		// Memory allocation failed
+		return (NULL);
+	}
+	// Copy the substring between start and end
+	strncpy(result, start, length);
+	// Null-terminate the new string
+	result[length] = '\0';
+	return (result);
+}
+
+void	free_cmd(t_cmd *node)
+{
+	int			i;
+	t_execcmd	*execcmd;
+
+	if (!node)
+		return ;
+	execcmd = (t_execcmd *)node;
+	if (execcmd->argv)
+	{
+		i = 0;
+		while (execcmd->argv[i])
+		{
+			free(execcmd->argv[i]);
+			i++;
+		}
+	}
+	// Free paths
+	if (execcmd->paths)
+		free(execcmd->paths);
+	// Free flag
+	if (execcmd->flag)
+		free(execcmd->flag);
+	// Finally, free the node itself
+	free(node);
+}
+
+void	free_pipes(t_data *minishell)
+{
+	int	i;
+
+	if (minishell->number_of_commands < 2)
+		return ;
+	if (!minishell || !minishell->pipe_argv)
+		return ;
+	i = 0;
+	while (minishell->pipe_argv[i])
+	{
+		free(minishell->pipe_argv[i]); // Free each row (int*)
+		i++;
+	}
+	// Free the main array
+	free(minishell->pipe_argv);
+	minishell->pipe_argv = NULL;
+}
+
+void	free_global(t_data *minishell)
+{
+	int	i;
+
+	if (!minishell)
+		return ;
+	// Free the input string
+	if (minishell->input)
+		free(minishell->input);
+	// Free the pipe_argv using the helper function
+	free_pipes(minishell);
+	// Free each command in the commands array
+	if (minishell->commands)
+	{
+		i = 0;
+		while (minishell->commands[i])
+		{
+			free_cmd(minishell->commands[i]); // Free each command
+			i++;
+		}
+		free(minishell->commands); // Free the commands array itself
+	}
+	// free(minishell);
+}
+
 t_cmd	*parseexec(char **ps, char *es)
 {
 	t_execcmd	*cmd;
@@ -103,12 +198,14 @@ t_cmd	*parseexec(char **ps, char *es)
 
 	char *q, *eq;
 	int tok, argc;
-	
 	ret = ft_init_exec_cmd(); /* ret is general return type */
-	cmd = (t_execcmd *)ret;   /* need to be casted to specific type cmd stores current command */
+	cmd = (t_execcmd *)ret;
+	/* need to be casted to specific type cmd stores current command */
 	argc = 0;
 	ret = parseredirs(ret, ps, es);
 	/* parse redirections takes previous command and put it to redirections comand if redirection found  */
+		cmd->argv = malloc(sizeof(char *) * 10 + 1);
+		bzero(cmd->argv, 11 * sizeof(char *));
 	while (!peek(ps, es, "|)&;")) /* while there is no pipe, end of block,
 		semicolon or ampersand */
 	{
@@ -116,15 +213,13 @@ t_cmd	*parseexec(char **ps, char *es)
 			break ;
 		if (tok != 'a')
 			panic("syntax");
-		cmd->argv[argc] = q;
-		cmd->eargv[argc] = eq;
+		cmd->argv[argc] = substring(q, eq);
+		cmd->argv[argc + 1] = 0;
 		argc++;
 		if (argc >= MAXARGS)
 			panic("too many args");
 		ret = parseredirs(ret, ps, es);
 	}
-	cmd->argv[argc] = 0;
-	cmd->eargv[argc] = 0;
 	return (ret);
 }
 

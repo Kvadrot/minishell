@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/14 19:06:19 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:53:44 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,15 @@ typedef struct s_llist
 typedef struct s_data
 {
 	char			*input;
-	char			**cinput;
-	t_list			*pipe_list;
 	int				**pipe_argv;
-	char			**envir;
 	char			*environment;
-	int				stdin;
-	int				stdout;
+	char			**envir;
 	int				exit_status;
-	t_tokens		*tokens;
 	int				number_of_commands;
 	t_env			*envlist;
 	t_cmd			**commands;
-	t_llist			*tracker;
 	struct termios	terminal;
-	struct s_data	*next;
+	t_llist			*tracker;
 }					t_data;
 
 // Validate_input
@@ -125,7 +119,6 @@ void				ft_envlstadd_back(t_env *new, t_data *minishell);
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 int					peek(char **ps, char *es, char *toks);
 void				panic(char *s);
-t_cmd				*nulterminate(t_cmd *cmd);
 int					gettoken(char **ps, char *es, char **q, char **eq);
 
 // execution
@@ -144,8 +137,6 @@ t_cmd				*parseblock(char **ps, char *es);
 t_cmd				*parseredirs(t_cmd *cmd, char **ps, char *es);
 pid_t				fork1(void);
 void				do_exec(t_cmd *cmd, t_data *minishell);
-void				do_pipe(t_cmd *cmd, t_data *minishell);
-
 void				do_list(t_cmd *cmd, t_data *minishell);
 void				do_back(t_cmd *cmd, t_data *minishell);
 int					is_builtin_done(char **argv, t_data *minishell);
@@ -168,5 +159,6 @@ void				make_forks(t_data *minishell);
 void				create_pipes(t_data *minishell);
 void				run_with_pipes(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
+void				free_global(t_data *minishell);
 
 #endif

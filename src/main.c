@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 18:52:12 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:30:39 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void minishell_loop(t_data *minishell)
 		alloc_mem_for_commands(minishell);
 		parsecmd(minishell);
 		run_with_pipes(minishell);
-		free(minishell->input);
+		free_global(minishell);
 		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
 		// runcmd(parsecmd(buff));
 		// init_tokens(minishell);
@@ -65,11 +65,9 @@ void minishell_loop(t_data *minishell)
 void init_minishell(t_data *minishell, char **env)
 {
 	minishell->envir = env;
-	minishell->stdin = dup(0);
-	minishell->stdout = dup(1);
 	tcgetattr(STDIN_FILENO, &minishell->terminal);
 	minishell->tracker = NULL;
-	minishell->tokens = NULL;
+	minishell->number_of_commands = 0;
 }
 
 int main(int argc, char **argv, char **env)
