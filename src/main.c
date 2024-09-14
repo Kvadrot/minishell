@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/09 21:06:25 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:58:55 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@ void minishell_loop(t_data *minishell)
 			minishell_free(minishell, YES);
 			break;
 		}
-		// printf("after prompt\n");
+		parsecmd(minishell);
+		setup_pipes(minishell);
+		make_forks(minishell);
+		runcmd(minishell);
+
+		free(minishell->input);
 		
 		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
-		runcmd(parsecmd(minishell->input), minishell); //
 		// runcmd(parsecmd(buff));
-		free(minishell->input);
 		// init_tokens(minishell);
 		// check_syntax(minishell->tokens);
 		// break ;

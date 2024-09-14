@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 20:08:02 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/12 21:54:42 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/14 18:16:52 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,39 @@
 
 // #include <fcntl-linux.h>
 
-void setup_pipes(t_data *minishell)
-{
-	unsigned int commands;
 
-	commands = minishell->number_of_commands;
-	if (commands == 0)
-		return;
-	if (commands == 1)
-		do_single_comand();
-	else
-		do_pipe2(minishell);
-	return;
+
+void	do_single_comand(void)
+{
+	// t_cmd	*cmd;
+	// t_execcmd	*ecmd;
+
+	// cmd = minishell->commands;
+	// ecmd = (t_execcmd *)cmd;
+	// if (ecmd->type == EXEC)
+	// 	do_exec(cmd, minishell);
+	// else if (ecmd->type == PIPE)
+	// 	do_pipe(cmd, minishell);
+	// else if (ecmd->type == LIST)
+	// 	do_list(cmd, minishell);
+	// else if (ecmd->type == BACK)
+	// 	do_back(cmd, minishell);
 }
 
-do_pipe2(t_data *minishell)
+void	do_pipe(t_cmd *cmd, t_data *minishell)
 {
-	unsigned int pipes_to_make;
-
-	pipes_to_make = minishell->number_of_commands;
-	while (pipes_to_make)
-	{
-		
-	}
-}
-
-void do_pipe(t_cmd *cmd, t_data *minishell)
-{
-	int p[2];
-	pid_t pid_l;
-	pid_t pid_r;
-	t_list *node;
-	int i;
-	t_execcmd *cmd1;
-	t_execcmd *cmd2;
-	t_execcmd *cmd3;
-	t_pipecmd *pcmd;
-	t_pipecmd *pcmd1;
-	t_pipecmd *pcmd2;
+	int			p[2];
+	pid_t		pid_l;
+	pid_t		pid_r;
+	t_list		*node;
+	int			i;
+	t_execcmd	*cmd1;
+	t_execcmd	*cmd2;
+	t_execcmd	*cmd3;
+	t_pipecmd	*pcmd;
+	t_pipecmd	*pcmd1;
+	t_pipecmd	*pcmd2;
+	int			p1[2];
 
 	i = 0;
 	// cmd1
@@ -83,7 +78,6 @@ void do_pipe(t_cmd *cmd, t_data *minishell)
 	pcmd1->left = cmd1;
 	pcmd1->right = cmd2;
 	minishell->pipe_list = ft_lstnew(pcmd1);
-
 	minishell->pipe_list->next->content = ft_lstnew(cmd);
 	pcmd2 = malloc(sizeof(*pcmd2));
 	ft_memset(pcmd2, 0, sizeof(*pcmd2));
@@ -91,14 +85,10 @@ void do_pipe(t_cmd *cmd, t_data *minishell)
 	pcmd1->index = 0;
 	pcmd2->left = cmd1;
 	pcmd2->right = cmd2;
-	int p1[2];
-
 	// put pipe struct into current node
 	node = minishell->pipe_list;
-
 	while (minishell->pipe_list)
 	{
-
 		if (pipe(((t_pipecmd *)(node->content))->pipe) < 0)
 			panic("pipe");
 		if ((pid_l = fork1()) == 0)
@@ -186,18 +176,13 @@ void do_pipe(t_cmd *cmd, t_data *minishell)
 	close(p[1]);
 	wait(&pid_l);
 	wait(&pid_r);
-	return;
+	return ;
 }
 
-void make_pipes(t_data *minishell)
+void	do_redirect(t_cmd *cmd, t_data *minishell)
 {
-	while ()
-}
-
-void do_redirect(t_cmd *cmd, t_data *minishell)
-{
-	t_redircmd *rcmd;
-	int fd;
+	t_redircmd	*rcmd;
+	int			fd;
 
 	// int			p[2];
 	// pid_t		pid_l;
@@ -249,7 +234,7 @@ void do_redirect(t_cmd *cmd, t_data *minishell)
 // 	}
 // }
 
-void execute_command(char *binary_path, t_execcmd *ecmd)
+void	execute_command(char *binary_path, t_execcmd *ecmd)
 {
 	// need access to envlist here or somewhere else, potentially only
 	// after using export/import functions
@@ -261,18 +246,18 @@ void execute_command(char *binary_path, t_execcmd *ecmd)
 	exit(1);
 }
 
-void do_exec(t_cmd *cmd, t_data *minishell)
+void	do_exec(t_cmd *cmd, t_data *minishell)
 {
-	t_execcmd *ecmd;
-	char **paths;
-	char *binary_path;
+	t_execcmd	*ecmd;
+	char		**paths;
+	char		*binary_path;
 
 	ecmd = (t_execcmd *)cmd;
 	if (ecmd->argv[0] == NULL)
 		exit(1);
 	ft_expand_dolar(ecmd->argv, minishell);
 	if (is_builtin_done(ecmd->argv, minishell))
-		return;
+		return ;
 	paths = retrieve_paths();
 	binary_path = find_executable_path(ecmd, paths);
 	execute_command(binary_path, ecmd);
@@ -298,10 +283,10 @@ void do_exec(t_cmd *cmd, t_data *minishell)
 // 	}
 // }
 
-void do_list(t_cmd *cmd, t_data *minishell)
+void	do_list(t_cmd *cmd, t_data *minishell)
 {
-	pid_t pid_l;
-	t_listcmd *lcmd;
+	pid_t		pid_l;
+	t_listcmd	*lcmd;
 
 	// int			p[2];
 	// pid_t		pid_r;
@@ -312,9 +297,9 @@ void do_list(t_cmd *cmd, t_data *minishell)
 	runcmd(lcmd->right, minishell);
 }
 
-void do_back(t_cmd *cmd, t_data *minishell)
+void	do_back(t_cmd *cmd, t_data *minishell)
 {
-	t_backcmd *bcmd;
+	t_backcmd	*bcmd;
 
 	// int			pid;
 	bcmd = (t_backcmd *)cmd;
@@ -322,9 +307,9 @@ void do_back(t_cmd *cmd, t_data *minishell)
 		runcmd(bcmd->cmd, minishell);
 }
 
-pid_t fork1(void)
+pid_t	fork1(void)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
@@ -332,10 +317,10 @@ pid_t fork1(void)
 	return (pid);
 }
 
-void ft_expand_dolar(char **argv, t_data *minishell)
+void	ft_expand_dolar(char **argv, t_data *minishell)
 {
-	int i;
-	char *value;
+	int		i;
+	char	*value;
 
 	i = 0;
 	while (argv[i])

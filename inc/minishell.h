@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/12 21:50:11 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/14 18:16:06 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,20 @@ typedef struct s_llist
 typedef struct s_data
 {
 	char			*input;
-	char 			**cinput;
+	char			**cinput;
 	t_list			*pipe_list;
+	int				**pipe_argv;
 	char			**envir;
 	char			*environment;
 	int				stdin;
 	int				stdout;
+	int				exit_status;
 	t_tokens		*tokens;
+	unsigned int	number_of_commands;
 	t_env			*envlist;
-	t_command		*commands;
+	t_cmd			**commands;
 	t_llist			*tracker;
 	struct termios	terminal;
-	unsigned	int number_of_commands;
 	struct s_data	*next;
 }					t_data;
 
@@ -162,5 +164,7 @@ void				clean_up(char *binary_path, char **paths);
 char				**retrieve_paths(void);
 char				*find_executable_path(t_execcmd *ecmd, char **paths);
 char				**environment_list_to_array(t_env *environment);
+void				make_forks(t_data *minishell);
+void				create_pipes(t_data *minishell);
 
 #endif
