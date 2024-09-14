@@ -6,14 +6,11 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:21:24 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 18:08:29 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:24:28 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell2.h"
 #include "../inc/minishell.h"
-
-
 
 void	create_pipes(t_data *minishell)
 {
@@ -34,22 +31,26 @@ void	create_pipes(t_data *minishell)
 		i++;
 	}
 }
-// void	setup_pipes(t_data *minishell)
-// {
-// 	unsigned int	commands;
+void	run_with_pipes(t_data *minishell)
+{
+	unsigned int	commands;
 
-// 	commands = minishell->number_of_commands;
-// 	if (commands == 0)
-// 		return ;
-// 	if (commands == 1)
-// 		do_single_comand();
-// 	else
-// 	{
-// 		create_pipes(minishell);
-// 		// make_pipes(minishell);
-// 	}
-// 	return ;
-// }
+	commands = minishell->number_of_commands;
+	if (commands == 0)
+		return ;
+	if (commands == 1)
+	{
+		if (fork1() == 0)
+			runcmd(minishell->commands[0], minishell);
+		wait(NULL);
+	}
+	else
+	{
+		create_pipes(minishell);
+		make_forks(minishell);
+	}
+	return ;
+}
 
 // int	main(void)
 // {

@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/14 18:16:06 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:19:31 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,6 @@ char				*find_executable_path(t_execcmd *ecmd, char **paths);
 char				**environment_list_to_array(t_env *environment);
 void				make_forks(t_data *minishell);
 void				create_pipes(t_data *minishell);
+void				run_with_pipes(t_data *minishell);
 
 #endif
