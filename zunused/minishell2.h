@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:29:06 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:22:10 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:50:36 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 
 typedef struct s_data
 {
-	char			*input;
-	char			**cinput;
-	int				**pipe_argv;
-	int	number_of_commands;
-}					t_data;
+	char	*input;
+	char	**cinput;
+	int		**pipe_argv;
+	int		num_of_cmds;
+}			t_data;
 
-void				do_single_comand(void);
-void				create_pipes(t_data *minishell);
-void				setup_pipes(t_data *minishell);
+void		do_single_comand(void);
+void		create_pipes(t_data *minishell);
+void		setup_pipes(t_data *minishell);
 
-void				panic(char *str);
+void		panic(char *str);
 
 #endif

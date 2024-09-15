@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:59:52 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 20:50:04 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/15 19:13:10 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,18 @@ void	make_forks(t_data *minishell)
 	int		j;
 	t_cmd	*cmd;
 
-	(void)minishell;
+	minishell->pids = malloc((minishell->num_of_cmds + 1) * sizeof(int));
 	i = 0;
-	commands = minishell->number_of_commands;
+	commands = minishell->num_of_cmds;
 	pipe_argv = minishell->pipe_argv;
 	while (i < commands)
 	{
 		cmd = minishell->commands[i];
-		if (i == 0)
-			pid = fork();
-		if (pid == 0)
+		minishell->pids[i] = fork();
+		if (minishell->pids[i] == 0)
 		{
-			if (i != 0)
-				dup2(pipe_argv[i - 1][0], STDIN_FILENO); /*
-					// zamieniamy wejscie na wyjscie z pipe
-					// dla wszystkich oprocz pierwszego
-					// czytamy z pipe */
-			if (i != commands - 1)                       //
-				dup2(pipe_argv[i][1], STDOUT_FILENO);    /*
-						// zamykamy wyjscie stdout i podmieniamy na wyjscie do pipe
-						// piszemy do pipe dla wszystkich oprocz ostatniego*/
-			close_pipes(pipe_argv, commands);
-			runcmd(cmd, minishell);
+			ft_child_process(cmd, minishell, i);
+			exit(0);
 		}
 		i++;
 	}
@@ -59,6 +49,38 @@ void	make_forks(t_data *minishell)
 	}
 	// close_pipes(pipe_argv, commands);
 }
+
+void	ft_child_process(t_cmd *cmd, t_data *minishell, int i)
+{
+	t_execcmd	*execcmd;
+	
+	ft_read_fd(cmd, minishell, i);
+	ft_write_fd(cmd, minishell, i);
+	if (runcmd(cmd, minishell) == -1)
+	{
+	execcmd = (t_execcmd *)cmd;
+		write(2, execcmd->argv[0], ft_strlen(execcmd->argv[0]));
+		write(2, ": command not found\n", 20);
+		exit(127);
+	}
+	free(execcmd->argv);
+}
+
+ 		// if (i != 0)
+		// 	if (pid == 0)
+		// 	{
+		// 		if (i != 0)
+		// 			dup2(pipe_argv[i - 1][0], STDIN_FILENO); /*
+		// 				// zamieniamy wejscie na wyjscie z pipe
+		// 				// dla wszystkich oprocz pierwszego
+		// 				// czytamy z pipe */
+		// 		if (i != commands - 1)                       //
+		// 			dup2(pipe_argv[i][1], STDOUT_FILENO);    /*
+		// 					// zamykamy wyjscie stdout i podmieniamy na wyjscie do pipe
+		// 					// piszemy do pipe dla wszystkich oprocz ostatniego*/
+		// 		close_pipes(pipe_argv, commands);
+		// 		runcmd(cmd, minishell);
+		// 	} 
 
 static void	close_pipes(int **pipe_argv, int commands)
 {

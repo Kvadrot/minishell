@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:21:24 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 18:45:50 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/15 19:11:01 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	create_pipes(t_data *minishell)
 {
-	int				i;
+	int	i;
 	int	pipes;
 
 	i = 0;
-	pipes = minishell->number_of_commands - 1;
+	pipes = minishell->num_of_cmds - 1;
 	minishell->pipe_argv = (int **)malloc(sizeof(int *) * (pipes + 1));
 	if (minishell->pipe_argv == NULL)
 		panic("malloc");
@@ -35,7 +35,7 @@ void	run_with_pipes(t_data *minishell)
 {
 	unsigned int	commands;
 
-	commands = minishell->number_of_commands;
+	commands = minishell->num_of_cmds;
 	if (commands == 0)
 		return ;
 	if (commands == 1)
@@ -52,13 +52,51 @@ void	run_with_pipes(t_data *minishell)
 	return ;
 }
 
+void	ft_read_fd(t_command *command, t_data *minishell, int i)
+{
+	int	j;
+
+	j = 0;
+	if ((i == 0) && (command->redirs.input_redir > 0))
+		if (dup2(command->redirs.input_redir, 0) == -1)
+			perror("Error!");
+	if (i > 0)
+		if (dup2(gen->pipes[i - 1][0], 0) == -1)
+			perror("Error!");
+	while (j < gen->num_of_cmds - 1)
+	{
+		if (j != (i - 1))
+			close(gen->pipes[j][0]);
+		j++;
+	}
+}
+
+void	ft_write_fd(t_command *command, t_gen *gen, int i)
+{
+	int	j;
+
+	if (i < gen->num_of_cmds - 1)
+		if (dup2(gen->pipes[i][1], 1) == -1)
+			perror("Error!");
+	if ((i == gen->num_of_cmds - 1) && (command->redirs.output_redir > 0))
+		if (dup2(command->redirs.output_redir, 1) == -1)
+			perror("Error!");
+	j = 0;
+	while (j < gen->num_of_cmds - 1)
+	{
+		if (j != i)
+			close(gen->pipes[j][1]);
+		j++;
+	}
+}
+
 // int	main(void)
 // {
 // 	t_data	minishell;
 // 	int		i;
 
 // 	i = 0;
-// 	minishell.number_of_commands = 3;
+// 	minishell.num_of_cmds = 3;
 // 	setup_pipes(&minishell);
 // 	if (minishell.pipe_argv != NULL)
 // 	{

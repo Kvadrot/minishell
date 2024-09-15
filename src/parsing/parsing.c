@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:45:24 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:50:30 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parsecmd(t_data *minishell)
 		if (cmd)
 		{
 			minishell->commands[i] = cmd;
-			minishell->number_of_commands++;
+			minishell->num_of_cmds++;
 		}
 		peek(&ps, es, "|");
 		ps++;

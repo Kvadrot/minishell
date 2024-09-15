@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:48:22 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:50:13 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void minishell_loop(t_data *minishell)
 		// free_global(minishell);
 		minishell->input = NULL;
 		minishell->pipe_argv = NULL;
-		minishell->number_of_commands = 0;
+		minishell->num_of_cmds = 0;
 		minishell->commands = NULL;
 		
 		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
@@ -78,7 +78,7 @@ void init_minishell(t_data *minishell, char **env)
 {
 	minishell->envir = env;
 	tcgetattr(STDIN_FILENO, &minishell->terminal);
-	minishell->number_of_commands = 0;
+	minishell->num_of_cmds = 0;
 }
 
 int main(int argc, char **argv, char **env)

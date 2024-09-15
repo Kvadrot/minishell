@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:31:27 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 19:03:26 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,11 @@ void	execute_command(char *binary_path, t_execcmd *ecmd)
 	// after using export/import functions 
 	// ecmd->eargv = environment_list_to_array(minishell->envlist);
 	// execve(binary_path, ecmd->argv, ecmd->eargv);
-	if (fork1() == 0)
-	{
+
 		execve(binary_path, ecmd->argv, 0); // to be updated with above
 		handle_exec_error("execve failed for: ", binary_path);
 		exit(0);
-	}
-	wait(0);
+
 }
 
 void	do_exec(t_cmd *cmd, t_data *minishell)

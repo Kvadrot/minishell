@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/15 14:48:43 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 19:06:26 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ typedef struct s_data
 	int				**pipe_argv;
 	char			*environment;
 	char			**envir;
+	int 			*pids;
 	int				exit_status;
-	int				number_of_commands;
+	int				num_of_cmds;
 	t_env			*envlist;
 	t_cmd			**commands;
 	struct termios	terminal;
@@ -127,7 +128,7 @@ t_cmd				*redircmd(t_cmd *subcmd, char *file, char *efile, int mode,
 t_cmd				*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd				*listcmd(t_cmd *left, t_cmd *right);
 t_cmd				*backcmd(t_cmd *subcmd);
-void				runcmd(struct s_cmd *cmd, t_data *minishell);
+int				runcmd(struct s_cmd *cmd, t_data *minishell);
 void				parsecmd(t_data *minishell);
 t_cmd				*parseline(char **ps, char *es);
 t_cmd				*parsepipe(char **ps, char *es);

@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 20:12:35 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:49:45 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:50:27 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_pipes(t_data *minishell)
 {
 	int	i;
 
-	if (minishell->number_of_commands < 2)
+	if (minishell->num_of_cmds < 2)
 		return ;
 	if (!minishell || !minishell->pipe_argv)
 		return ;
