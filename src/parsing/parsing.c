@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:20:41 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:45:24 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,36 +55,36 @@ void	parsecmd(t_data *minishell)
 	}
 }
 
-t_cmd	*parseline(char **ps, char *es)
-{
-	t_cmd	*cmd;
+// t_cmd	*parseline(char **ps, char *es)
+// {
+// 	t_cmd	*cmd;
 
-	cmd = parsepipe(ps, es);
-	while (peek(ps, es, "&"))
-	{
-		gettoken(ps, es, 0, 0);
-		cmd = backcmd(cmd);
-	}
-	if (peek(ps, es, ";"))
-	{
-		gettoken(ps, es, 0, 0);
-		cmd = listcmd(cmd, parseline(ps, es));
-	}
-	return (cmd);
-}
+// 	cmd = parsepipe(ps, es);
+// 	while (peek(ps, es, "&"))
+// 	{
+// 		gettoken(ps, es, 0, 0);
+// 		cmd = backcmd(cmd);
+// 	}
+// 	if (peek(ps, es, ";"))
+// 	{
+// 		gettoken(ps, es, 0, 0);
+// 		cmd = listcmd(cmd, parseline(ps, es));
+// 	}
+// 	return (cmd);
+// }
 
-t_cmd	*parsepipe(char **ps, char *es)
-{
-	t_cmd	*cmd;
+// t_cmd	*parsepipe(char **ps, char *es)
+// {
+// 	t_cmd	*cmd;
 
-	cmd = parseexec(ps, es);
-	if (peek(ps, es, "|"))
-	{
-		gettoken(ps, es, 0, 0);
-		cmd = pipecmd(cmd, parsepipe(ps, es));
-	}
-	return (cmd);
-}
+// 	cmd = parseexec(ps, es);
+// 	if (peek(ps, es, "|"))
+// 	{
+// 		gettoken(ps, es, 0, 0);
+// 		cmd = pipecmd(cmd, parsepipe(ps, es));
+// 	}
+// 	return (cmd);
+// }
 
 /*
 * 1 function look for block to parse
@@ -120,76 +120,6 @@ char	*substring(const char *start, const char *end)
 	return (result);
 }
 
-void	free_cmd(t_cmd *node)
-{
-	int			i;
-	t_execcmd	*execcmd;
-
-	if (!node)
-		return ;
-	execcmd = (t_execcmd *)node;
-	if (execcmd->argv)
-	{
-		i = 0;
-		while (execcmd->argv[i])
-		{
-			free(execcmd->argv[i]);
-			i++;
-		}
-	}
-	// Free paths
-	if (execcmd->paths)
-		free(execcmd->paths);
-	// Free flag
-	if (execcmd->flag)
-		free(execcmd->flag);
-	// Finally, free the node itself
-	free(node);
-}
-
-void	free_pipes(t_data *minishell)
-{
-	int	i;
-
-	if (minishell->number_of_commands < 2)
-		return ;
-	if (!minishell || !minishell->pipe_argv)
-		return ;
-	i = 0;
-	while (minishell->pipe_argv[i])
-	{
-		free(minishell->pipe_argv[i]); // Free each row (int*)
-		i++;
-	}
-	// Free the main array
-	free(minishell->pipe_argv);
-	minishell->pipe_argv = NULL;
-}
-
-void	free_global(t_data *minishell)
-{
-	int	i;
-
-	if (!minishell)
-		return ;
-	// Free the input string
-	if (minishell->input)
-		free(minishell->input);
-	// Free the pipe_argv using the helper function
-	free_pipes(minishell);
-	// Free each command in the commands array
-	if (minishell->commands)
-	{
-		i = 0;
-		while (minishell->commands[i])
-		{
-			free_cmd(minishell->commands[i]); // Free each command
-			i++;
-		}
-		free(minishell->commands); // Free the commands array itself
-	}
-	// free(minishell);
-}
 
 t_cmd	*parseexec(char **ps, char *es)
 {
@@ -223,20 +153,20 @@ t_cmd	*parseexec(char **ps, char *es)
 	return (ret);
 }
 
-t_cmd	*parseblock(char **ps, char *es)
-{
-	t_cmd	*cmd;
+// t_cmd	*parseblock(char **ps, char *es)
+// {
+// 	t_cmd	*cmd;
 
-	if (!peek(ps, es, "("))
-		panic("parseblock");
-	gettoken(ps, es, 0, 0);
-	cmd = parseline(ps, es);
-	if (!peek(ps, es, ")"))
-		panic("syntax - missing )");
-	gettoken(ps, es, 0, 0);
-	cmd = parseredirs(cmd, ps, es);
-	return (cmd);
-}
+// 	if (!peek(ps, es, "("))
+// 		panic("parseblock");
+// 	gettoken(ps, es, 0, 0);
+// 	cmd = parseline(ps, es);
+// 	if (!peek(ps, es, ")"))
+// 		panic("syntax - missing )");
+// 	gettoken(ps, es, 0, 0);
+// 	cmd = parseredirs(cmd, ps, es);
+// 	return (cmd);
+// }
 
 t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es)
 {

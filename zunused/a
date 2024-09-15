@@ -1,0 +1,16 @@
+in run cmd
+a
+exec.c
+exec.o
+exec_utils.c
+exec_utils.o
+find_bin_cmd.c
+find_bin_cmd.o
+find_bin_cmd_utils.c
+find_bin_cmd_utils.o
+forks.c
+forks.o
+makefile
+minishell2.h
+pipes.c
+pipes.o

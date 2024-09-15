@@ -6,27 +6,87 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 20:12:35 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/03 16:06:00 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:49:45 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void minishell_free(t_data *minishell, int flag)
+void	minishell_free(t_data *minishell, int flag)
 {
-	t_llist *tmp;
+	// free memory
+	(void)flag;
+	(void)minishell;
+	exit(0);
+}
 
-	if (flag == YES)
+void	free_cmd(t_cmd *node)
+{
+	int			i;
+	t_execcmd	*execcmd;
+
+	if (!node)
+		return ;
+	execcmd = (t_execcmd *)node;
+	if (execcmd->argv)
 	{
-		ft_putendl_fd("\noutside while loop, ready to free memory\n", STDOUT_FILENO);
-		while (minishell->tracker)
+		i = 0;
+		while (execcmd->argv[i])
 		{
-			ft_putendl_fd("\ninside while, freeing pointer\n", STDOUT_FILENO);
-			tmp = minishell->tracker;
-			minishell->tracker = (minishell->tracker->next);
-			free(tmp->content);
-			free(tmp);
+			free(execcmd->argv[i]);
+			i++;
 		}
 	}
-	exit(0);
+	// Free paths
+	if (execcmd->paths)
+		free(execcmd->paths);
+	// Free flag
+	if (execcmd->flag)
+		free(execcmd->flag);
+	// Finally, free the node itself
+	free(node);
+}
+
+void	free_pipes(t_data *minishell)
+{
+	int	i;
+
+	if (minishell->number_of_commands < 2)
+		return ;
+	if (!minishell || !minishell->pipe_argv)
+		return ;
+	i = 0;
+	while (minishell->pipe_argv[i])
+	{
+		free(minishell->pipe_argv[i]); // Free each row (int*)
+		i++;
+	}
+	// Free the main array
+	free(minishell->pipe_argv);
+	minishell->pipe_argv = NULL;
+}
+
+void	free_global(t_data *minishell)
+{
+	int	i;
+
+	if (!minishell)
+		return ;
+	// Free the input string
+	if (minishell->input)
+		free(minishell->input);
+	// Free the pipe_argv using the helper function
+	free_pipes(minishell);
+	// Free each command in the commands array
+	if (minishell->commands)
+	{
+		i = 0;
+		while (minishell->commands[i])
+		{
+			free_cmd(minishell->commands[i]); // Free each command
+			i++;
+		}
+		free(minishell->commands); // Free the commands array itself
+	}
+	// free(minishell);
 }

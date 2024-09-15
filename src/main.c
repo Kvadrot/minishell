@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:24:17 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:48:22 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void minishell_loop(t_data *minishell)
 		{
 			ft_putendl_fd("\nCaught EOF (Ctrl+D)\n", STDOUT_FILENO);
 			// diagnostics only delete before realase EOF
-			minishell_free(minishell, YES);
+			// minishell_free(minishell, YES);
 			break ;
 		}
 		if (minishell->input)
@@ -38,7 +38,13 @@ void minishell_loop(t_data *minishell)
 		alloc_mem_for_commands(minishell);
 		parsecmd(minishell);
 		run_with_pipes(minishell);
-		free_global(minishell);
+		
+		// free_global(minishell);
+		minishell->input = NULL;
+		minishell->pipe_argv = NULL;
+		minishell->number_of_commands = 0;
+		minishell->commands = NULL;
+		
 		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
 		// printf("after prompt\n");
 		
@@ -72,7 +78,6 @@ void init_minishell(t_data *minishell, char **env)
 {
 	minishell->envir = env;
 	tcgetattr(STDIN_FILENO, &minishell->terminal);
-	minishell->tracker = NULL;
 	minishell->number_of_commands = 0;
 }
 

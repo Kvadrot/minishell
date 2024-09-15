@@ -38,6 +38,8 @@ SRCS = ft_memset.c \
        ft_putstr_fd.c   \
        ft_putendl_fd.c  \
 	   ft_strcmp.c \
+	   ft_strcpy.c \
+	   ft_strncpy.c \
 	   ft_lstclear.c \
 	   ft_lstnew.c \
 	   ft_lstadd_back.c \

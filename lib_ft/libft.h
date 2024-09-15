@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:03:30 by itykhono          #+#    #+#             */
-/*   Updated: 2024/09/12 20:52:38 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:57:39 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 int					ft_strcmp(const char *s1, const char *s2);
+char				*ft_strcpy(char *dest, const char *src);
 t_list				*ft_lstnew(void *content);
 
 // void				ft_lstadd_front(t_list **lst, t_list *new);
