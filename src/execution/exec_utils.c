@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:31:08 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:10:35 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_cmd	*backcmd(t_cmd *subcmd)
 
 void	runcmd(struct s_cmd *cmd, t_data *minishell)
 {
-	printf("in run cmd\n");
+	// printf("in run cmd\n");
 	if (cmd == 0)
 		exit(1);
 	if (cmd->type == 0)
