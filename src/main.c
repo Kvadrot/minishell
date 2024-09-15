@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 16:39:20 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:42:46 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ void	minishell_loop(t_data *minishell)
 		// }
 		// seg fault here (no input given)
 		// ft_input_is_valid(minishell->input);
-		// if (minishell->commands && minishell->commands->args[0]) // cd
-			/nfs/homes/gbuczyns/Documents/CommonCore/level_4 >> asdas
+		// if (minishell->commands && minishell->commands->args[0]) // cd /nfs/homes/gbuczyns/Documents/CommonCore/level_4 >> asdas
 		// {
 		// 	buff = minishell->commands->args[0];
 		// 	if (ft_strcmp(buff, "cd") == 0)
