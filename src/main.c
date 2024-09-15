@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:48:22 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:38:38 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,22 @@
 // 3) Lexer (String -> Tokens)
 // 4) Parser (Tokens -> Logical_groups -> cmd_groups)
 
+// ------------------------------TO DO------------------------------
+// Signal for CTRL + C
+// Parsing
+// Handling $? for last error code
+// Norminette
+
 #include "../inc/minishell.h"
+
+void handle_sigint(int sig)
+{
+    (void)sig;
+    write(STDOUT_FILENO, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
 
 void minishell_loop(t_data *minishell)
 {
@@ -90,6 +105,7 @@ int main(int argc, char **argv, char **env)
 	(void)env;
 	// char buff[] = "echo tav > test"; //>> tak.txt | ls > ls";
 
+	signal(SIGINT, handle_sigint);
 	init_minishell(&minishell, env);
 	init_environment(&minishell.envlist, minishell.envir);
 	// print_environment(minishell.envlist);
