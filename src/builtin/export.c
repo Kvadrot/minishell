@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/11 18:35:21 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:24:49 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,8 @@ int	process_export_argument(char *arg, t_data *minishell)
 
 int	ft_export(char **argv, t_data *minishell)
 {
-	int i;
-	int result;
+	int	i;
+	int	result;
 
 	if (argv[1] == NULL)
 	{

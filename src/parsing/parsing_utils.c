@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 19:53:18 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:27:04 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	peek(char **ps, char *es, char *toks)
 // 		return (0);
 // 	switch (cmd->type)
 // 	{
-// 	case OUTREDIR:
+// 	case REDIR:
 // 		rcmd = (t_redircmd *)cmd;
 // 		nulterminate(rcmd->cmd);
 // 		*rcmd->efile = 0;

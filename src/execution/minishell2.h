@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:29:06 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/14 15:11:12 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:22:10 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_data
 	char			*input;
 	char			**cinput;
 	int				**pipe_argv;
-	unsigned int	number_of_commands;
+	int	number_of_commands;
 }					t_data;
 
 void				do_single_comand(void);
