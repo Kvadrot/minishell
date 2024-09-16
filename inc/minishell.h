@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/16 20:57:09 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/15 19:06:26 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_data
 	int				**pipe_argv;
 	char			*environment;
 	char			**envir;
-	int				*pids;
+	int 			*pids;
 	int				exit_status;
 	int				num_of_cmds;
 	t_env			*envlist;
@@ -128,7 +128,7 @@ t_cmd				*redircmd(t_cmd *subcmd, char *file, char *efile, int mode,
 t_cmd				*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd				*listcmd(t_cmd *left, t_cmd *right);
 t_cmd				*backcmd(t_cmd *subcmd);
-int					runcmd(struct s_cmd *cmd, t_data *minishell);
+int				runcmd(struct s_cmd *cmd, t_data *minishell);
 void				parsecmd(t_data *minishell);
 t_cmd				*parseline(char **ps, char *es);
 t_cmd				*parsepipe(char **ps, char *es);
@@ -160,7 +160,5 @@ void				create_pipes(t_data *minishell);
 void				run_with_pipes(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
 void				free_global(t_data *minishell);
-
-void				malloc_int_array(int **destination, int size);
 
 #endif
