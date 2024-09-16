@@ -6,7 +6,7 @@
 /*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:59:52 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/16 20:58:05 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/16 22:02:36 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	make_forks(t_data *minishell)
 		i++;
 	}
 	j = 0;
+	close_pipes(pipe_argv, num_of_cmds);
 	while (j < num_of_cmds)
 	{
 		waitpid(-1, &status, 0);
@@ -49,7 +50,6 @@ void	make_forks(t_data *minishell)
 			minishell->exit_status = WEXITSTATUS(status);
 		j++;
 	}
-	close_pipes(pipe_argv, num_of_cmds);
 }
 
 static void	ft_child_process(t_cmd *cmd, t_data *minishell, int i)

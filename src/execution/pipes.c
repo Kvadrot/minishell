@@ -6,7 +6,7 @@
 /*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:21:24 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/16 21:11:01 by ja               ###   ########.fr       */
+/*   Updated: 2024/09/16 21:50:42 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,13 @@ void	run_with_pipes(t_data *minishell)
 		return ;
 	if (commands == 1)
 	{
-		if (fork1() == 0)
+		// malloc_int_array(&(minishell->pids), minishell->num_of_cmds);
+		// minishell->pids[0] = fork1();
+		// if (minishell->pids[0] == 0)
+		if(fork1() == 0)
 			runcmd(minishell->commands[0], minishell);
-		wait(NULL);
+		wait(0);
+		// waitpid(minishell->pids[0], &minishell->exit_status, 0);
 	}
 	else
 	{
@@ -57,15 +61,14 @@ void	run_with_pipes(t_data *minishell)
 	return ;
 }
 
-
-
-
 // // To implement the command `ls | grep a > text.txt` using your structures,
 // 	you'll need to handle:
 
 // // 1. **Pipes (`|`)**: You need to create a pipe between `ls` and `grep`.
-// // 2. **Forks**: Fork two child processes to handle each command in the pipeline.
-// // 3. **Redirection (`>`)**: Redirect the output of `grep` to a file (`text.txt`).
+//
+	// 2. **Forks**: Fork two child processes to handle each command in the pipeline.
+//
+	// 3. **Redirection (`>`)**: Redirect the output of `grep` to a file (`text.txt`).
 
 // // Here's a breakdown of how to handle it:
 
@@ -146,14 +149,16 @@ void	run_with_pipes(t_data *minishell)
 // // - **Forking**: Each child process handles one part of the pipeline.
 // // - **Waiting**: The parent waits for both child processes to terminate.
 
-// // You can use the `t_execcmd` structure to represent each command (`ls` and `grep`) and store them in `data->commands`:
+//
+	// You can use the `t_execcmd` structure to represent each command (`ls` and `grep`) and store them in `data->commands`:
 
 // // ```c
 // // data->commands[0] = &ls_command;
 // // data->commands[1] = &grep_command;
 // // ```
 
-// // This should give you the basics for implementing command execution with pipes and redirection. Let me know if you need help with further implementation details!
+//
+	// This should give you the basics for implementing command execution with pipes and redirection. Let me know if you need help with further implementation details!
 
 // // int	main(void)
 // 	// {
