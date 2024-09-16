@@ -3,32 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ja <ja@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:59:52 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 19:13:10 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/16 20:58:05 by ja               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static void	close_pipes(int **pipe_argv, int commands);
+static void	ft_child_process(t_cmd *cmd, t_data *minishell, int i);
+static void	ft_write_fd(t_cmd *cmd, t_data *minishell, int i);
+static void	ft_read_fd(t_cmd *cmd, t_data *minishell, int i);
 
 void	make_forks(t_data *minishell)
 {
 	int		i;
-	int		pid;
 	int		status;
 	int		**pipe_argv;
-	int		commands;
+	int		num_of_cmds;
 	int		j;
 	t_cmd	*cmd;
 
-	minishell->pids = malloc((minishell->num_of_cmds + 1) * sizeof(int));
 	i = 0;
-	commands = minishell->num_of_cmds;
+	num_of_cmds = minishell->num_of_cmds;
 	pipe_argv = minishell->pipe_argv;
-	while (i < commands)
+	malloc_int_array(&(minishell->pids), num_of_cmds);
+	while (i < num_of_cmds)
 	{
 		cmd = minishell->commands[i];
 		minishell->pids[i] = fork();
@@ -40,48 +42,72 @@ void	make_forks(t_data *minishell)
 		i++;
 	}
 	j = 0;
-	while (j < commands)
+	while (j < num_of_cmds)
 	{
 		waitpid(-1, &status, 0);
 		if (WIFEXITED(status))
 			minishell->exit_status = WEXITSTATUS(status);
 		j++;
 	}
-	// close_pipes(pipe_argv, commands);
+	close_pipes(pipe_argv, num_of_cmds);
 }
 
-void	ft_child_process(t_cmd *cmd, t_data *minishell, int i)
+static void	ft_child_process(t_cmd *cmd, t_data *minishell, int i)
 {
 	t_execcmd	*execcmd;
-	
+
 	ft_read_fd(cmd, minishell, i);
 	ft_write_fd(cmd, minishell, i);
 	if (runcmd(cmd, minishell) == -1)
 	{
-	execcmd = (t_execcmd *)cmd;
+		execcmd = (t_execcmd *)cmd;
 		write(2, execcmd->argv[0], ft_strlen(execcmd->argv[0]));
 		write(2, ": command not found\n", 20);
 		exit(127);
 	}
-	free(execcmd->argv);
+
 }
 
- 		// if (i != 0)
-		// 	if (pid == 0)
-		// 	{
-		// 		if (i != 0)
-		// 			dup2(pipe_argv[i - 1][0], STDIN_FILENO); /*
-		// 				// zamieniamy wejscie na wyjscie z pipe
-		// 				// dla wszystkich oprocz pierwszego
-		// 				// czytamy z pipe */
-		// 		if (i != commands - 1)                       //
-		// 			dup2(pipe_argv[i][1], STDOUT_FILENO);    /*
-		// 					// zamykamy wyjscie stdout i podmieniamy na wyjscie do pipe
-		// 					// piszemy do pipe dla wszystkich oprocz ostatniego*/
-		// 		close_pipes(pipe_argv, commands);
-		// 		runcmd(cmd, minishell);
-		// 	} 
+static void	ft_read_fd(t_cmd *cmd, t_data *minishell, int i)
+{
+	int	j;
 
+	j = 0;
+	if ((i == 0) && (cmd->fd_to_read > 0))
+	{
+		if (dup2(cmd->fd_to_read, 0) == -1)
+			perror("Error!");
+		close(cmd->fd_to_read);
+	}
+	if (i > 0)
+		if (dup2(minishell->pipe_argv[i - 1][0], 0) == -1)
+			perror("Error!");
+	while (j < minishell->num_of_cmds - 1)
+	{
+		if (j != (i - 1))
+			close(minishell->pipe_argv[j][0]);
+		j++;
+	}
+}
+
+static void	ft_write_fd(t_cmd *cmd, t_data *minishell, int i)
+{
+	int	j;
+
+	if (i < minishell->num_of_cmds - 1)
+		if (dup2(minishell->pipe_argv[i][1], 1) == -1)
+			perror("Error!");
+	if (cmd->fd_to_write > 0)
+		if (dup2(cmd->fd_to_write, 1) == -1)
+			perror("Error!");
+	j = 0;
+	while (j < minishell->num_of_cmds - 1)
+	{
+		// if (j != i)
+		close(minishell->pipe_argv[j][1]);
+		j++;
+	}
+}
 static void	close_pipes(int **pipe_argv, int commands)
 {
 	int i;
