@@ -16,7 +16,7 @@ OBJ_DIR = obj/
 
 #src/cmd/cmd.c \
 # Source files
-SRCS = src/main.c \
+SRCS =	src/main.c \
 		src/builtin/cd.c \
 		src/builtin/builtin_utils.c \
 		src/builtin/echo.c \
@@ -31,9 +31,14 @@ SRCS = src/main.c \
 		src/execution/find_bin_cmd.c \
 		src/execution/find_bin_cmd_utils.c \
 		src/error/error.c \
-		src/env/env_utils.c src/env/env.c src/env/envlist_to_array.c\
-		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \
-		src/parsing/heredoc.c src/parsing/parsing.c src/parsing/parsing_utils.c\
+		src/env/env_utils.c \
+		src/env/env.c \
+		src/env/envlist_to_array.c \
+		src/garbage_colector/garbage_colector.c \
+		src/garbage_colector/minishell_free.c \
+		src/parsing/heredoc.c \
+		src/parsing/parsing.c \
+		src/parsing/parsing_utils.c\
 
 OBJS = $(SRCS:.c=.o)
 
