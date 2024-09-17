@@ -6,74 +6,62 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/08 17:50:31 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:43:33 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/**
- * @brief: looks for the given token type inside tokens list
- * starting from the givven token
- * 
- * @input: t_tokens **Tokens_list, token_type that we are looking for
- * @return: Bool does the list contain the searchable type of node or not
-*/
-bool	ft_check_token_exists(t_tokens *tokens, t_token_type searchable_token)
+t_command_full *init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 {
-	t_tokens	*temp_token;
+	t_command_full *new_command;
+	new_command = (t_command_full *)malloc(sizeof(t_command_full));
+	if (!new_command)
+	{
+		
+		return (NULL);
+	}
 
+	return (new_command);
+}
+
+t_command_full *ft_parse(t_tokens *tokens)
+{
+	t_command_full	*list_head;
+	t_command_full	*temp_node;
+	t_tokens	*temp_token;
+	
+	if (!list_head)
+	{
+		list_head = init_cmd(NULL, tokens);
+		if (!list_head)
+		{
+			// ft_throw_error();
+			// return (NULL);
+		}
+		temp_node = list_head;
+	} else {
+		// temp_node = init_cmd();
+	}
 	temp_token = tokens;
 	while (temp_token)
 	{
-		if (temp_token->type == searchable_token)
+		if (temp_token == T_PIPE)
 		{
-			return (true);
+			
+		} else if (temp_token == T_DGREAT || temp_token == T_DLESS || temp_token == T_GREAT || temp_token == T_LESS)
+		{
+			
+		} else {
+			// ft_append(temp_node->args, temp_token); appends cuurent token to 
 		}
 		temp_token = temp_token->next;
 	}
-	return (false);
-}
-
-/**
- * @brief: Recursive func that converts list of tokens into AST
- * each AST_node = t_command
- * Tokens are divided via prioritization:
- * 1) | left right
- * 2) > < >> << : left right
- * 3) Word : char **args
- * 
- * TODO: think about condition that will terminate our loop
- * for now main Idia is to limit our loop with node limiter
- * 
- * there are some special rules for filling left and right in redirections cases
- * @input: t_tokens **Tokens_list, pointer to the node that limits our func
- * @return: AST - tree made from t_commands nods 
-*/
-t_command	*parse_tokens(t_tokens *start_token, t_tokens *end_token)
-{
-	// t_tokens	*temp_token;
-	t_tokens	*root_token;
-	t_command	*root_branch;
-
-	// temp_token = start_token;
-	//TODO:
-	root_token = ft_find_root_token(start_token, end_token);
-	root_branch = init_branch(NULL, root_token->type, NULL, NULL);
-	if (root_token != T_WORD)
-	{
-		// TODO:
-		// finish parsing for left side of pipe | redir
-		// root_branch->left = parse_tokens(root_token, NULL);
-		root_branch->right = parse_tokens(root_token, NULL);
-		root_branch->right = NULL;
-	}
-
-	return (root_branch);
+	return (list_head);
 }
 
 // Function to free the args array in a command
-void	free_command_args(t_command *cmd)
+void	free_command_args(t_command_full *cmd)
 {
 	if (cmd->args)
 	{

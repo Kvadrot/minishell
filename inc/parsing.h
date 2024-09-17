@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/08 16:40:34 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:37:43 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,32 @@
 
 # include "minishell.h"
 
-typedef struct s_command
-{
-	char				**args;
-	int					type;
-	struct s_command	*left;
-	struct s_command	*right;
-}						t_command;
 
 //parsing_utils.c
-t_command	*init_branch(char **args, int type, t_command *left, t_command *right);
-t_tokens	*ft_find_root_token(t_tokens *start_token, t_tokens *end_token);
+enum redir_type
+{
+	IN,
+	OUT,
+	EDIT,
+	HERE_DOC
+};
 
-//parsing.c
-t_command	*parse_tokens(t_tokens *start_token, t_tokens *end_token);
+typedef struct s_command_full t_command_full;  // Forward declaration
+
+typedef struct s_redir
+{
+	int		type;
+	char	file_name;
+	int		fd;
+} t_redir;
+
+typedef struct s_command_full
+{
+	char				*cmd_name;
+	char				**args;
+	t_redir				*redir;
+	t_command_full		*next;
+	t_command_full		*prev;
+}						t_command_full;
 
 #endif

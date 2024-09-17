@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/07 12:42:44 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:45:05 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_data
 	int				stdout;
 	t_tokens		*tokens;
 	t_env			*env;
-	t_command		*commands;
+	t_command_full		*commands;
 	struct termios	terminal;
 	struct s_data	*next;
 }					t_data;
@@ -64,13 +64,12 @@ void				environment_new_node_end(t_env **head, char *key,
 void				init_environment(t_env **environment, char **env);
 void				environment_free_list(t_env *head);
 
-void				environment_free_list(t_env *head);
-
 // tester functions
 void				print_environment(t_env *node);
 
 // tokens
-void				init_tokens(t_data *minishell);
+int					init_tokens(t_data *minishell);
+void				ft_free_token_list(t_tokens *token_list);
 int					validate_tokens(t_tokens *tokens);
 
 //	new potential libft function

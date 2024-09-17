@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/09/08 16:40:03 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:12:35 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,38 @@ void	minishell_loop(t_data *minishell)
 	{
 		minishell->tokens = NULL;
 		minishell->input = readline(PROMPT);
-		if (ft_input_is_valid(minishell->input) == false) //initial valisdation
+		if (ft_strlen(minishell->input) > 0)
 		{
-			//ERROR Occured
-			//TODO: free alocated mem, continue reading from line
-			printf("Mini_hell: syntax error\n");
-		}
-		init_tokens(minishell);
-		if (validate_tokens(minishell->tokens) < 0)
-		{
-			//ERROR Occured
-			// printing is inside the validate_tokens func
-			//TODO: free alocated mem, continue reading from line
-			//free()
-			// break;
-		}
+			//TODO: add to history
+			//add to history
+			if (ft_input_is_valid(minishell->input) == false) //initial valisdation
+			{
+				//ERROR Occured
+				//TODO: free alocated mem, continue reading from line
+				printf("Mini_hell: syntax error\n");
+			}
+			init_tokens(minishell);
+			if (validate_tokens(minishell->tokens) < 0)
+			{
+				//ERROR Occured
+				// printing is inside the validate_tokens func
+				//TODO: free alocated mem, continue reading from line
+				//free()
+				// break;
+			}
 
-		minishell->commands = parse_tokens(minishell->tokens, NULL);
-		minishell->commands = NULL;
+			// minishell->commands = parse_tokens(minishell->tokens, NULL);
+			// minishell->commands = NULL;
 
-		//Uncomment to Test Tokens
-// =================================================================================
-		// while (minishell->tokens != NULL)
-		// {
-		// 	printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
-		// 	minishell->tokens = minishell->tokens->next;
-		// }
-// =================================================================================
+			//Uncomment to Test Tokens
+	// =================================================================================
+			while (minishell->tokens != NULL)
+			{
+				printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
+				minishell->tokens = minishell->tokens->next;
+			}
+	// =================================================================================
+		}
 	}
 }
 

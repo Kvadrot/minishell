@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/08 16:35:28 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:49:28 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ t_tokens	*get_token(char *input)
 	token->value = NULL;
 	token->type = 0;
 	token->next = NULL;
-	if (*input)
-	{
+	// if (*input)
+	// {
 		if (!ft_strncmp(">>", input, 2))
 			return (update_token(token, ">>", T_DGREAT));
 		else if (!ft_strncmp("<<", input, 2))
@@ -82,8 +82,8 @@ t_tokens	*get_token(char *input)
 			return (update_token(token, "|", T_PIPE));
 		else
 			return (update_token_word(token, input, T_WORD));
-	}
-	return (NULL);
+	// }
+	// return (NULL);
 }
 
 void	append_token(t_tokens **tokens, t_tokens *new_token)
@@ -140,13 +140,15 @@ int	validate_tokens(t_tokens *tokens)
 	return (200);
 }
 
-void	init_tokens(t_data *minishell)
+int	init_tokens(t_data *minishell)
 {
 	char		*string;
 	t_tokens	*token;
 
 	token = NULL;
 	string = minishell->input; //<< fewrgewger >> ergewrg | d >>> f
+	if (!string)
+		return (200);
 	while (string && *string)
 	{
 		ft_skip_whitespace(&string);
@@ -155,8 +157,29 @@ void	init_tokens(t_data *minishell)
 		{
 			append_token(&minishell->tokens, token);
 			string += ft_strlen(token->value);
+		} else {
+			ft_free_token_list(minishell->tokens);
+			return (400);
 		}
 	}
+	return (200);
+}
+
+void				ft_free_token_list(t_tokens *token_list)
+{
+	t_tokens *temp;
+	t_tokens *temp_next;
+
+	temp = token_list;
+	temp_next = NULL;
+	while (temp)
+	{
+		temp_next = temp->next;
+		free(temp->value);
+		free(temp);
+		temp = temp_next;
+	}
+	ft_printf("debug ft_free_token_list is done \n");
 }
 
 // int	main(int ac, char **av)
