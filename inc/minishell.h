@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/17 13:45:05 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:09:43 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,8 @@ bool				ft_input_is_valid(char *input_str);
 void				minishell_loop(t_data *minishell);
 
 t_env				*environment_new_node(char *key, char *value);
-void				environment_new_node_end(t_env **head, char *key,
-						char *value);
-void				init_environment(t_env **environment, char **env);
+void				environment_new_node_end(t_data *minishell, char *key, char *value);
+void				init_environment(t_data **minishell, char **envir);
 void				environment_free_list(t_env *head);
 
 // tester functions
@@ -77,7 +76,8 @@ char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
 bool				ft_is_whitespace(char c);
 
-
+// error handling
+void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
 
 
 

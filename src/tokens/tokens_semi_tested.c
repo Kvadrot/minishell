@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/17 13:49:28 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:00:31 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	validate_tokens(t_tokens *tokens)
 		if (current->type != 0 && current->next->type != 0)
 		{
 			// need actual error code to handle it
-			printf("Mini_hell: syntax error near unexpected token `%s' - printed by: validate_tokens\n",
+			ft_printf("Mini_hell: syntax error near unexpected token `%s' - printed by: validate_tokens\n",
 				current->next->value);
 			return (-404);
 		}
@@ -159,7 +159,7 @@ int	init_tokens(t_data *minishell)
 			string += ft_strlen(token->value);
 		} else {
 			ft_free_token_list(minishell->tokens);
-			return (400);
+			return (-400);
 		}
 	}
 	return (200);

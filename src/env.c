@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/24 12:49:57 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:24:44 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,46 +25,52 @@ t_env	*environment_new_node(char *key, char *value)
 	return (new_node);
 }
 
-void	environment_new_node_end(t_env **head, char *key, char *value)
+void	environment_new_node_end(t_data *minishell, char *key, char *value)
 {
 	t_env	*new_node;
 	t_env	*current;
 
 	new_node = environment_new_node(key, value);
 	if (!new_node)
-		return ;
-	if (*head == NULL)
-		*head = new_node;
+	{
+		ft_handle_error(true, "Malloc_error, printed in environment_new_node_end", 433, minishell);
+	}
+	if (minishell->env == NULL)
+		minishell->env = new_node;
 	else
 	{
-		current = *head;
+		current = minishell->env;
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_node;
 	}
 }
 
-void	init_environment(t_env **environment, char **env)
+void	init_environment(t_data **minishell, char **envir)
 {
 	char	*key;
 	char	*value;
 	char	*delimiter_pos;
 	int		i;
 
-	*environment = NULL;
+	(*minishell)->env = NULL;
 	i = 0;
-	while (env[i])
+
+	while (envir[i])
 	{
-		delimiter_pos = ft_strchr(env[i], '=');
+		delimiter_pos = ft_strchr(envir[i], '=');
 		if (delimiter_pos != NULL)
 		{
-			key = ft_strndup(env[i], delimiter_pos - env[i]);
-			// if (!key)
-			// 	should we handle it?
-				value = ft_strdup(delimiter_pos + 1);
-			// if (!value)
-			// 	should we handle it?
-				environment_new_node_end(environment, key, value);
+			key = ft_strndup(envir[i], delimiter_pos - envir[i]);
+			if (!key)
+				ft_handle_error(true , "unexpected ERROR dup_is_faild, printed by init_environment\n", 422, *minishell);
+			value = ft_strdup(delimiter_pos + 1);
+			if (!value)
+				ft_handle_error(true , "unexpected ERROR dup_is_faild, printed by init_environment\n", 423, *minishell);
+			// environment_new_node_end((*minishell)->env, key, value);
+
+			environment_new_node_end(*minishell, key, value);
+
 			free(key);
 			free(value);
 		}
