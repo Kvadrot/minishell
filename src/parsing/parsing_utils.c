@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/17 19:00:05 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:20:53 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,34 @@ int	peek(char **ps, char *es, char *toks)
 	return (*s && strchr(toks, *s));
 }
 
+void	skip_whitespace(char **s, char *es)
+{
+	while (*s < es && strchr(" \t\r\n\v", **s))
+		(*s)++;
+}
+
+void	skip_trailing_whitespace(char **s, char *es)
+{
+	while (*s < es && strchr(" \t\r\n\v", **s))
+		(*s)++;
+}
+
+void	advance_to_end_of_token(char **s, char *es)
+{
+	while (*s < es && !strchr(" \t\r\n\v", **s) && !strchr("<|>&;()", **s))
+		(*s)++;
+}
+
 int	gettoken(char **ps, char *es, char **q, char **eq)
 {
-	char *s;
-	int ret;
+	char	*s;
+	int		ret;
 
 	s = *ps;
-	while (s < es && strchr(" \t\r\n\v", *s))
-		s++;
+	skip_whitespace(&s, es);
 	if (q)
 		*q = s;
 	ret = *s;
-
 	if (*s == 0)
 		return (0);
 	else if (peek(&s, es, "|();&"))
@@ -60,14 +76,10 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	}
 	else
 		ret = 'a';
-
-	while (s < es && !strchr(" \t\r\n\v", *s) && !strchr("<|>&;()", *s))
-		s++;
+	advance_to_end_of_token(&s, es);
 	if (eq)
 		*eq = s;
-
-	while (s < es && strchr(" \t\r\n\v", *s))
-		s++;
+	skip_trailing_whitespace(&s, es);
 	*ps = s;
 	return (ret);
 }
