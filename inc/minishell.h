@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/19 19:21:24 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:27:57 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <signal.h>
 
 # define PROMPT "MDshell > "
 # define YES 1
