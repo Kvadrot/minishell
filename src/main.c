@@ -6,13 +6,15 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 18:49:17 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:26:28 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // ------------------------------TO DO------------------------------
 // 1) Validate input (quotes etc)
 // 2) Update here_doc
+// 3) src/execution/exec.c: Error!
+// ASSIGN_IN_CONTROL (line: 24): Assignment in control structure
 
 #include "../inc/minishell.h"
 
