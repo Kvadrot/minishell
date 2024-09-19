@@ -6,13 +6,13 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/17 19:09:24 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:41:38 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_cmd	*redircmd(t_cmd *subcmd, char *file, char *efile, int mode, int fd)
+t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 {
 	t_redircmd	*cmd;
 
@@ -21,7 +21,6 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, char *efile, int mode, int fd)
 	cmd->type = REDIR;
 	cmd->cmd = subcmd;
 	cmd->file = file;
-	cmd->efile = efile;
 	cmd->mode = mode;
 	cmd->fd = fd;
 	return ((t_cmd *)cmd);

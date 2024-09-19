@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/17 19:09:16 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:24:22 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	run_in_background_or_list(t_cmd *cmd, t_data *minishell)
 		pid_l = fork1();
 		if (pid_l == 0)
 			runcmd(lcmd->left, minishell);
-		waitpid(pid_l, NULL, 0);          
+		waitpid(pid_l, NULL, 0);
 		runcmd(lcmd->right, minishell);
 	}
 	else if (cmd->type == BACK)
@@ -88,7 +88,7 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 	paths = retrieve_paths();
 	binary_path = find_executable_path(ecmd, paths);
 	execute_command(binary_path, ecmd, minishell);
-	clean_up(binary_path, paths); // Free resources (or call garbage collector)
+	clean_up(binary_path, paths);
 }
 
 void	runcmd(struct s_cmd *cmd, t_data *minishell)

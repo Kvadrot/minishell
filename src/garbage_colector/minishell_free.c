@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 20:12:35 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 14:49:45 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:44:17 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	minishell_free(t_data *minishell, int flag)
 {
-	// free memory
+	// add free
 	(void)flag;
 	(void)minishell;
 	exit(0);
@@ -37,13 +37,10 @@ void	free_cmd(t_cmd *node)
 			i++;
 		}
 	}
-	// Free paths
 	if (execcmd->paths)
 		free(execcmd->paths);
-	// Free flag
 	if (execcmd->flag)
 		free(execcmd->flag);
-	// Finally, free the node itself
 	free(node);
 }
 
@@ -58,10 +55,9 @@ void	free_pipes(t_data *minishell)
 	i = 0;
 	while (minishell->pipe_argv[i])
 	{
-		free(minishell->pipe_argv[i]); // Free each row (int*)
+		free(minishell->pipe_argv[i]);
 		i++;
 	}
-	// Free the main array
 	free(minishell->pipe_argv);
 	minishell->pipe_argv = NULL;
 }
@@ -72,21 +68,17 @@ void	free_global(t_data *minishell)
 
 	if (!minishell)
 		return ;
-	// Free the input string
 	if (minishell->input)
 		free(minishell->input);
-	// Free the pipe_argv using the helper function
 	free_pipes(minishell);
-	// Free each command in the commands array
 	if (minishell->commands)
 	{
 		i = 0;
 		while (minishell->commands[i])
 		{
-			free_cmd(minishell->commands[i]); // Free each command
+			free_cmd(minishell->commands[i]);
 			i++;
 		}
-		free(minishell->commands); // Free the commands array itself
+		free(minishell->commands);
 	}
-	// free(minishell);
 }

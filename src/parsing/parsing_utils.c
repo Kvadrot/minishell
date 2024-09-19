@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/17 19:20:53 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:21:57 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,45 +41,16 @@ void	advance_to_end_of_token(char **s, char *es)
 		(*s)++;
 }
 
-int	gettoken(char **ps, char *es, char **q, char **eq)
+char	*ft_substring(const char *start, const char *end)
 {
-	char	*s;
-	int		ret;
+	size_t	length;
+	char	*result;
 
-	s = *ps;
-	skip_whitespace(&s, es);
-	if (q)
-		*q = s;
-	ret = *s;
-	if (*s == 0)
-		return (0);
-	else if (peek(&s, es, "|();&"))
-		s++;
-	else if (*s == '>')
-	{
-		s++;
-		if (*s == '>')
-		{
-			ret = '+';
-			s++;
-		}
-	}
-	else if (*s == '<')
-	{
-		s++;
-		if (*s == '<')
-		{
-			ret = '-';
-			s++;
-			*ps = s;
-		}
-	}
-	else
-		ret = 'a';
-	advance_to_end_of_token(&s, es);
-	if (eq)
-		*eq = s;
-	skip_trailing_whitespace(&s, es);
-	*ps = s;
-	return (ret);
+	length = end - start;
+	result = malloc(length + 1);
+	if (result == NULL)
+		return (NULL);
+	strncpy(result, start, length);
+	result[length] = '\0';
+	return (result);
 }

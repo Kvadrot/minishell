@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:59:52 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/17 18:50:02 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:12:59 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	fork_and_run_command(t_data *minishell, int i)
 	}
 }
 
-
 void	make_forks(t_data *minishell)
 {
 	int	i;
@@ -92,5 +91,6 @@ void	make_forks(t_data *minishell)
 			close(pipe_argv[i - 1][0]);
 		i++;
 	}
+	close_pipes(pipe_argv, commands);
 	wait_for_children(commands, &status, minishell);
 }

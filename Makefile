@@ -22,6 +22,7 @@ SRCS =	src/main.c \
 		src/builtin/echo.c \
 		src/builtin/exit.c \
 		src/builtin/pwd.c \
+		src/builtin/export_utils.c \
 		src/builtin/export.c \
 		src/builtin/unset.c \
 		src/execution/pipes.c \
@@ -37,8 +38,10 @@ SRCS =	src/main.c \
 		src/garbage_colector/garbage_colector.c \
 		src/garbage_colector/minishell_free.c \
 		src/parsing/heredoc.c \
-		src/parsing/parsing.c \
+		src/parsing/parsing_init.c\
 		src/parsing/parsing_utils.c\
+		src/parsing/parsing.c \
+		src/parsing/tokens.c \
 
 OBJS = $(SRCS:.c=.o)
 
