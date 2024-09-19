@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:21:24 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 19:13:23 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:41:52 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	run_with_pipes(t_data *minishell)
 	if (commands == 1)
 	{
 		if (fork1() == 0)
+		{
 			runcmd(minishell->commands[0], minishell);
+			exit(1);
+		}
 		wait(NULL);
 	}
 	else
