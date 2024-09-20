@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 19:11:28 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:29:53 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	runcmd(t_cmd *cmd, t_data *minishell)
 	else if (cmd->type == LIST || cmd->type == BACK)
 		run_in_background_or_list(cmd, minishell);
 	else if (cmd->type == HERE_DOC)
-		do_heredoc(cmd, minishell);
+		do_here_doc(cmd, minishell);
 	else
 		exit(1);
 	return ;

@@ -27,16 +27,18 @@ SRCS =	src/main.c \
 		src/builtin/unset.c \
 		src/execution/pipes.c \
 		src/execution/forks.c \
+		src/execution/exec_init.c \
 		src/execution/exec.c \
-		src/execution/exec_utils.c \
 		src/execution/find_bin_cmd.c \
 		src/execution/find_bin_cmd_utils.c \
+		src/execution/expand_dollar.c \
 		src/error/error.c \
 		src/env/env_utils.c \
 		src/env/env.c \
 		src/env/envlist_to_array.c \
 		src/garbage_colector/garbage_colector.c \
 		src/garbage_colector/minishell_free.c \
+		src/parsing/argv_utils.c \
 		src/parsing/heredoc.c \
 		src/parsing/parsing_init.c\
 		src/parsing/parsing_utils.c\

@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/20 19:19:36 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:34:34 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int					ft_unset(char **argv, t_data *minishell);
 int					ft_export(char **argv, t_data *minishell);
 int					ft_pwd(char **argv);
 t_cmd				*here_doc_cmd(t_cmd *cmd, char *q, char *eq);
-void				do_heredoc(t_cmd *cmd, t_data *minishell);
+void				do_here_doc(t_cmd *cmd, t_data *minishell);
 void				take_input(t_cmd *cmd, char *token);
 int					ft_exit(void);
 void				handle_exec_error(const char *msg, const char *arg);
@@ -167,5 +167,7 @@ void				sort_env_vars(t_env **env_array, size_t count);
 void				do_redirect(t_cmd *cmd, t_data *minishell);
 void				remove_quotes(char **str);
 void	handle_quotes_dollar(char **argv, t_data *minishell);
+void	init_cmd_argv(t_cmd *cmd);
+void	append_to_argv(t_cmd *cmd, char *line);
 
 #endif
