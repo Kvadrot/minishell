@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 19:17:15 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:21:22 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	return (ret);
 }
 
-void	handle_tokens(t_execcmd *cmd, t_cmd **ret, char **ps, char *es)
+void	handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es)
 {
 	int		tok;
 	int		argc;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 18:41:38 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:22:13 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 {
-	t_redircmd	*cmd;
+	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
@@ -28,7 +28,7 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 
 t_cmd	*listcmd(t_cmd *left, t_cmd *right)
 {
-	t_listcmd	*cmd;
+	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
@@ -40,7 +40,7 @@ t_cmd	*listcmd(t_cmd *left, t_cmd *right)
 
 t_cmd	*backcmd(t_cmd *subcmd)
 {
-	t_backcmd	*cmd;
+	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));

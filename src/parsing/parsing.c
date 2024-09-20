@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 19:03:16 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:01:48 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void	parsecmd(t_data *minishell)
 
 t_cmd	*parseexec(char **ps, char *es)
 {
-	t_execcmd	*cmd;
-	t_cmd		*ret;
+	t_cmd	*cmd;
+	t_cmd	*ret;
 
-	ret = ft_init_exec_cmd();
-	cmd = (t_execcmd *)ret;
+	ret = ft_init_cmd(EXEC);
+	cmd = ret;
 	ret = parseredirs(ret, ps, es);
 	handle_tokens(cmd, &ret, ps, es);
 	return (ret);

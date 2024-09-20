@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:03:45 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 19:11:13 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:56:55 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	take_input(t_heredoc_cmd *cmd, char *token)
+void	take_input(t_cmd *cmd, char *token)
 {
 	char	*line;
 	char	*temp;
@@ -45,10 +45,12 @@ void	take_input(t_heredoc_cmd *cmd, char *token)
 	free(token);
 }
 
+
+
 t_cmd	*here_doc_cmd(t_cmd *subcmd, char *q, char *eq)
 {
-	t_heredoc_cmd	*cmd;
-	char			*token;
+	t_cmd	*cmd;
+	char	*token;
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));

@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 18:21:51 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:01:18 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_cmd	*ft_init_exec_cmd(void)
+t_cmd	*ft_init_cmd(int type)
 {
-	t_execcmd	*cmd;
+	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = EXEC;
+	cmd->type = type;
 	return ((t_cmd *)cmd);
 }
 
-void	init_cmd_args(t_execcmd *cmd)
+void	init_cmd_args(t_cmd *cmd)
 {
 	cmd->argv = malloc(sizeof(char *) * 11);
 	if (!cmd->argv)
@@ -30,7 +30,7 @@ void	init_cmd_args(t_execcmd *cmd)
 	bzero(cmd->argv, 11 * sizeof(char *));
 }
 
-void	add_argument(t_execcmd *cmd, char *q, char *eq, int *argc)
+void	add_argument(t_cmd *cmd, char *q, char *eq, int *argc)
 {
 	cmd->argv[*argc] = ft_substring(q, eq);
 	(*argc)++;

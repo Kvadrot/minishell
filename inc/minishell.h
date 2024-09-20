@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/19 19:27:57 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:01:07 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void				panic(char *s);
 int					gettoken(char **ps, char *es, char **q, char **eq);
 
 // execution
-t_cmd				*ft_init_exec_cmd(void);
+t_cmd				*ft_init_cmd(int type);
 t_cmd				*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
 t_cmd				*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd				*listcmd(t_cmd *left, t_cmd *right);
@@ -135,12 +135,12 @@ int					ft_unset(char **argv, t_data *minishell);
 int					ft_export(char **argv, t_data *minishell);
 int					ft_pwd(char **argv);
 t_cmd				*here_doc_cmd(t_cmd *subcmd, char *q, char *eq);
-void				take_input(t_heredoc_cmd *cmd, char *token);
+void				take_input(t_cmd *cmd, char *token);
 int					ft_exit(void);
 void				handle_exec_error(const char *msg, const char *arg);
 void				clean_up(char *binary_path, char **paths);
 char				**retrieve_paths(void);
-char				*find_executable_path(t_execcmd *ecmd, char **paths);
+char				*find_executable_path(t_cmd *ecmd, char **paths);
 char				**environment_list_to_array(t_env *environment);
 void				make_forks(t_data *minishell);
 void				create_pipes(t_data *minishell);
@@ -148,17 +148,16 @@ void				run_with_pipes(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
 void				free_global(t_data *minishell);
 char				*ft_substring(const char *start, const char *end);
-void				handle_tokens(t_execcmd *cmd, t_cmd **ret, char **ps,
+void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps,
 						char *es);
 void				advance_to_end_of_token(char **s, char *es);
 void				skip_trailing_whitespace(char **s, char *es);
 void				skip_whitespace(char **s, char *es);
 int					peek(char **ps, char *es, char *toks);
-t_cmd				*ft_init_exec_cmd(void);
-void				init_cmd_args(t_execcmd *cmd);
-void				handle_tokens(t_execcmd *cmd, t_cmd **ret, char **ps,
+void				init_cmd_args(t_cmd *cmd);
+void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps,
 						char *es);
-void				add_argument(t_execcmd *cmd, char *q, char *eq, int *argc);
+void				add_argument(t_cmd *cmd, char *q, char *eq, int *argc);
 void				print_environment_sorted(t_env *node);
 void				sort_env_vars(t_env **env_array, size_t count);
 
