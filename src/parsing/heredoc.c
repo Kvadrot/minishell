@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:03:45 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/11 20:15:54 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:11:13 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	take_input(t_heredoc_cmd *cmd, char *token)
 	char	*line;
 	char	*temp;
 
-	// Initialize cmd->argv if it's NULL
 	if (cmd->argv == NULL)
 	{
 		cmd->argv = malloc(sizeof(char *));
@@ -25,19 +24,16 @@ void	take_input(t_heredoc_cmd *cmd, char *token)
 	}
 	while (1)
 	{
-		line = readline("our_heredoc> ");
+		line = readline("> ");
 		if (line == NULL)
 		{
-			// EOF reached
 			break ;
 		}
 		if (strcmp(line, token) == 0)
 		{
-			// Delimiter found, exit loop
 			free(line);
 			break ;
 		}
-		// Append the line to cmd->argv[0]
 		temp = ft_strjoin(cmd->argv[0], line);
 		free(cmd->argv[0]);
 		cmd->argv[0] = temp;
@@ -58,16 +54,9 @@ t_cmd	*here_doc_cmd(t_cmd *subcmd, char *q, char *eq)
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = HERE_DOC;
 	token = ft_strncpy(malloc(eq - q + 1), q, eq - q);
-	token[eq - q] = '\0'; // Ensure null-termination
+	token[eq - q] = '\0';
 	(void)subcmd;
 	take_input(cmd, token);
-	// cmd->cmd = subcmd;
 	printf("%s\n", cmd->argv[0]);
 	return ((t_cmd *)cmd);
 }
-
-/*
-	t
-	printf("%s\n", cmd->argv[0]);
-	return ((t_cmd *)cmd);
- */

@@ -5,8 +5,8 @@ CC = gcc
 WARNFLAGS = -Wall -Wextra -Werror
 RLFLAG = -lreadline -lm -g
 CFLAGS = -g
-HEADERS = -I./lib_ft -I./lib_ft_printf -I./inc
-LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
+HEADERS = -I./lib_ft -I./inc
+LDFLAGS = -L./lib_ft -l:libft.a $(RLFLAG)
 
 
 # Object directory
@@ -16,12 +16,13 @@ OBJ_DIR = obj/
 
 #src/cmd/cmd.c \
 # Source files
-SRCS = src/main.c \
+SRCS =	src/main.c \
 		src/builtin/cd.c \
 		src/builtin/builtin_utils.c \
 		src/builtin/echo.c \
 		src/builtin/exit.c \
 		src/builtin/pwd.c \
+		src/builtin/export_utils.c \
 		src/builtin/export.c \
 		src/builtin/unset.c \
 		src/execution/pipes.c \
@@ -31,9 +32,16 @@ SRCS = src/main.c \
 		src/execution/find_bin_cmd.c \
 		src/execution/find_bin_cmd_utils.c \
 		src/error/error.c \
-		src/env/env_utils.c src/env/env.c src/env/envlist_to_array.c\
-		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \
-		src/parsing/heredoc.c src/parsing/parsing.c src/parsing/parsing_utils.c\
+		src/env/env_utils.c \
+		src/env/env.c \
+		src/env/envlist_to_array.c \
+		src/garbage_colector/garbage_colector.c \
+		src/garbage_colector/minishell_free.c \
+		src/parsing/heredoc.c \
+		src/parsing/parsing_init.c\
+		src/parsing/parsing_utils.c\
+		src/parsing/parsing.c \
+		src/parsing/tokens.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -42,9 +50,6 @@ NAME = minishell
 
 # Libft src
 LIBFT = ./lib_ft/libft.a
-
-# ft_printf
-FTPRINTF = ./lib_ft_printf/libftprintf.a
 
 # Default rule
 all: $(LIBFT) $(FTPRINTF) $(NAME)
@@ -70,21 +75,15 @@ $(NAME): $(OBJS)
 $(LIBFT):
 	make -C lib_ft
 
-# Make lib_ft_printf
-$(FTPRINTF):
-	make -C lib_ft_printf
-
 # Clean up obj files
 clean:
 	make -C lib_ft clean
-	make -C lib_ft_printf clean
 	rm -f $(OBJS)
 
 # Full clean up
 fclean: clean
 	rm -f $(NAME)
 	make -C lib_ft fclean
-	make -C lib_ft_printf fclean
 
 # Rebuild
 re: fclean all

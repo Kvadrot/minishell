@@ -3,97 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/15 18:50:13 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:26:28 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// 1) COPY ENV
-// 2) Validate input
-// 3) Lexer (String -> Tokens)
-// 4) Parser (Tokens -> Logical_groups -> cmd_groups)
+// ------------------------------TO DO------------------------------
+// 1) Validate input (quotes etc)
+// 2) Update here_doc
+// 3) src/execution/exec.c: Error!
+// ASSIGN_IN_CONTROL (line: 24): Assignment in control structure
 
 #include "../inc/minishell.h"
 
-void minishell_loop(t_data *minishell)
+void	handle_sigint(int sig)
 {
-	// char *buff;
+	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
+static void	reset_minishell(t_data *minishell)
+{
+	minishell->input = NULL;
+	minishell->pipe_argv = NULL;
+	minishell->number_of_commands = 0;
+	minishell->commands = NULL;
+}
+
+void	minishell_loop(t_data *minishell)
+{
 	while (1)
 	{
-		// minishell->tokens = NULL;
-		// printf("before prompt\n");
 		minishell->input = readline(PROMPT);
 		if (minishell->input == NULL)
 		{
-			ft_putendl_fd("\nCaught EOF (Ctrl+D)\n", STDOUT_FILENO);
-			// diagnostics only delete before realase EOF
-			// minishell_free(minishell, YES);
-			break ;
+			ft_putendl_fd("exit", STDOUT_FILENO);
+			exit(0);
 		}
 		if (minishell->input)
 			add_history(minishell->input);
 		alloc_mem_for_commands(minishell);
 		parsecmd(minishell);
 		run_with_pipes(minishell);
-		
-		// free_global(minishell);
-		minishell->input = NULL;
-		minishell->pipe_argv = NULL;
-		minishell->num_of_cmds = 0;
-		minishell->commands = NULL;
-		
-		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
-		// printf("after prompt\n");
-		
-		// char buff[] = "echo tav > ztest"; //>> tak.txt | ls > ls";
-
-		// runcmd(parsecmd(buff));
-		// init_tokens(minishell);
-		// check_syntax(minishell->tokens);
-		// break ;
-		// minishell->commands = parse_tokens(minishell->tokens);
-		// while (minishell->tokens != NULL)
-		// {
-		// 	printf("%s = %d\n", minishell->tokens->value,
-		// minishell->tokens->type);
-		// 	minishell->tokens = minishell->tokens->next;
-		// }
-		// seg fault here (no input given)
-		// ft_input_is_valid(minishell->input);
-		// if (minishell->commands && minishell->commands->args[0]) // cd /nfs/homes/gbuczyns/Documents/CommonCore/level_4 >> asdas
-		// {
-		// 	buff = minishell->commands->args[0];
-		// 	if (ft_strcmp(buff, "cd") == 0)
-		// 		md_cd(minishell->commands->args[1], minishell);
-		// }
-		// print_environment(minishell->envlist);
+		reset_minishell(minishell);
 	}
 }
 
-
-void init_minishell(t_data *minishell, char **env)
+void	init_minishell(t_data *minishell, char **env)
 {
 	minishell->envir = env;
 	tcgetattr(STDIN_FILENO, &minishell->terminal);
-	minishell->num_of_cmds = 0;
+	minishell->number_of_commands = 0;
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_data	minishell;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	// char buff[] = "echo tav > test"; //>> tak.txt | ls > ls";
-
+	signal(SIGINT, handle_sigint);
 	init_minishell(&minishell, env);
 	init_environment(&minishell.envlist, minishell.envir);
-	// print_environment(minishell.envlist);
 	minishell_loop(&minishell);
-	// environment_free_list(minishell.envlist);
 	return (0);
 }

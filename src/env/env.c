@@ -5,15 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/12 19:23:50 by ssuchane         ###   ########.fr       */
+/*   Created: 2024/09/19 19:13:40 by ssuchane          #+#    #+#             */
+/*   Updated: 2024/09/19 19:14:21 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-// interchangeable use of functions in env and env_utils which
-// pretty much do the same stuff
 
 t_env	*environment_new_node(char *key, char *value)
 {
@@ -58,7 +55,6 @@ void	init_environment(t_env **environment, char **env)
 	i = 0;
 	while (env[i])
 	{
-		// use get_key_and_value(); function for readibility
 		delimiter_pos = ft_strchr(env[i], '=');
 		if (delimiter_pos != NULL)
 		{
@@ -72,7 +68,6 @@ void	init_environment(t_env **environment, char **env)
 	}
 }
 
-// function to free the list
 void	environment_free_list(t_env *head)
 {
 	t_env	*tmp;
@@ -87,7 +82,6 @@ void	environment_free_list(t_env *head)
 	}
 }
 
-// tester function
 void	print_environment(t_env *node)
 {
 	t_env	*current;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_colector.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:57:46 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/03 21:15:13 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:16:15 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,3 @@ void	ft_clear_envlist(t_data *minishell)
 	}
 	minishell->envlist = NULL;
 }
-
-// void	ft_clean_ms(t_data *minishell)
-// {
-// 	gc_collector(NULL, true);
-// 	ft_clear_parse(&minishell->tokens, minishell);
-// 	ft_clear_envlist(minishell);
-// 	rl_clear_history();
-// 	tcsetattr(STDIN_FILENO, TCSANOW, &minishell->terminal);
-// }

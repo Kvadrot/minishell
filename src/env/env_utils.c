@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:18:13 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/11 18:54:04 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:14:32 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ bool	ft_env_entry_exists(char *key, t_data *minishell)
 	}
 	return (false);
 }
-
 
 char	*ft_get_envlst_val(char *key, t_data *minishell)
 {

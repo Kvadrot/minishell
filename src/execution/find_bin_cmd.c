@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 20:33:18 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/11 19:27:15 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:12:48 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*construct_full_path(const char *base_path, const char *cmd)
 	base_len = ft_strlen(base_path);
 	cmd_len = ft_strlen(cmd);
 	total_len = base_len + 1 + cmd_len + 1;
-
 	full_path = malloc(total_len);
 	if (full_path == NULL)
 		return (NULL);

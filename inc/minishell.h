@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/15 19:06:26 by gbuczyns         ###   ########.fr       */
+/*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
+/*   Updated: 2024/09/19 19:27:57 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "../lib_ft/libft.h"
 # include "cmd.h"
-# include "parsing.h"
-# include "tokens.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -26,6 +24,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <signal.h>
 
 # define PROMPT "MDshell > "
 # define YES 1
@@ -35,11 +34,6 @@
 # define PERROR -1
 # define PSUCCESS 0
 
-// DRBUG_FIELD
-// DELETE ME befor release
-//========================================================================================//
-# include "../lib_ft_printf/ft_printf.h"
-//========================================================================================//
 # define FILE_CONTROL_G 0
 
 # ifndef FILE_CONTROL_G
@@ -71,9 +65,8 @@ typedef struct s_data
 	int				**pipe_argv;
 	char			*environment;
 	char			**envir;
-	int 			*pids;
 	int				exit_status;
-	int				num_of_cmds;
+	int				number_of_commands;
 	t_env			*envlist;
 	t_cmd			**commands;
 	struct termios	terminal;
@@ -94,8 +87,6 @@ void				environment_free_list(t_env *head);
 
 void				minishell_free(t_data *minishell, int flag);
 
-t_tokens			*convert_input_to_tokens(t_data *minishell);
-
 // tester functions
 void				print_environment(t_env *node);
 
@@ -107,9 +98,6 @@ char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
 bool				ft_is_whitespace(char c);
 
-t_command			*parse_tokens(t_tokens *tokens);
-
-int					check_syntax(t_tokens *tokens);
 int					md_cd(char *path, t_data *minishell);
 void				ft_update_env_list(char *key, char *value, bool yes,
 						t_data *minishell);
@@ -123,12 +111,11 @@ int					gettoken(char **ps, char *es, char **q, char **eq);
 
 // execution
 t_cmd				*ft_init_exec_cmd(void);
-t_cmd				*redircmd(t_cmd *subcmd, char *file, char *efile, int mode,
-						int fd);
+t_cmd				*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
 t_cmd				*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd				*listcmd(t_cmd *left, t_cmd *right);
 t_cmd				*backcmd(t_cmd *subcmd);
-int				runcmd(struct s_cmd *cmd, t_data *minishell);
+void				runcmd(struct s_cmd *cmd, t_data *minishell);
 void				parsecmd(t_data *minishell);
 t_cmd				*parseline(char **ps, char *es);
 t_cmd				*parsepipe(char **ps, char *es);
@@ -160,5 +147,25 @@ void				create_pipes(t_data *minishell);
 void				run_with_pipes(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
 void				free_global(t_data *minishell);
+char				*ft_substring(const char *start, const char *end);
+void				handle_tokens(t_execcmd *cmd, t_cmd **ret, char **ps,
+						char *es);
+void				advance_to_end_of_token(char **s, char *es);
+void				skip_trailing_whitespace(char **s, char *es);
+void				skip_whitespace(char **s, char *es);
+int					peek(char **ps, char *es, char *toks);
+t_cmd				*ft_init_exec_cmd(void);
+void				init_cmd_args(t_execcmd *cmd);
+void				handle_tokens(t_execcmd *cmd, t_cmd **ret, char **ps,
+						char *es);
+void				add_argument(t_execcmd *cmd, char *q, char *eq, int *argc);
+void				print_environment_sorted(t_env *node);
+void				sort_env_vars(t_env **env_array, size_t count);
+
+void				print_sorted_env_vars(t_env **env_array, size_t count);
+size_t				count_env_vars(t_env *node);
+t_env				**collect_env_vars(t_env *node, size_t count);
+void				sort_env_vars(t_env **env_array, size_t count);
+void				do_redirect(t_cmd *cmd, t_data *minishell);
 
 #endif
