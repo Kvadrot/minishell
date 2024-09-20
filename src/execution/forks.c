@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:59:52 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 19:12:59 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:57:40 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	fork_and_run_command(t_data *minishell, int i)
 		setup_pipes(pipe_argv, i, commands);
 		close_pipes(pipe_argv, commands);
 		runcmd(cmd, minishell);
+		minishell->exit_status = 0;
 		exit(0);
 	}
 	else if (pid < 0)
