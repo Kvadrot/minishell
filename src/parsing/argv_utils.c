@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:31:05 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 19:34:13 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:44:38 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	append_to_argv(t_cmd *cmd, char *line)
 	free(cmd->argv[0]);
 	cmd->argv[0] = temp;
 }
+
 void	init_cmd_argv(t_cmd *cmd)
 {
 	if (cmd->argv == NULL)

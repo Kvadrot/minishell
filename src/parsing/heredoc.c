@@ -6,13 +6,11 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:03:45 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 19:34:01 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:44:45 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 static int	is_matching_token(char *line, char *token)
 {
@@ -23,8 +21,6 @@ static int	is_matching_token(char *line, char *token)
 	}
 	return (0);
 }
-
-
 
 void	take_input(t_cmd *cmd, char *token)
 {
@@ -58,7 +54,7 @@ t_cmd	*here_doc_cmd(t_cmd *sub_cmd, char *q, char *eq)
 
 void	do_here_doc(t_cmd *cmd, t_data *minishell)
 {
-	int p[2];
+	int	p[2];
 
 	pipe(p);
 	if (fork1() == 0)

@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/20 19:34:34 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:44:17 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,8 @@ t_env				**collect_env_vars(t_env *node, size_t count);
 void				sort_env_vars(t_env **env_array, size_t count);
 void				do_redirect(t_cmd *cmd, t_data *minishell);
 void				remove_quotes(char **str);
-void	handle_quotes_dollar(char **argv, t_data *minishell);
-void	init_cmd_argv(t_cmd *cmd);
-void	append_to_argv(t_cmd *cmd, char *line);
+void				handle_quotes_dollar(char **argv, t_data *minishell);
+void				init_cmd_argv(t_cmd *cmd);
+void				append_to_argv(t_cmd *cmd, char *line);
 
 #endif

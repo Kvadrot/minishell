@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:27:50 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 19:41:46 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:44:54 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,3 @@ void	handle_quotes_dollar(char **argv, t_data *minishell)
 		i++;
 	}
 }
-
