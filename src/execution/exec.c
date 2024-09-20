@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 18:25:52 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:11:28 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 
 	if (cmd->argv[0] == NULL)
 		return ;
-	ft_expand_dolar(cmd->argv, minishell);
+	handle_quotes_dollar(cmd->argv, minishell);
 	if (is_builtin_done(cmd->argv, minishell))
 		return ;
 	paths = retrieve_paths();

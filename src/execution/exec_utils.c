@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 18:25:52 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:24:35 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,60 @@ t_cmd	*backcmd(t_cmd *subcmd)
 	return ((t_cmd *)cmd);
 }
 
-void	ft_expand_dolar(char **argv, t_data *minishell)
+void	remove_quotes(char **str)
 {
-	int		i;
+	int	len;
+
+	if (!str || !*str)
+		return ;
+	len = ft_strlen(*str);
+	if ((len >= 2 && (*str)[0] == '\'' && (*str)[len - 1] == '\'') || (len >= 2
+			&& (*str)[0] == '"' && (*str)[len - 1] == '"'))
+	{
+		ft_memmove(*str, *str + 1, len - 2); // Remove the outermost quotes
+		(*str)[len - 2] = '\0';
+	}
+}
+
+void	ft_expand_dollar(char **argv, t_data *minishell)
+{
 	char	*value;
+
+	if (*argv[0] == '$')
+	{
+		value = ft_get_envlst_val(*argv + 1, minishell);
+		if (value)
+		{
+			free(*argv);
+			*argv = value;
+		}
+	}
+}
+
+void	handle_quotes_dollar(char **argv, t_data *minishell)
+{
+	int	i;
+	
+	if (!argv) // Check if argv is NULL
+		return;
 
 	i = 0;
 	while (argv[i])
 	{
-		if (argv[i][0] == '$')
+		if (argv[i][0] == '"' && argv[i][ft_strlen(argv[i]) - 1] == '"')
 		{
-			value = ft_get_envlst_val(argv[i] + 1, minishell);
-			if (value)
-			{
-				free(argv[i]);
-				argv[i] = value;
-			}
+			remove_quotes(&argv[i]);
+			ft_expand_dollar(&argv[i], minishell);
+		}
+		else if (argv[i][0] == '\'' && argv[i][ft_strlen(argv[i]) - 1] == '\'')
+		{
+			remove_quotes(&argv[i]);
+		}
+		else if (ft_strchr(argv[i], '$'))
+		{
+			ft_expand_dollar(&argv[i], minishell);
 		}
 		i++;
 	}
 }
+

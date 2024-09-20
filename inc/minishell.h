@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/20 18:31:04 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:19:36 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void				do_exec(t_cmd *cmd, t_data *minishell);
 void				do_list(t_cmd *cmd, t_data *minishell);
 void				do_back(t_cmd *cmd, t_data *minishell);
 int					is_builtin_done(char **argv, t_data *minishell);
-void				ft_expand_dolar(char **argv, t_data *minishell);
+void				ft_expand_dollar(char **argv, t_data *minishell);
 void				do_redirect(t_cmd *cmd, t_data *minishell);
 int					ft_echo(char **argv);
 char				**get_key_and_value(char *argument);
@@ -165,5 +165,7 @@ size_t				count_env_vars(t_env *node);
 t_env				**collect_env_vars(t_env *node, size_t count);
 void				sort_env_vars(t_env **env_array, size_t count);
 void				do_redirect(t_cmd *cmd, t_data *minishell);
+void				remove_quotes(char **str);
+void	handle_quotes_dollar(char **argv, t_data *minishell);
 
 #endif
