@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 18:01:48 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:27:14 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es)
 		else if (tok == '+')
 			cmd = redircmd(cmd, q, O_WRONLY | O_CREAT | O_APPEND, 1);
 		else if (tok == '-')
-			cmd = here_doc_cmd(cmd, q, NULL);
+			cmd = here_doc_cmd(cmd, q, eq);
 	}
 	return (cmd);
 }

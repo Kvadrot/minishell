@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 17:22:13 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:25:52 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = REDIR;
-	cmd->cmd = subcmd;
+	cmd->sub_cmd = subcmd;
 	cmd->file = file;
 	cmd->mode = mode;
 	cmd->fd = fd;
@@ -45,7 +45,7 @@ t_cmd	*backcmd(t_cmd *subcmd)
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = BACK;
-	cmd->cmd = subcmd;
+	cmd->sub_cmd = subcmd;
 	return ((t_cmd *)cmd);
 }
 

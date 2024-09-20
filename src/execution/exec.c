@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 17:29:41 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:25:52 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	do_redirect(t_cmd *rcmd, t_data *minishell)
 			panic("open");
 		if (fork1() == 0)
 		{
-			runcmd(rcmd->cmd, minishell);
+			runcmd(rcmd->sub_cmd, minishell);
 			exit(0);
 		}
 		wait(0);
@@ -47,7 +47,7 @@ void	run_in_background_or_list(t_cmd *cmd, t_data *minishell)
 	else if (cmd->type == BACK)
 	{
 		if (fork1() == 0)
-			runcmd(cmd->cmd, minishell);
+			runcmd(cmd->sub_cmd, minishell);
 	}
 }
 
@@ -95,6 +95,8 @@ void	runcmd(t_cmd *cmd, t_data *minishell)
 		do_redirect(cmd, minishell);
 	else if (cmd->type == LIST || cmd->type == BACK)
 		run_in_background_or_list(cmd, minishell);
+	else if (cmd->type == HERE_DOC)
+		do_heredoc(cmd, minishell);
 	else
 		exit(1);
 	return ;

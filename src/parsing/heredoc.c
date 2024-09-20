@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:03:45 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 17:56:55 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:42:50 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,43 @@ void	take_input(t_cmd *cmd, char *token)
 	free(token);
 }
 
-
-
-t_cmd	*here_doc_cmd(t_cmd *subcmd, char *q, char *eq)
+t_cmd	*here_doc_cmd(t_cmd *sub_cmd, char *q, char *eq)
 {
 	t_cmd	*cmd;
 	char	*token;
 
-	cmd = malloc(sizeof(*cmd));
-	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = HERE_DOC;
+	cmd = ft_init_cmd(HERE_DOC);
 	token = ft_strncpy(malloc(eq - q + 1), q, eq - q);
 	token[eq - q] = '\0';
-	(void)subcmd;
+	cmd->sub_cmd = sub_cmd;
 	take_input(cmd, token);
-	printf("%s\n", cmd->argv[0]);
-	return ((t_cmd *)cmd);
+	return (cmd);
+}
+
+void	do_heredoc(t_cmd *cmd, t_data *minishell)
+{
+	int p[2];
+
+	pipe(p);
+	if (fork1() == 0)
+	{
+		dup2(p[1], 1);
+		close(p[1]);
+		close(p[0]);
+		printf("%s", cmd->argv[0]);
+		exit(0);
+	}
+	if (fork1() == 0)
+	{
+		dup2(p[0], 0);
+		close(p[1]);
+		close(p[0]);
+		runcmd(cmd->sub_cmd, minishell);
+		exit(0);
+	}
+	close(p[1]);
+	close(p[0]);
+	wait(0);
+	wait(0);
+	exit(0);
 }

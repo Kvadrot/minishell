@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/20 18:01:07 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:31:04 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-# include <signal.h>
 
 # define PROMPT "MDshell > "
 # define YES 1
@@ -134,7 +134,8 @@ char				**get_key_and_value(char *argument);
 int					ft_unset(char **argv, t_data *minishell);
 int					ft_export(char **argv, t_data *minishell);
 int					ft_pwd(char **argv);
-t_cmd				*here_doc_cmd(t_cmd *subcmd, char *q, char *eq);
+t_cmd				*here_doc_cmd(t_cmd *cmd, char *q, char *eq);
+void				do_heredoc(t_cmd *cmd, t_data *minishell);
 void				take_input(t_cmd *cmd, char *token);
 int					ft_exit(void);
 void				handle_exec_error(const char *msg, const char *arg);
@@ -148,15 +149,13 @@ void				run_with_pipes(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
 void				free_global(t_data *minishell);
 char				*ft_substring(const char *start, const char *end);
-void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps,
-						char *es);
+void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es);
 void				advance_to_end_of_token(char **s, char *es);
 void				skip_trailing_whitespace(char **s, char *es);
 void				skip_whitespace(char **s, char *es);
 int					peek(char **ps, char *es, char *toks);
 void				init_cmd_args(t_cmd *cmd);
-void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps,
-						char *es);
+void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es);
 void				add_argument(t_cmd *cmd, char *q, char *eq, int *argc);
 void				print_environment_sorted(t_env *node);
 void				sort_env_vars(t_env **env_array, size_t count);

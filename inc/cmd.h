@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:08:04 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 17:23:46 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:26:06 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_cmd
 	char			*file;
 	int				mode;
 	int				fd;
-	struct s_cmd	*cmd;
+	struct s_cmd	*sub_cmd;
 	struct s_cmd	*left;
 	struct s_cmd	*right;
 }					t_cmd;
