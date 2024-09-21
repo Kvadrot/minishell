@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 19:03:31 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/22 00:18:24 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 // 1) Validate input (quotes etc)
 // 2) momory leaks
 // 3) exit codes
+// 4) move opening files to parsing
+// 5) change commands to list
 
 #include "../inc/minishell.h"
 
