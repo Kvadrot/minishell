@@ -102,5 +102,5 @@ test: test.c
 
 push:
 	git add .
-	git commit -m "push"
+	git commit -m "make push!"
 	git push
