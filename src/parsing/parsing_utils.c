@@ -6,21 +6,23 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 22:00:36 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 23:08:44 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 /*
+** Function skip whitespaces and moves *ps pointer to the next 
+** character like in the tokens string.
 ** Returns 1 if the character is in the toks string, 0 otherwise.
 */
-int	peek(char **ps, char *es, char *toks)
+int	peek(char **ps, char *toks)
 {
 	char	*s;
 
 	s = *ps;
-	while (s < es && strchr(" \t\r\n\v", *s))
+	while (s && *s && strchr(" \t\r\n\v", *s))
 		s++;
 	*ps = s;
 	return (*s && strchr(toks, *s));

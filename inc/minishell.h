@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/21 21:14:19 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/22 00:07:50 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,10 @@ char				*ft_get_envlst_val(char *key, t_data *minishell);
 void				*gc_collector(void *list, bool free);
 void				ft_envlstadd_back(t_env *new, t_data *minishell);
 void				ft_lstclear(t_list **lst, void (*del)(void *));
-int					peek(char **ps, char *es, char *toks);
+int					peek(char **ps, char *toks);
 void				panic(char *s);
 int					gettoken(char **ps, char *es, char **q, char **eq);
+char				*get_word(char **ps);
 
 // execution
 t_cmd				*ft_init_cmd(int type);
@@ -115,9 +116,9 @@ void				runcmd(struct s_cmd *cmd, t_data *minishell);
 void				parsecmd(t_data *minishell);
 t_cmd				*parseline(char **ps, char *es);
 t_cmd				*parsepipe(char **ps, char *es);
-t_cmd				*parseexec(char **ps, char *es);
+t_cmd				*parseexec(char **ps);
 t_cmd				*parseblock(char **ps, char *es);
-t_cmd				*parseredirs(t_cmd *cmd, char **ps, char *es);
+t_cmd				*parseredirs(t_cmd *sub_cmd, char **ps, char *es);
 pid_t				fork1(void);
 void				do_exec(t_cmd *cmd, t_data *minishell);
 void				do_list(t_cmd *cmd, t_data *minishell);
@@ -130,7 +131,7 @@ char				**get_key_and_value(char *argument);
 int					ft_unset(char **argv, t_data *minishell);
 int					ft_export(char **argv, t_data *minishell);
 int					ft_pwd(char **argv);
-t_cmd				*here_doc_cmd(t_cmd *cmd, char *q, char *eq);
+t_cmd				*here_doc_cmd(t_cmd *cmd, char *token);
 void				do_here_doc(t_cmd *cmd, t_data *minishell);
 void				take_input(t_cmd *cmd, char *token);
 int					ft_exit(void);
@@ -145,11 +146,10 @@ int					execute(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
 void				free_global(t_data *minishell);
 char				*ft_substring(const char *start, const char *end);
-void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es);
+void				get_argv(t_cmd *cmd, char **ps);
 void				advance_to_end_of_token(char **s, char *es);
-int					peek(char **ps, char *es, char *toks);
+
 void				init_cmd_args(t_cmd *cmd);
-void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es);
 void				add_argument(t_cmd *cmd, char *q, char *eq, int *argc);
 void				print_environment_sorted(t_env *node);
 void				sort_env_vars(t_env **env_array, size_t count);

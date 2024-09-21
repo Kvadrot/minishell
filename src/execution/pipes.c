@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:21:24 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 17:18:12 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/22 00:00:40 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	execute(t_data *minishell)
 	commands = minishell->number_of_commands;
 	if (commands == 0)
 		return (1);
-	if (commands == 1 && is_builtin(*(minishell->commands)))
+	if (commands == 1 && is_builtin(*(minishell->commands)) && minishell->commands[0]->type == EXEC)
 	{
 		return (run_builtin_cmd(minishell->commands[0]->argv, minishell));
 	}

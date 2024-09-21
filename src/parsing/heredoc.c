@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:03:45 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 19:44:45 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/22 00:09:02 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,11 @@ void	take_input(t_cmd *cmd, char *token)
 	free(token);
 }
 
-t_cmd	*here_doc_cmd(t_cmd *sub_cmd, char *q, char *eq)
+t_cmd	*here_doc_cmd(t_cmd *sub_cmd, char *token)
 {
 	t_cmd	*cmd;
-	char	*token;
 
 	cmd = ft_init_cmd(HERE_DOC);
-	token = ft_strncpy(malloc(eq - q + 1), q, eq - q);
-	token[eq - q] = '\0';
 	cmd->sub_cmd = sub_cmd;
 	take_input(cmd, token);
 	return (cmd);

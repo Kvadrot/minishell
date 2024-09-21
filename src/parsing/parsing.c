@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 17:23:19 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/22 00:10:57 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,58 +35,71 @@ void	parsecmd(t_data *minishell)
 {
 	int		i;
 	t_cmd	*cmd;
+	t_cmd	*temp;
 	char	*es;
 	char	*ps;
 
 	i = 0;
+	cmd = NULL;
+	temp = NULL;
 	ps = minishell->input;
 	es = minishell->input + ft_strlen(minishell->input);
 	while (ps <= es)
 	{
-		cmd = parseexec(&ps, es);
+		cmd = parseredirs(cmd, &ps, es);
+		if (cmd)
+			cmd->sub_cmd = parseexec(&ps);
+		else
+		{
+			cmd = parseexec(&ps);
+			temp = parseredirs(cmd, &ps, es);
+			if (temp)
+				cmd = temp;
+		}
 		if (cmd)
 		{
 			handle_quotes_dollar(cmd->argv, minishell);
 			minishell->commands[i] = cmd;
 			minishell->number_of_commands++;
 		}
-		peek(&ps, es, "|");
+		peek(&ps, "|");
 		ps++;
 		i++;
 	}
 }
 
-t_cmd	*parseexec(char **ps, char *es)
+t_cmd	*parseexec(char **ps)
 {
-	t_cmd	*cmd;
-	t_cmd	*ret;
+	t_cmd	*ret_cmd;
 
-	ret = ft_init_cmd(EXEC);
-	cmd = ret;
-	ret = parseredirs(ret, ps, es);
-	handle_tokens(cmd, &ret, ps, es);
-	return (ret);
+	ret_cmd = ft_init_cmd(EXEC);
+	get_argv(ret_cmd, ps);
+	return (ret_cmd);
 }
 
-t_cmd	*parseredirs(t_cmd *cmd, char **ps, char *es)
+t_cmd	*parseredirs(t_cmd *sub_cmd, char **ps, char *es)
 {
 	int		tok;
-	char	*q;
-	char	*eq;
+	t_cmd	*ret_cmd;
+	char	*file;
 
-	while (peek(ps, es, "<>"))
+	ret_cmd = NULL;
+	tok = 0;
+	file = NULL;
+	while (peek(ps, "<>"))
 	{
 		tok = gettoken(ps, es, 0, 0);
-		if (gettoken(ps, es, &q, &eq) != 'a')
+		file = get_word(ps);
+		if (file == NULL)
 			panic("missing file for redirection");
 		if (tok == '<')
-			cmd = redircmd(cmd, q, O_RDONLY, 0);
+			ret_cmd = redircmd(sub_cmd, file, O_RDONLY, 0);
 		else if (tok == '>')
-			cmd = redircmd(cmd, q, O_CREAT | O_WRONLY | O_TRUNC, 1);
+			ret_cmd = redircmd(sub_cmd, file, O_CREAT | O_WRONLY | O_TRUNC, 1);
 		else if (tok == '+')
-			cmd = redircmd(cmd, q, O_WRONLY | O_CREAT | O_APPEND, 1);
+			ret_cmd = redircmd(sub_cmd, file, O_WRONLY | O_CREAT | O_APPEND, 1);
 		else if (tok == '-')
-			cmd = here_doc_cmd(cmd, q, eq);
+			ret_cmd = here_doc_cmd(sub_cmd, file);
 	}
-	return (cmd);
+	return (ret_cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 21:58:17 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 23:43:01 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	ret = *s;
 	if (*s == 0)
 		return (0);
-	if (peek(&s, es, "|();&"))
+	if (peek(&s, "|();&"))
 		s++;
 	else if (*s == '>')
 		ret = handle_greater_than(&s);
@@ -74,14 +74,8 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 	return (ret);
 }
 
-void	handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es)
+void	get_argv(t_cmd *cmd, char **ps)
 {
-	char	*s;
-
-	while (!peek(ps, es, "|)&;") && **ps != 0)
-	{
-		s = get_string(ps);
-		cmd->argv = ft_append_argv(cmd->argv, s);
-		*ret = parseredirs(*ret, ps, es);
-	}
+	while (!peek(ps, "<>|)&;") && **ps != 0)
+		cmd->argv = ft_append_argv(cmd->argv, get_string(ps));
 }

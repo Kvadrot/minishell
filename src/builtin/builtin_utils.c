@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:04:01 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 22:01:25 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/22 00:15:38 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	run_builtin_cmd(char **argv, t_data *minishell)
 
 int	is_builtin(t_cmd *cmd)
 {
+	if (!cmd->argv)
+		return (0);
 	if (ft_strcmp(cmd->argv[0], "cd") == 0 || ft_strcmp(cmd->argv[0],
 			"echo") == 0 || ft_strcmp(cmd->argv[0], "env") == 0
 		|| ft_strcmp(cmd->argv[0], "export") == 0 || ft_strcmp(cmd->argv[0],
