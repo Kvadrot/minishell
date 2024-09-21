@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:31:05 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 21:33:54 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 22:00:56 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_cmd_argv(t_cmd *cmd)
 		cmd->argv[0] = ft_strdup("");
 	}
 }
+
 /*
 ** Append a line to the argv array
 */

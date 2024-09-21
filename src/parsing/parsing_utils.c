@@ -6,13 +6,13 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 21:13:45 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 22:00:36 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/* 
+/*
 ** Returns 1 if the character is in the toks string, 0 otherwise.
 */
 int	peek(char **ps, char *es, char *toks)
@@ -52,7 +52,7 @@ char	*ft_substring(const char *start, const char *end)
 	return (result);
 }
 
- char	*get_block(char **ps)
+char	*get_block(char **ps)
 {
 	char	*ret;
 	char	*s;
@@ -67,7 +67,7 @@ char	*ft_substring(const char *start, const char *end)
 	s++;
 	while (s && *s && *s != quote)
 		s++;
-	length = s - start +1;
+	length = s - start + 1;
 	ret = malloc(length + 1);
 	if (ret == NULL)
 		return (NULL);
@@ -77,7 +77,7 @@ char	*ft_substring(const char *start, const char *end)
 		s++;
 	*ps = s;
 	return (ret);
-} 
+}
 
 char	*get_word(char **ps)
 {
@@ -101,12 +101,12 @@ char	*get_word(char **ps)
 	return (ret);
 }
 
-/* 
-* Returns a string from the input string.
-* The string can be a block or a word.
-* A block is a string between two quotes.
-* A word is a string between two whitespaces.
-*/
+/*
+ * Returns a string from the input string.
+ * The string can be a block or a word.
+ * A block is a string between two quotes.
+ * A word is a string between two whitespaces.
+ */
 char	*get_string(char **ps)
 {
 	if (*ps == NULL || **ps == '\0')

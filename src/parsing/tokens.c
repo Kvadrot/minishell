@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 21:55:48 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:58:17 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,12 @@ int	gettoken(char **ps, char *es, char **q, char **eq)
 
 void	handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es)
 {
-	// int		tok;
-	// char	*q;
-	// char	*eq;
 	char	*s;
 
-	// int		argc;
-	// argc = 0;
-	// init_cmd_args(cmd);
 	while (!peek(ps, es, "|)&;") && **ps != 0)
 	{
-		// tok = gettoken(ps, es, &q, &eq);
-		// if (tok == 0)
-		// 	break ;
-		// if (tok != 'a')
-		// 	panic("syntax");
 		s = get_string(ps);
 		cmd->argv = ft_append_argv(cmd->argv, s);
-		// add_argument(cmd, q, eq, &argc);
 		*ret = parseredirs(*ret, ps, es);
 	}
 }
-

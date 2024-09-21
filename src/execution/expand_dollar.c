@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:27:50 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 15:12:22 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 22:00:23 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,15 @@ void	handle_quotes_dollar(char **argv, t_data *minishell)
 {
 	int	i;
 
-	// char	*temp;
 	if (!argv)
 		return ;
 	i = 0;
 	while (argv[i])
 	{
-		// temp = argv[i];       // debug
-		// printf("%s\n", temp); // debug
-			// printf("%s\n", argv[i]); // debug
 		if (argv[i][0] == '"' && argv[i][ft_strlen(argv[i]) - 1] == '"')
 		{
 			remove_quotes(&argv[i]);
 			ft_expand_dollar(&argv[i], minishell);
-			// printf("%s\n", argv[i]); // debug
 		}
 		else if (argv[i][0] == '\'' && argv[i][ft_strlen(argv[i]) - 1] == '\'')
 		{
