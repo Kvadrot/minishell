@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:31:05 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 15:02:21 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:33:54 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**ft_append_argv(char **argv, char *line)
 	i = 0;
 	while (argv && argv[i])
 	{
-		new_argv[i] = ft_strdup(argv[i]);
+		new_argv[i] = argv[i];
 		i++;
 	}
 	new_argv[i] = ft_strdup(line);

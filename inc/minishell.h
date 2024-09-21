@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/21 20:20:11 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:14:19 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,7 @@ void				print_environment(t_env *node);
 //	new potential libft function
 char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
-bool				ft_is_whitespace(char c);
-
+char				*get_string(char **ps);
 int					md_cd(char *path, t_data *minishell);
 void				ft_update_env_list(char *key, char *value, bool yes,
 						t_data *minishell);
@@ -148,8 +147,6 @@ void				free_global(t_data *minishell);
 char				*ft_substring(const char *start, const char *end);
 void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es);
 void				advance_to_end_of_token(char **s, char *es);
-void				skip_trailing_whitespace(char **s, char *es);
-void				skip_whitespace(char **s, char *es);
 int					peek(char **ps, char *es, char *toks);
 void				init_cmd_args(t_cmd *cmd);
 void				handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es);

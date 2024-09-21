@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:03:30 by itykhono          #+#    #+#             */
-/*   Updated: 2024/09/21 18:07:44 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:10:08 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int					ft_isdigit(char s);
 int					ft_isalnum(char s);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
+int					ft_iswhitespace(char c);
+
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 
