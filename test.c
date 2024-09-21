@@ -15,7 +15,8 @@ int	ft_iswhitespace(char c)
 	return (0);
 }
 
-char	*get_block(char **ps, char *es)
+
+ char	*get_block(char **ps, char *es)
 {
 	char	*ret;
 	char	*s;
@@ -26,11 +27,11 @@ char	*get_block(char **ps, char *es)
 	s = *ps;
 	quote = *s;
 	length = 0;
-	s++;
 	start = s;
+	s++;
 	while (s < es && *s != quote)
 		s++;
-	length = s - start;
+	length = s - start +1;
 	ret = malloc(length + 1);
 	if (ret == NULL)
 		return (NULL);
@@ -40,7 +41,7 @@ char	*get_block(char **ps, char *es)
 		s++;
 	*ps = s;
 	return (ret);
-}
+} 
 
 char	*get_word(char **ps, char *es)
 {
@@ -80,7 +81,7 @@ int	main(void)
 	char	*ps;
 	char	*string;
 
-	input = "   ula 			\"  'Hello, World!'  ";
+	input = " '  			\"  Hello, World!' \"' ";
 	es = input + strlen(input);
 	ps = input;
 	string = get_string(&ps, es);
