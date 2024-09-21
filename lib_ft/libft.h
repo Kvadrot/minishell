@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:03:30 by itykhono          #+#    #+#             */
-/*   Updated: 2024/09/21 15:08:45 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:07:44 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-int					ft_isalpha(int someChar);
-int					ft_isdigit(int someInt);
-int					ft_isalnum(int some_val);
+int					ft_isalpha(char s);
+int					ft_isdigit(char s);
+int					ft_isalnum(char s);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);

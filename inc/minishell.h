@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/21 16:25:47 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:26:04 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,6 @@ void				minishell_free(t_data *minishell, int flag);
 
 // tester functions
 void				print_environment(t_env *node);
-
-// tokens
-void				init_tokens(t_data *minishell);
 
 //	new potential libft function
 char				*ft_strncpy(char *dest, char *src, int num);

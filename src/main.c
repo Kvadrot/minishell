@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 16:18:05 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:03:31 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	reset_minishell(t_data *minishell)
 	minishell->input = NULL;
 	minishell->pipe_argv = NULL;
 	minishell->number_of_commands = 0;
-	minishell->exit_status = 0;
 	minishell->commands = NULL;
 }
 
@@ -50,6 +49,7 @@ void	minishell_loop(t_data *minishell)
 		alloc_mem_for_commands(minishell);
 		parsecmd(minishell);
 		execute(minishell);
+		// free
 		reset_minishell(minishell);
 	}
 }
@@ -59,6 +59,7 @@ void	init_minishell(t_data *minishell, char **env)
 	minishell->envir = env;
 	tcgetattr(STDIN_FILENO, &minishell->terminal);
 	minishell->number_of_commands = 0;
+	minishell->exit_status = 0;
 }
 
 int	main(int argc, char **argv, char **env)

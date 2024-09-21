@@ -9,7 +9,7 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/minishell",
+			"program": "${workspaceFolder}/test",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",

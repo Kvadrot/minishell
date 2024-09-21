@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 17:56:55 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:11:46 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,25 @@
 
 void	do_redirect(t_cmd *rcmd, t_data *minishell)
 {
-	int fd, status;
+	int	fd;
 
 	if (fork1() == 0)
 	{
 		close(rcmd->fd);
 		fd = open(rcmd->file, rcmd->mode, 0644);
 		if (fd < 0)
-		{
-			perror("open");
-			exit(1);
-		}
+			panic("open");
 		if (fork1() == 0)
 		{
 			runcmd(rcmd->sub_cmd, minishell);
 			exit(0);
 		}
-		wait(&status);
-		if (WIFEXITED(status))
-			minishell->exit_status = WEXITSTATUS(status);
+		wait(0);
 		close(fd);
 		exit(0);
 	}
-	wait(0);
 }
+
 void	run_in_background_or_list(t_cmd *cmd, t_data *minishell)
 {
 	pid_t	pid_l;

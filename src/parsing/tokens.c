@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 17:55:50 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:14:38 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ void	handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es)
 	int		tok;
 	char	*q;
 	char	*eq;
-	char	*s;
+	// char	*s;
 
-	// int		argc;
-	// argc = 0;
-	// init_cmd_args(cmd);
+	int		argc;
+	argc = 0;
+	init_cmd_args(cmd);
 	while (!peek(ps, es, "|)&;"))
 	{
 		tok = gettoken(ps, es, &q, &eq);
@@ -91,34 +91,33 @@ void	handle_tokens(t_cmd *cmd, t_cmd **ret, char **ps, char *es)
 			break ;
 		if (tok != 'a')
 			panic("syntax");
-		s = ft_substring(q, eq);
-		ft_append_argv(cmd->argv, s);
-		// add_argument(cmd, q, eq, &argc);
+		// s = ft_substring(q, eq);
+		// ft_append_argv(cmd->argv, s);
+		add_argument(cmd, q, eq, &argc);
 		*ret = parseredirs(*ret, ps, es);
 	}
 }
 
-char	*get_word(char **ps, char *es)
-{
-	char *ret;
-	char *s;
-	char *token;
-	
-	s = *ps;
-	skip_whitespace(s, es);
-	if (*s == '"' || *s == '\'')
-	{
-		token = *s;
-		s++;
-		while (*s != token && *s)
-			s++;
-		if (*s == token)
-			s++;
-	}
-	else
-	{
-		while (!peek(&s, es, " \t\r\n\v") && *s)
-			s++;
-	}
+// char	*get_block(char **ps, char *es)
+// {
+// 	char *ret;
+// 	char *s;
+// 	char *token;
 
-}
+// 	s = *ps;
+// 	skip_whitespace(s, es);
+// 	if (*s == '"' || *s == '\'')
+// 	{
+// 		token = *s;
+// 		s++;
+// 		while (ft_isalnum(s) && *s != token && *s)
+// 			s++;
+// 		if (*s == token)
+// 			s++;
+// 	}
+// 	else
+// 	{
+// 		return (0);
+// 	}
+// }
+
