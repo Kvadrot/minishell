@@ -99,3 +99,8 @@ test: test.c
 	rm -f test
 	sleep 1
 	cc test.c -o test -I./inc -L./lib_ft -l:libft.a -lreadline -lm -g
+
+push:
+	git add .
+	git commit -m "push"
+	git push
