@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:30:16 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 18:27:14 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:23:19 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	parsecmd(t_data *minishell)
 		cmd = parseexec(&ps, es);
 		if (cmd)
 		{
+			handle_quotes_dollar(cmd->argv, minishell);
 			minishell->commands[i] = cmd;
 			minishell->number_of_commands++;
 		}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:04:01 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/12 19:23:55 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/21 16:32:52 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_builtin_done(char **argv, t_data *minishell)
+int	run_builtin_cmd(char **argv, t_data *minishell)
 {
 	int	ret;
 
@@ -38,4 +38,16 @@ int	is_builtin_done(char **argv, t_data *minishell)
 	else if (ft_strcmp(argv[0], "exit") == 0)
 		ret = ft_exit();
 	return (ret);
+}
+
+int	is_builtin(t_cmd *cmd)
+{
+
+	if (ft_strcmp(cmd->argv[0], "cd") == 0 || ft_strcmp(cmd->argv[0],
+			"echo") == 0 || ft_strcmp(cmd->argv[0], "env") == 0
+		|| ft_strcmp(cmd->argv[0], "export") == 0 || ft_strcmp(cmd->argv[0],
+			"pwd") == 0 || ft_strcmp(cmd->argv[0], "unset") == 0
+		|| ft_strcmp(cmd->argv[0], "exit") == 0)
+		return (1);
+	return (0);
 }

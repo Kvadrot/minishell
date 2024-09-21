@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:23:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 19:45:53 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:56:55 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,30 @@
 
 void	do_redirect(t_cmd *rcmd, t_data *minishell)
 {
-	int	fd;
+	int fd, status;
 
 	if (fork1() == 0)
 	{
 		close(rcmd->fd);
 		fd = open(rcmd->file, rcmd->mode, 0644);
 		if (fd < 0)
-			panic("open");
+		{
+			perror("open");
+			exit(1);
+		}
 		if (fork1() == 0)
 		{
 			runcmd(rcmd->sub_cmd, minishell);
 			exit(0);
 		}
-		wait(0);
+		wait(&status);
+		if (WIFEXITED(status))
+			minishell->exit_status = WEXITSTATUS(status);
 		close(fd);
 		exit(0);
 	}
+	wait(0);
 }
-
 void	run_in_background_or_list(t_cmd *cmd, t_data *minishell)
 {
 	pid_t	pid_l;
@@ -52,7 +57,7 @@ void	run_in_background_or_list(t_cmd *cmd, t_data *minishell)
 	}
 }
 
-void	execute_command(char *binary_path, t_cmd *cmd, t_data *minishell)
+void	execute_process(char *binary_path, t_cmd *cmd, t_data *minishell)
 {
 	char	**envp;
 
@@ -75,12 +80,14 @@ void	do_exec(t_cmd *cmd, t_data *minishell)
 
 	if (cmd->argv[0] == NULL)
 		return ;
-	handle_quotes_dollar(cmd->argv, minishell);
-	if (is_builtin_done(cmd->argv, minishell))
+	if (run_builtin_cmd(cmd->argv, minishell))
+	{
+		minishell->exit_status = 0;
 		return ;
+	}
 	paths = retrieve_paths();
 	binary_path = find_executable_path(cmd, paths);
-	execute_command(binary_path, cmd, minishell);
+	execute_process(binary_path, cmd, minishell);
 	clean_up(binary_path, paths);
 }
 

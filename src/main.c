@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:51:34 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 20:04:39 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 16:18:05 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	reset_minishell(t_data *minishell)
 	minishell->input = NULL;
 	minishell->pipe_argv = NULL;
 	minishell->number_of_commands = 0;
+	minishell->exit_status = 0;
 	minishell->commands = NULL;
 }
 
@@ -48,7 +49,7 @@ void	minishell_loop(t_data *minishell)
 			add_history(minishell->input);
 		alloc_mem_for_commands(minishell);
 		parsecmd(minishell);
-		run_with_pipes(minishell);
+		execute(minishell);
 		reset_minishell(minishell);
 	}
 }

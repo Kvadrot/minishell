@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:21:24 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 19:41:52 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:18:12 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,21 @@ void	create_pipes(t_data *minishell)
 	}
 }
 
-void	run_with_pipes(t_data *minishell)
+int	execute(t_data *minishell)
 {
-	unsigned int	commands;
+	int	commands;
 
 	commands = minishell->number_of_commands;
 	if (commands == 0)
-		return ;
-	if (commands == 1)
+		return (1);
+	if (commands == 1 && is_builtin(*(minishell->commands)))
+	{
+		return (run_builtin_cmd(minishell->commands[0]->argv, minishell));
+	}
+	else if (commands == 1)
 	{
 		if (fork1() == 0)
-		{
 			runcmd(minishell->commands[0], minishell);
-			exit(1);
-		}
 		wait(NULL);
 	}
 	else
@@ -64,5 +65,5 @@ void	run_with_pipes(t_data *minishell)
 		create_pipes(minishell);
 		make_forks(minishell);
 	}
-	return ;
+	return (0);
 }

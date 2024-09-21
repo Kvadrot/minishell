@@ -6,7 +6,7 @@
 /*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/20 19:44:17 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/21 16:25:47 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ pid_t				fork1(void);
 void				do_exec(t_cmd *cmd, t_data *minishell);
 void				do_list(t_cmd *cmd, t_data *minishell);
 void				do_back(t_cmd *cmd, t_data *minishell);
-int					is_builtin_done(char **argv, t_data *minishell);
+int					run_builtin_cmd(char **argv, t_data *minishell);
 void				ft_expand_dollar(char **argv, t_data *minishell);
 void				do_redirect(t_cmd *cmd, t_data *minishell);
 int					ft_echo(char **argv);
@@ -145,7 +145,7 @@ char				*find_executable_path(t_cmd *ecmd, char **paths);
 char				**environment_list_to_array(t_env *environment);
 void				make_forks(t_data *minishell);
 void				create_pipes(t_data *minishell);
-void				run_with_pipes(t_data *minishell);
+int					execute(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
 void				free_global(t_data *minishell);
 char				*ft_substring(const char *start, const char *end);
@@ -169,5 +169,6 @@ void				remove_quotes(char **str);
 void				handle_quotes_dollar(char **argv, t_data *minishell);
 void				init_cmd_argv(t_cmd *cmd);
 void				append_to_argv(t_cmd *cmd, char *line);
+int					is_builtin(t_cmd *cmd);
 
 #endif

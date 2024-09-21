@@ -92,3 +92,6 @@ re: fclean all
 
 # Ensure that 'all', 'clean', 'fclean', 're', and 'bonus' are not interpreted as file names
 .PHONY: all clean fclean re bonus
+
+test:
+	cc test.c -o test -I./inc -L./lib_ft -l:libft.a -lreadline -lm -g
