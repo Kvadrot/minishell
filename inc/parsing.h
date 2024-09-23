@@ -17,32 +17,29 @@
 
 # include "minishell.h"
 
+// Forward declaration of struct
+typedef struct s_command_full t_command_full;
+typedef struct s_redir t_redir;
 
-//parsing_utils.c
-enum redir_type
+
+// Struct for redirection
+struct s_redir
 {
-	IN,
-	OUT,
-	EDIT,
-	HERE_DOC
+    t_token_type type;      // Use correct type name for enum
+    char *file_name;        // Changed to pointer to store file name as a string
+    int *fd;
+    t_redir *next;
+    t_redir *prev;
 };
 
-typedef struct s_command_full t_command_full;  // Forward declaration
-
-typedef struct s_redir
+// Struct for command
+struct s_command_full
 {
-	int		type;
-	char	file_name;
-	int		fd;
-} t_redir;
-
-typedef struct s_command_full
-{
-	char				*cmd_name;
-	char				**args;
-	t_redir				*redir;
-	t_command_full		*next;
-	t_command_full		*prev;
-}						t_command_full;
+    char *cmd_name;
+    char **args;
+    t_redir *redir_list_head;         // This should be a pointer to an array or a single redirection struct
+    t_command_full *next;
+    t_command_full *prev;
+};
 
 #endif

@@ -17,40 +17,50 @@
 
 #include "../inc/minishell.h"
 
-void	minishell_loop(t_data *minishell)
+void	minishell_loop(t_data **minishell)
 {
 	while (1)
 	{
-		minishell->tokens = NULL;
-		minishell->input = readline(PROMPT);
-		if (minishell->input != NULL && ft_strlen(minishell->input) > 0)
+		(*minishell)->tokens = NULL;
+		(*minishell)->input = readline(PROMPT);
+		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history
 			//add input to minishell history
-			if (ft_input_is_valid(minishell->input) == false) //initial validation
+			if (ft_input_is_valid((*minishell)->input) == false) //initial validation
 			{
-				free(minishell->input);
+				free((*minishell)->input);
 				ft_printf("Mini_hell: syntax error\n");
 				continue;
 			}
-			init_tokens(minishell);
-			if (validate_tokens(minishell->tokens) < 0)
+			init_tokens((*minishell));
+			if (validate_tokens((*minishell)->tokens) < 0)
 			{
-				ft_handle_error(false, NULL, -400, minishell);
+				ft_handle_error(false, NULL, -400, (*minishell));
 				continue;
 			}
 
-			// minishell->commands = parse_tokens(minishell->tokens, NULL);
-			// minishell->commands = NULL;
-
 			//Uncomment to Test Tokens
 	// =================================================================================
-			while (minishell->tokens != NULL)
-			{
-				printf("%s = %d\n", minishell->tokens->value, minishell->tokens->type);
-				minishell->tokens = minishell->tokens->next;
-			}
+			// while ((*minishell)->tokens != NULL)
+			// {
+			// 	printf("%s = %d\n", (*minishell)->tokens->value, (*minishell)->tokens->type);
+			// 	(*minishell)->tokens = (*minishell)->tokens->next;
+			// }
 	// =================================================================================
+		//TODO:
+		// free tokens list
+
+			(*minishell)->commands = ft_parse_tokens(minishell);
+		//Uncomment to Test COMMANDS
+	// ==================================================================================================================================
+	t_command_full *temp_cmd = (*minishell)->commands;
+	while (temp_cmd)
+	{
+		ft_printf("amoount\n");
+		temp_cmd = temp_cmd->next;
+	}
+	//==================================================================================================================================
 		}
 	}
 }
@@ -75,12 +85,12 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_minishell(&minishell, env);
 	init_environment(&minishell, minishell->envir);
-		//Uncomment to CheckUp ENV
+//Uncomment to CheckUp ENV
 //=================================================================================
 	// print_environment(minishell.env);
 //=================================================================================
 
 	environment_free_list(minishell->env);
-	minishell_loop(minishell);
+	minishell_loop(&minishell);
 	return (0);
 }

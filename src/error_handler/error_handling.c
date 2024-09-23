@@ -33,7 +33,7 @@ void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data
 	char *path;
 
 	if (error_text)
-		ft_printf("ERROR: %s, ERR_status: %d", error_text, err_status);
+		ft_printf("ERROR: %sERR_status: %d", error_text, err_status);
 	if (is_crashable == true)
 	{
 		ft_free_minishell(minishell);

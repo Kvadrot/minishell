@@ -53,10 +53,11 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
+// LifeCycle
+void	minishell_loop(t_data **minishell);
+
 // Validate_input
 bool				ft_input_is_valid(char *input_str);
-
-void				minishell_loop(t_data *minishell);
 
 t_env				*environment_new_node(char *key, char *value);
 void				environment_new_node_end(t_data *minishell, char *key, char *value);
@@ -75,6 +76,10 @@ int					validate_tokens(t_tokens *tokens);
 char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
 bool				ft_is_whitespace(char c);
+
+
+//Parsing
+t_command_full *ft_parse_tokens(t_data **minishell);
 
 // error handling
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);

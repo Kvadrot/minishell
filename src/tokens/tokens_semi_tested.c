@@ -41,7 +41,7 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 	token->value = (char *)malloc(i + 1);
 	// if (!token->value)
 		// return not sufficient memory error
-	strncpy(token->value, input, i);
+	ft_strncpy(token->value, input, i);
 	token->value[i] = '\0';
 	token->type = type;
 	return (token);
