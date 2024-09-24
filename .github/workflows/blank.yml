@@ -1,0 +1,51 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step to checkout the repository
+      - uses: actions/checkout@v4
+
+      # Step to set up dependencies or tools, if any
+      # Uncomment this step if dependencies are required
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      # Step to configure the project
+      # Uncomment this step if configuration is required
+      # - name: Configure
+      #   run: ./configure
+
+      # Step to compile the project
+      - name: Compile_Check
+        run: |
+          echo "Running Make ..."
+          if ! make; then
+            echo "Error occurred during the compilation process. Check what you are pushing!"
+            echo "Your Push is 💩 - it is aborted"
+            exit 1
+          fi
+
+      # Step to run tests
+      # Uncomment and use this if you want to run tests
+      # - name: Run tests
+      #   run: |
+      #     echo "Running make check..."
+      #     if ! make check; then
+      #       echo "Error occurred during the testing process. Check what you are pushing!"
+      #       echo "Your Push is 💩 - it is aborted"
+      #       exit 1
+      #     fi
+
+      # Final step message
+      - name: Success message
+        if: success()
+        run: echo "All checks passed. GOOD JOB!"
