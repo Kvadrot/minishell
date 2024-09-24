@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/24 15:45:47 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:30:25 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	remove_quotes(char *str)
 {
 	int	len;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	if ((len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
 		|| (len >= 2 && str[0] == '"' && str[len - 1] == '"'))
 	{
@@ -41,6 +41,7 @@ int	ft_echo(char **argv)
 	}
 	while (argv[i])
 	{
+		remove_quotes(argv[i]);
 		ft_putstr_fd(argv[i], 1);
 		i++;
 		if (argv[i])

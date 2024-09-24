@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 20:12:35 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/24 15:46:35 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:44:17 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	minishell_free(t_data *minishell, int flag)
 {
-	// free memory
+	// add free
 	(void)flag;
 	(void)minishell;
 	exit(0);
@@ -22,27 +22,25 @@ void	minishell_free(t_data *minishell, int flag)
 
 void	free_cmd(t_cmd *node)
 {
-	int	i;
+	int			i;
+	t_execcmd	*execcmd;
 
 	if (!node)
 		return ;
-	node = node;
-	if (node->argv)
+	execcmd = (t_execcmd *)node;
+	if (execcmd->argv)
 	{
 		i = 0;
-		while (node->argv[i])
+		while (execcmd->argv[i])
 		{
-			free(node->argv[i]);
+			free(execcmd->argv[i]);
 			i++;
 		}
 	}
-	// Free paths
 	if (execcmd->paths)
 		free(execcmd->paths);
-	// Free flag
 	if (execcmd->flag)
 		free(execcmd->flag);
-	// Finally, free the node itself
 	free(node);
 }
 
