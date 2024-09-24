@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/17 13:43:33 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:45:18 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,16 @@ t_redir *ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 t_redir	*ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cmd)
 {
 	t_redir *redirection;
-	t_redir	*prev_redir;
 
-	prev_redir = ft_scroll_redir_list_to_last(cmd->redir_list_head);
 	redirection = (t_redir *)malloc(sizeof(t_redir));
 	if (!redirection)
 		(NULL);
-	redirection->type = prev_token->type;
-	redirection->file_name = token->value;
+	redirection->type = 0;
+	redirection->file_name = NULL;
 	redirection->fd = NULL;
-	redirection->prev = prev_redir;
+	redirection->prev = NULL;
 	redirection->next = NULL;
+
 	return (redirection);
 }
 
@@ -71,13 +70,21 @@ t_redir	*ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cm
 void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minishell)
 {
 	t_redir *new_redirection;
-	t_command_full *temp_cmd;
+	t_redir	*prev_redir;
 
+	prev_redir = ft_scroll_redir_list_to_last(cmd->redir_list_head);
 	new_redirection = ft_init_redir(token->prev, token, cmd);
 	if (!new_redirection)
 	{
 		ft_handle_error(true, "malloc error - printed by ft_handle_redirection\n", 447, *minishell);
 	}
+	new_redirection->type = token->prev->type;
+	new_redirection->file_name = token->value;
+	new_redirection->prev = prev_redir;
+	if (prev_redir)
+		prev_redir->next = new_redirection;
+	else
+		cmd->redir_list_head = new_redirection;
 }
 
 /** TODO: init_cmd
@@ -122,14 +129,14 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 		if (temp_token->type == T_WORD)
 		{
 			// TODO:
-			// append word to arg_list 
+			// append word to arg_list
+			ft_printf("temp ignoring for: %s\n", temp_token->value);
 		}
 		else if (temp_token->type == T_LESS || temp_token->type == T_GREAT 
 			|| temp_token->type == T_DLESS || temp_token->type == T_DGREAT )
 		{
 			temp_token = temp_token->next;
 			ft_handle_redirection(temp_command, temp_token, minishell);
-
 		} else if (temp_token->type == T_PIPE) {
 			new_command = init_cmd(temp_command, temp_token);
 			if (!new_command)

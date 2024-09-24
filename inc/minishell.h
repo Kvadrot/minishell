@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/17 16:09:43 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:32:31 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../lib_ft_printf/ft_printf.h"
 # include "../lib_ft/libft.h"
 # include "tokens.h"
 # include "parsing.h"
@@ -25,12 +26,6 @@
 # include <unistd.h>
 
 # define PROMPT "Mini_hell > "
-
-// DRBUG_FIELD
-// DELETE ME befor release
-//========================================================================================//
-# include "../lib_ft_printf/ft_printf.h"
-//========================================================================================//
 
 typedef struct s_env
 {
@@ -52,6 +47,13 @@ typedef struct s_data
 	struct termios	terminal;
 	struct s_data	*next;
 }					t_data;
+
+
+// DRBUG_FIELD
+// DELETE ME befor release
+//========================================================================================//
+# include "../src/debug_functions/debuger.h"
+//========================================================================================//
 
 // LifeCycle
 void	minishell_loop(t_data **minishell);
