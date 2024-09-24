@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:03:05 by itykhono          #+#    #+#             */
-/*   Updated: 2024/03/18 15:04:52 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:59:58 by gbuczyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(int someChar)
+/*
+
+	* The ft_isalpha() function checks whether the passed character
+	* is an alphabetic character.
+ */
+int	ft_isalpha(char someChar)
 {
-	if ((someChar >= 'A' && someChar <= 'Z')
-		|| (someChar >= 'a' && someChar <= 'z'))
+	if ((someChar >= 'A' && someChar <= 'Z') || (someChar >= 'a'
+			&& someChar <= 'z'))
 		return (1);
 	else
 		return (0);

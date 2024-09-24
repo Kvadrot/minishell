@@ -27,21 +27,15 @@ SRCS =	src/main.c \
 		src/builtin/unset.c \
 		src/execution/pipes.c \
 		src/execution/forks.c \
+		src/execution/exec_init.c \
 		src/execution/exec.c \
-		src/execution/exec_utils.c \
 		src/execution/find_bin_cmd.c \
 		src/execution/find_bin_cmd_utils.c \
+		src/execution/expand_dollar.c \
 		src/error/error.c \
-		src/env/env_utils.c \
-		src/env/env.c \
-		src/env/envlist_to_array.c \
-		src/garbage_colector/garbage_colector.c \
-		src/garbage_colector/minishell_free.c \
-		src/parsing/heredoc.c \
-		src/parsing/parsing_init.c\
-		src/parsing/parsing_utils.c\
-		src/parsing/parsing.c \
-		src/parsing/tokens.c \
+		src/env/env_utils.c src/env/env.c src/env/envlist_to_array.c\
+		src/garbage_colector/garbage_colector.c src/garbage_colector/minishell_free.c \
+		src/parsing/heredoc.c src/parsing/parsing.c src/parsing/parsing_utils.c\
 
 OBJS = $(SRCS:.c=.o)
 
@@ -90,3 +84,15 @@ re: fclean all
 
 # Ensure that 'all', 'clean', 'fclean', 're', and 'bonus' are not interpreted as file names
 .PHONY: all clean fclean re bonus
+
+# Test
+
+test: test.c
+	rm -f test
+	sleep 1
+	cc test.c -o test -I./inc -L./lib_ft -l:libft.a -lreadline -lm -g
+
+push:
+	git add .
+	git commit -m "make push!"
+	git push

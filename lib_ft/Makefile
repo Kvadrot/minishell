@@ -15,6 +15,7 @@ SRCS = ft_memset.c \
        ft_isalnum.c \
        ft_isascii.c \
        ft_isprint.c \
+	   ft_iswhitespace.c \
        ft_toupper.c \
        ft_tolower.c \
        ft_strchr.c  \
@@ -43,6 +44,8 @@ SRCS = ft_memset.c \
 	   ft_lstclear.c \
 	   ft_lstnew.c \
 	   ft_lstadd_back.c \
+	   ft_append_argv.c \
+	   ft_panic.c \
        ft_putnbr_fd.c
 
 # Object files

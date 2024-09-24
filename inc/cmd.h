@@ -6,7 +6,7 @@
 /*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:08:04 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/19 19:03:08 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:48:19 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,9 @@
 typedef struct s_cmd
 {
 	int				type;
-}					t_cmd;
-
-typedef struct s_execcmd
-{
-	int		type;
-	char	**argv;
-	char	*paths;
-	char	*flag;
-}			t_execcmd;
-
-typedef struct s_heredoc_cmd
-{
-	int				type;
 	char			**argv;
-}					t_heredoc_cmd;
-
-typedef struct s_redircmd
-{
-	int				type;
-	struct s_cmd	*cmd;
+	char			*paths;
+	char			*flag;
 	char			*file;
 	int				mode;
 	int				fd;
@@ -58,23 +41,10 @@ typedef struct s_redircmd
 typedef struct s_pipecmd
 {
 	int				type;
-	unsigned int	index;
-	int				pipe[2];
+	unsigned int 	index;
+	int 			pipe[2];
 	struct s_cmd	*left;
 	struct s_cmd	*right;
-}					t_pipecmd;
-
-typedef struct s_listcmd
-{
-	int				type;
-	struct s_cmd	*left;
-	struct s_cmd	*right;
-}					t_listcmd;
-
-typedef struct s_backcmd
-{
-	int				type;
-	struct s_cmd	*cmd;
-}					t_backcmd;
+}					t_cmd;
 
 #endif
