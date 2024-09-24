@@ -4,10 +4,9 @@
 *.so
 *.out
 *.dll
-minishell
 
 # Ignore directories created by common IDEs
-#.vscode/
+.vscode/
 *.nfs*
 
 # Ignore Vim temporary files
