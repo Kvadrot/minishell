@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 18:40:11 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/22 00:07:50 by gbuczyns         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/09/24 15:48:28 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <signal.h>
 
 # define PROMPT "MDshell > "
 # define YES 1
@@ -93,7 +94,11 @@ void				print_environment(t_env *node);
 //	new potential libft function
 char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
-char				*get_string(char **ps);
+bool				ft_is_whitespace(char c);
+
+t_command			*parse_tokens(t_tokens *tokens);
+
+int					check_syntax(t_tokens *tokens);
 int					md_cd(char *path, t_data *minishell);
 void				ft_update_env_list(char *key, char *value, bool yes,
 						t_data *minishell);
@@ -107,8 +112,9 @@ int					gettoken(char **ps, char *es, char **q, char **eq);
 char				*get_word(char **ps);
 
 // execution
-t_cmd				*ft_init_cmd(int type);
-t_cmd				*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
+t_cmd				*ft_init_exec_cmd(void);
+t_cmd				*redircmd(t_cmd *subcmd, char *file, char *efile, int mode,
+						int fd);
 t_cmd				*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd				*listcmd(t_cmd *left, t_cmd *right);
 t_cmd				*backcmd(t_cmd *subcmd);
@@ -145,24 +151,5 @@ void				create_pipes(t_data *minishell);
 int					execute(t_data *minishell);
 void				alloc_mem_for_commands(t_data *minishell);
 void				free_global(t_data *minishell);
-char				*ft_substring(const char *start, const char *end);
-void				get_argv(t_cmd *cmd, char **ps);
-void				advance_to_end_of_token(char **s, char *es);
-
-void				init_cmd_args(t_cmd *cmd);
-void				add_argument(t_cmd *cmd, char *q, char *eq, int *argc);
-void				print_environment_sorted(t_env *node);
-void				sort_env_vars(t_env **env_array, size_t count);
-
-void				print_sorted_env_vars(t_env **env_array, size_t count);
-size_t				count_env_vars(t_env *node);
-t_env				**collect_env_vars(t_env *node, size_t count);
-void				sort_env_vars(t_env **env_array, size_t count);
-void				do_redirect(t_cmd *cmd, t_data *minishell);
-void				remove_quotes(char **str);
-void				handle_quotes_dollar(char **argv, t_data *minishell);
-void				init_cmd_argv(t_cmd *cmd);
-void				append_to_argv(t_cmd *cmd, char *line);
-int					is_builtin(t_cmd *cmd);
 
 #endif

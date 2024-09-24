@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:21:24 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/22 00:00:40 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:46:27 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	create_pipes(t_data *minishell)
 		i++;
 	}
 }
-
-int	execute(t_data *minishell)
+void	run_with_pipes(t_data *minishell)
 {
 	int	commands;
 
@@ -57,7 +56,10 @@ int	execute(t_data *minishell)
 	else if (commands == 1)
 	{
 		if (fork1() == 0)
+		{
 			runcmd(minishell->commands[0], minishell);
+			exit(1);
+		}
 		wait(NULL);
 	}
 	else
@@ -65,5 +67,36 @@ int	execute(t_data *minishell)
 		create_pipes(minishell);
 		make_forks(minishell);
 	}
-	return (0);
+	return ;
+}
+
+// int	main(void)
+// {
+// 	t_data	minishell;
+// 	int		i;
+
+// 	i = 0;
+// 	minishell.number_of_commands = 3;
+// 	setup_pipes(&minishell);
+// 	if (minishell.pipe_argv != NULL)
+// 	{
+// 		printf("pipe_argv is not NULL\n");
+// 		while (minishell.pipe_argv[i] != NULL)
+// 		{
+// 			printf("pipe_argv[%d] is not NULL\n", i);
+// 			i++;
+// 		}
+// 	}
+// 	return (0);
+// }
+
+// void	panic(char *str)
+// {
+// 	printf("panic: %s\n", str);
+// 	exit(1);
+// }
+
+void	do_single_comand(void)
+{
+	printf("do_single_comand\n");
 }

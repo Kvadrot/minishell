@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 15:27:53 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 23:08:44 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:47:03 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** Function skip whitespaces and moves *ps pointer to the next 
-** character like in the tokens string.
-** Returns 1 if the character is in the toks string, 0 otherwise.
-*/
-int	peek(char **ps, char *toks)
+// Returns true when when *s is in toks.
+// Function updates *ps to point to the next non-whitespace character.
+int	peek(char **ps, char *es, char *toks)
 {
 	char	*s;
 
@@ -28,94 +25,97 @@ int	peek(char **ps, char *toks)
 	return (*s && strchr(toks, *s));
 }
 
-void	ft_skip_whitespace(char **s)
-{
-	while (*s && **s && ft_strchr(" \t\r\n\v", **s))
-		(*s)++;
-}
 
-void	advance_to_end_of_token(char **s, char *es)
-{
-	while (*s < es && !strchr(" \t\r\n\v", **s) && !strchr("<|>&;()", **s))
-		(*s)++;
-}
+// t_cmd	*nulterminate(t_cmd *cmd)
+// {
+// 	t_backcmd	*bcmd;
+// 	t_listcmd	*lcmd;
+// 	t_pipecmd	*pcmd;
+// 	t_redircmd	*rcmd;
 
-char	*ft_substring(const char *start, const char *end)
-{
-	size_t	length;
-	char	*result;
-
-	length = end - start;
-	result = malloc(length + 1);
-	if (result == NULL)
-		return (NULL);
-	strncpy(result, start, length);
-	result[length] = '\0';
-	return (result);
-}
-
-char	*get_block(char **ps)
-{
-	char	*ret;
-	char	*s;
-	size_t	length;
-	char	*start;
-	char	quote;
-
-	s = *ps;
-	quote = *s;
-	length = 0;
-	start = s;
-	s++;
-	while (s && *s && *s != quote)
-		s++;
-	length = s - start + 1;
-	ret = malloc(length + 1);
-	if (ret == NULL)
-		return (NULL);
-	strncpy(ret, start, length);
-	ret[length] = '\0';
-	if (quote)
-		s++;
-	*ps = s;
-	return (ret);
-}
-
-char	*get_word(char **ps)
-{
-	char	*ret;
-	char	*s;
-	size_t	length;
-	char	*start;
-
-	s = *ps;
-	length = 0;
-	start = s;
-	while (s && *s && !ft_iswhitespace(*s))
-		s++;
-	length = s - start;
-	ret = malloc(length + 1);
-	if (ret == NULL)
-		return (NULL);
-	strncpy(ret, start, length);
-	ret[length] = '\0';
-	*ps = s;
-	return (ret);
-}
+// 	if (cmd == 0)
+// 		return (0);
+// 	switch (cmd->type)
+// 	{
+// 	case REDIR:
+// 		rcmd = (t_redircmd *)cmd;
+// 		nulterminate(rcmd->cmd);
+// 		*rcmd->efile = 0;
+// 		break ;
+// 	case INREDIR:
+// 		rcmd = (t_redircmd *)cmd;
+// 		nulterminate(rcmd->cmd);
+// 		*rcmd->efile = 0;
+// 		break ;
+// 	case PIPE:
+// 		pcmd = (t_pipecmd *)cmd;
+// 		nulterminate(pcmd->left);
+// 		nulterminate(pcmd->right);
+// 		break ;
+// 	case LIST:
+// 		lcmd = (t_listcmd *)cmd;
+// 		nulterminate(lcmd->left);
+// 		nulterminate(lcmd->right);
+// 		break ;
+// 	case BACK:
+// 		bcmd = (t_backcmd *)cmd;
+// 		nulterminate(bcmd->cmd);
+// 		break ;
+// 	}
+// 	return (cmd);
+// }
 
 /*
- * Returns a string from the input string.
- * The string can be a block or a word.
- * A block is a string between two quotes.
- * A word is a string between two whitespaces.
- */
-char	*get_string(char **ps)
+** Function gettoken returns the type of the token found in the string.
+** It also updates the pointer to the string to point to the next token.
+** It also updates the pointers to the beginning and end of the token.
+** It returns the type of the token found.
+*/
+int	gettoken(char **ps, char *es, char **q, char **eq)
 {
-	if (*ps == NULL || **ps == '\0')
-		return (NULL);
-	ft_skip_whitespace(ps);
-	if (**ps == '"' || **ps == '\'')
-		return (get_block(ps));
+	char *s;
+	int ret;
+
+	s = *ps;
+	while (s < es && strchr(" \t\r\n\v", *s))
+		s++;
+	if (q)
+		*q = s;
+	ret = *s;
+
+	if (*s == 0)
+		return (0);
+	else if (peek(&s, es, "|();&"))
+		s++;
+	else if (*s == '>')
+	{
+		s++;
+		if (*s == '>')
+		{
+			ret = '+';
+			s++;
+		}
+	}
+	else if (*s == '<')
+	{
+		s++;
+		if (*s == '<')
+		{
+			ret = '-';
+			s++;
+			*ps = s;
+		}
+	}
 	else
-		return (get_word(ps));
+		ret = 'a';
+
+	while (s < es && !strchr(" \t\r\n\v", *s) && !strchr("<|>&;()", *s))
+		s++;
+	if (eq)
+		*eq = s;
+
+	while (s < es && strchr(" \t\r\n\v", *s))
+		s++;
+	*ps = s;
+	return (ret);
 }

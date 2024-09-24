@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:52 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/21 18:25:35 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:45:47 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+// echo prints quotes
+
+void	remove_quotes(char *str)
+{
+	int	len;
+
+	len = strlen(str);
+	if ((len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
+		|| (len >= 2 && str[0] == '"' && str[len - 1] == '"'))
+	{
+		ft_memmove(str, str + 1, len - 2);
+		str[len - 2] = '\0';
+	}
+}
 
 int	ft_echo(char **argv)
 {

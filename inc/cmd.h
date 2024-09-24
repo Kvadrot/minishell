@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:08:04 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/21 15:12:51 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:48:19 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ typedef struct s_cmd
 	char			*file;
 	int				mode;
 	int				fd;
-	struct s_cmd	*sub_cmd;
+}					t_redircmd;
+
+typedef struct s_pipecmd
+{
+	int				type;
+	unsigned int 	index;
+	int 			pipe[2];
 	struct s_cmd	*left;
 	struct s_cmd	*right;
 }					t_cmd;

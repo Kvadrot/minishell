@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbuczyns <gbuczyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 20:12:35 by gbuczyns          #+#    #+#             */
-/*   Updated: 2024/09/20 17:55:28 by gbuczyns         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:46:35 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	minishell_free(t_data *minishell, int flag)
 {
+	// free memory
 	(void)flag;
 	(void)minishell;
 	exit(0);
@@ -35,10 +36,13 @@ void	free_cmd(t_cmd *node)
 			i++;
 		}
 	}
-	if (node->paths)
-		free(node->paths);
-	if (node->flag)
-		free(node->flag);
+	// Free paths
+	if (execcmd->paths)
+		free(execcmd->paths);
+	// Free flag
+	if (execcmd->flag)
+		free(execcmd->flag);
+	// Finally, free the node itself
 	free(node);
 }
 
