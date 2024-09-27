@@ -24,11 +24,11 @@ OBJ_DIR6 = obj/debug_functions/
 # Default sources
 SRC = main.c env.c \
 	parsing/parsing.c \
+	parsing/parsing_help_fts.c \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \
 	validation/validation.c \
 	error_handler/error_handling.c \
 	debug_functions/parsing_debuger.c \
-	
 
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 #OBJS = $(SRCS:.c=.o)
