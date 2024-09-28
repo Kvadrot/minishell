@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/27 17:07:45 by ufo              ###   ########.fr       */
+/*   Updated: 2024/09/28 16:42:37 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,15 +239,16 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 			if (!new_command)
 				ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, *minishell);
 			temp_command->next = new_command;
-			temp_command = new_command;
+			temp_command = temp_command->next;
 		}
 		
 		temp_token = temp_token->next;
 	}
-	ft_printf("args contains: %d\n", ft_strlen_arr_of_str(temp_command->args));
-	int i = 0;
-	// while ((*minishell)->commands->args[i]){
-	// 	ft_printf("%s\n", (*minishell)->commands->args[i]);
+	// ft_printf("args contains: %d\n", ft_strlen_arr_of_str(temp_command->args));
+	// int i = 0;
+	// while ((*minishell)->commands->next->args[i] != NULL){
+		
+	// 	ft_printf("temp commnad args: %s\n", (*minishell)->commands->next->args[i]);
 	// 	i++;
 	// }
 	ft_debug_parsing(minishell);
