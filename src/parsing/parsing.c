@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/28 16:42:37 by ufo              ###   ########.fr       */
+/*   Updated: 2024/09/29 12:45:45 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ t_redir *ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 }
 
 
-/** TODO: ft_strlen_arr_of_str
+/** TODO: ft_get_size_arr_of_str
 * @brief: Countd lrngth ARR OF STRINGS
 //=======================================================================//
 //=======================================================================//
 * @returns: amount of strings inside: int
 */
-int	ft_strlen_arr_of_str(char **arr_of_str)
+int	ft_get_size_arr_of_str(char **arr_of_str)
 {
 	int	result;
 
@@ -66,7 +66,7 @@ int	ft_strlen_arr_of_str(char **arr_of_str)
  char **append_string_to_array(char *new_str, char **args)
 {
     int i = 0;
-    int old_size = ft_strlen_arr_of_str(args); // Assuming this returns the length of the array
+    int old_size = ft_get_size_arr_of_str(args); // Assuming this returns the length of the array
     char **result;
 
     // Allocate memory for the new array
@@ -241,16 +241,9 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 			temp_command->next = new_command;
 			temp_command = temp_command->next;
 		}
-		
 		temp_token = temp_token->next;
 	}
-	// ft_printf("args contains: %d\n", ft_strlen_arr_of_str(temp_command->args));
-	// int i = 0;
-	// while ((*minishell)->commands->next->args[i] != NULL){
-		
-	// 	ft_printf("temp commnad args: %s\n", (*minishell)->commands->next->args[i]);
-	// 	i++;
-	// }
+
 	ft_debug_parsing(minishell);
 	return (cmd_head);
 }
@@ -267,37 +260,4 @@ void	free_command_args(t_command_full *cmd)
 		free(cmd->args);
 	}
 }
-
-// ft_list_length()
-//---------------------------------------------------------------//
-// returns amount of t_nds inside of given List
-//---------------------------------------------------------------//
-int	ft_get_list_length(t_tokens *list)
-{
-	t_tokens	*temp;
-	int		length;
-
-	if (!list)
-		return (0);
-	length = 1;
-	temp = list;
-	while (temp->next)
-	{
-		temp = temp->next;
-		length++;
-	}
-	return (length);
-}
-
-
-// -------infinity loop--------
-//  sad dsd ads | fsdf sdfs > a
-
-// ---------no output----------
-//	only T_WORD 
-//	ls | grep A
-//	echo
-
-// ------incomplete list-------
-//	cat << EOF grep test dsada
 
