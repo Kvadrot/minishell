@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/09/29 13:18:07 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/01 13:19:04 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	minishell_loop(t_data **minishell)
 		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history
-			//add input to minishell history
+			add_history((*minishell)->input);
 			if (ft_input_is_valid((*minishell)->input) == false) //initial validation
 			{
 				free((*minishell)->input);
