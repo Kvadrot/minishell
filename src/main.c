@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/01 13:19:04 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:56:02 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	minishell_loop(t_data **minishell)
 		//TODO:
 		// free tokens list
 		// (*minishell)->commands = ft_parse_tokens(minishell);
-
 		ft_parse_tokens(minishell);
+		
 		//TODO: free tokens;
 
 		//Uncomment to Test COMMANDS
