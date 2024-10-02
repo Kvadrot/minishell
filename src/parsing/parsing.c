@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/29 12:45:45 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 10:55:48 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,8 @@ t_command_full *init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 	new_command->args = NULL;
 	new_command->redir_list_head = NULL;
 	new_command->cmd_name = NULL;
+	new_command->fd_in = 0;
+	new_command->fd_out = 1;
 	return (new_command);
 }
 

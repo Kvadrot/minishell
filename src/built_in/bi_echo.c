@@ -3,22 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   bi_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:07:28 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/01 14:16:09 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:22:29 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_bi_echo(int fd_output, char *flag, const char *format, ...)
+void    ft_bi_echo(t_command_full *cmd)
 {
-    va_list args;
-    va_start(args, format);
-    int result = ft_printf_full(fd_output, format, args);
-	if (flag != NULL && ft_strncmp(flag, "-n", ft_strlen("-n")) == 0)
-		write(1, "\n", fd_output);
-    va_end(args);
-    return result;
+    int i;
+    i = 0;
+    if (cmd->args)
+    {
+        if (ft_strncmp(cmd->args[0], "-n", ft_strlen("-n")) == 0)
+            i++;
+        while (cmd->args[i] != NULL)
+        {
+
+            ft_printf_full(cmd->args[i], cmd->fd_out, NULL);
+            ft_printf(" ");
+            i++;
+        }
+    }
+    if (cmd->args && ft_strncmp(cmd->args[0], "-n", ft_strlen("-n")) != 0)
+    {
+        ft_printf_full( "\n", cmd->fd_out, NULL);
+    }
 }
+

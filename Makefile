@@ -20,9 +20,12 @@ OBJ_DIR3 = obj/validation/
 OBJ_DIR4 = obj/parsing/
 OBJ_DIR5 = obj/error_handler/
 OBJ_DIR6 = obj/debug_functions/
+OBJ_DIR7 = obj/built_in/
+
 
 # Default sources
 SRC = main.c env.c \
+	built_in/bi_echo.c \
 	parsing/parsing.c \
 	parsing/parsing_help_fts.c \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \
@@ -41,6 +44,8 @@ $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR4)
 	@mkdir -p $(OBJ_DIR5)
 	@mkdir -p $(OBJ_DIR6)
+	@mkdir -p $(OBJ_DIR7)
+
 
 	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
 	$(CC) $(WARNFLAGS) $(CFLAGS) $(HEADERS) $< -c -o $@

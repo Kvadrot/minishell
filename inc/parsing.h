@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/17 13:37:43 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/02 10:54:22 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ struct s_redir
 // Struct for command
 struct s_command_full
 {
-    char *cmd_name;
-    char **args;
+    char    *cmd_name;
+    char    **args;
+    int     fd_out;
+    int     fd_in;
     t_redir *redir_list_head;         // This should be a pointer to an array or a single redirection struct
     t_command_full *next;
     t_command_full *prev;

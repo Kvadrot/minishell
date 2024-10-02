@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/23 18:32:31 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 10:20:36 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../lib_ft/libft.h"
 # include "tokens.h"
 # include "parsing.h"
+# include "../src/built_in/built_in.h"
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
