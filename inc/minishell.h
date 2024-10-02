@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/02 10:20:36 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 11:58:09 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_command_full *ft_parse_tokens(t_data **minishell);
 
 // error handling
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
+void	ft_free_tokens(t_data **minishell);
 
 
 

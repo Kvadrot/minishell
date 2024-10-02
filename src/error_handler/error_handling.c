@@ -6,11 +6,28 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/09/23 18:17:12 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 12:00:37 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void				ft_free_token_list(t_tokens *token_list)
+{
+	t_tokens *temp;
+	t_tokens *temp_next;
+
+	temp = token_list;
+	temp_next = NULL;
+	while (temp)
+	{
+		temp_next = temp->next;
+		free(temp->value);
+		free(temp);
+		temp = temp_next;
+	}
+	// ft_printf("debug ft_free_token_list is done \n");
+}
 
 void	ft_free_minishell(t_data *entire_data)
 {
@@ -23,7 +40,7 @@ void	ft_free_minishell(t_data *entire_data)
 	if (entire_data->commands)
 		ft_printf("TODO: free commands\n");
 	if (entire_data->tokens)
-		ft_printf("TODO: free tokens\n");
+		ft_free_token_list(entire_data->tokens);
 }
 
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell)
