@@ -21,6 +21,7 @@ OBJ_DIR4 = obj/parsing/
 OBJ_DIR5 = obj/error_handler/
 OBJ_DIR6 = obj/debug_functions/
 OBJ_DIR7 = obj/built_in/
+OBJ_DIR8 = obj/common_tools/
 
 
 # Default sources
@@ -32,6 +33,8 @@ SRC = main.c env.c \
 	validation/validation.c \
 	error_handler/error_handling.c \
 	debug_functions/parsing_debuger.c \
+	common_tools/append_string_to_array.c \
+	common_tools/ft_get_size_arr_of_str.c \
 
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 #OBJS = $(SRCS:.c=.o)
@@ -45,6 +48,8 @@ $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR5)
 	@mkdir -p $(OBJ_DIR6)
 	@mkdir -p $(OBJ_DIR7)
+	@mkdir -p $(OBJ_DIR8)
+
 
 
 	@echo "Compiling $< with $(WARNFLAGS) $(CFLAGS) $(HEADERS)"
