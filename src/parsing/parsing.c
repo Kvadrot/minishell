@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/03 14:23:41 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/03 15:30:24 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,51 +136,17 @@ char *ft_join_with_delimeter(char *s1, char *s2, char *delimiter)
 	if (s1 == NULL)
 	{
 		result_str = ft_strjoin(s2, delimiter);
-		free(s2);
 	} else {
 		temp = ft_strjoin(s1, s2);
 		if (!temp)
 			return (NULL);
 		result_str = ft_strjoin(temp, delimiter);
 		free(temp);
-		if (!result_str)
-			return (NULL);
 	}
 	return (result_str);
 }
 
-// char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir, t_data **minihell)
-// {
-// 	bool	continue_reading;
-// 	char	*here_doc_next_line;
-// 	char	*result_text;
-// 	char	*temp_copy;
-
-// 	continue_reading = true;
-// 	result_text = NULL;
-// 	while (continue_reading == true)
-// 	{
-// 		here_doc_next_line = readline(HEREDOC_PROMPT);
-// 		if (here_doc_next_line == NULL)
-// 		{
-// 			ft_handle_error(true, " error, printed by ft_handle_here_doc\n", 4022, *minihell);
-// 		}
-// 		if (ft_strncmp(current_redir->file_name, here_doc_next_line, ft_strlen(here_doc_next_line)) == 0)
-// 			break;
-// 		temp_copy = ft_strjoin(result_text, here_doc_next_line);
-// 		if (!temp_copy)
-// 			ft_handle_error(true, " error, printed by ft_handle_here_doc\n", 4022, *minihell);
-// 		if (result_text)
-// 			free(result_text);
-// 		result_text = ft_strdup(temp_copy);
-// 		if (!result_text)
-// 			ft_handle_error(true, " error, printed by ft_handle_here_doc\n", 4022, *minihell);
-// 		free(temp_copy);
-// 	}
-// 	return (result_text);
-// }
-
-char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir, t_data **minihell)
+char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 {
 	bool	continue_reading;
 	char	*here_doc_next_line;
@@ -194,19 +160,33 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir, t_
 		here_doc_next_line = readline(HEREDOC_PROMPT);
 		if (here_doc_next_line == NULL)
 		{
-			ft_handle_error(true, " error, printed by ft_handle_here_doc\n", 4022, *minihell);
+			if (result_text)
+				free(result_text);
+			return (NULL);
 		}
-		if (ft_strncmp(current_redir->file_name, here_doc_next_line, ft_strlen(here_doc_next_line)) == 0)
+		if (  ft_strlen(here_doc_next_line) != 0 && ft_strncmp(current_redir->file_name, here_doc_next_line, ft_strlen(here_doc_next_line)) == 0)
+		{
+			free(here_doc_next_line);
 			break;
+		}
 		temp_copy = ft_join_with_delimeter(result_text, here_doc_next_line, "\n");
 		if (!temp_copy)
-			ft_handle_error(true, " error, printed by ft_handle_here_doc\n", 4022, *minihell);
+			{
+				if (result_text)
+					free(result_text);
+				free(here_doc_next_line);
+				return (NULL);
+			}
 		if (result_text)
 			free(result_text);
 		result_text = ft_strdup(temp_copy);
 		if (!result_text)
-			ft_handle_error(true, " error, printed by ft_handle_here_doc\n", 4022, *minihell);
-		free(temp_copy);
+		{
+			free(temp_copy);
+			free(here_doc_next_line);
+			return (NULL);
+		}
+		free(here_doc_next_line);
 	}
 	return (result_text);
 }
@@ -270,9 +250,9 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 		cmd->redir_list_head = new_redirection;
 	if (new_redirection->type == T_DLESS)
 	{
-		tempstr = ft_handle_here_doc(cmd, new_redirection, minishell);
+		tempstr = ft_handle_here_doc(cmd, new_redirection);
 		if (!tempstr)
-			ft_handle_error(true, "error, printed by ft_handle_redirection\n", 4041, minishell);
+			ft_handle_error(true, "error, printed by ft_handle_redirection\n", 4041, *minishell);
 		new_redirection->value = tempstr;
 		ft_printf("my HEREDOC = %s", tempstr);
 	}
