@@ -36,6 +36,7 @@ SRC = main.c env.c \
 	common_tools/append_string_to_array.c \
 	common_tools/ft_get_size_arr_of_str.c \
 	common_tools/ft_join_with_delimeter.c \
+	common_tools/ft_strcmp.c
 
 SRCS = $(addprefix ${SRC_DIR}, ${SRC})
 #OBJS = $(SRCS:.c=.o)

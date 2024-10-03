@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/03 15:47:11 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/03 17:32:40 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 				free(result_text);
 			return (NULL);
 		}
-		if (  ft_strlen(here_doc_next_line) != 0 && ft_strncmp(current_redir->file_name, here_doc_next_line, ft_strlen(here_doc_next_line)) == 0)
+		if (  ft_strlen(here_doc_next_line) != 0 && ft_strcmp(current_redir->file_name, here_doc_next_line) == 0)
 		{
 			free(here_doc_next_line);
 			break;
