@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/02 10:54:22 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 14:48:21 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ struct s_redir
     t_token_type type;      // Use correct type name for enum
     char *file_name;        // Changed to pointer to store file name as a string
     int *fd;
+    char *value;            //only for HEREDOC !!!
     t_redir *next;
     t_redir *prev;
 };

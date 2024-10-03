@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/02 11:58:09 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 15:03:08 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <unistd.h>
 
 # define PROMPT "Mini_hell > "
+# define HEREDOC_PROMPT "> "
 
 typedef struct s_env
 {

@@ -6,25 +6,41 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/02 12:00:37 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 13:51:31 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+// Function to free the args array in a command
+void	free_command_args(t_command_full *cmd)
+{
+	if (cmd->args)
+	{
+		for (int i = 0; cmd->args[i] != NULL; i++)
+		{
+			free(cmd->args[i]);
+		}
+		free(cmd->args);
+	}
+}
 
 void				ft_free_token_list(t_tokens *token_list)
 {
 	t_tokens *temp;
 	t_tokens *temp_next;
 
-	temp = token_list;
-	temp_next = NULL;
-	while (temp)
+	if (token_list)
 	{
-		temp_next = temp->next;
-		free(temp->value);
-		free(temp);
-		temp = temp_next;
+		temp = token_list;
+		temp_next = NULL;
+		while (temp)
+		{
+			temp_next = temp->next;
+			free(temp->value);
+			free(temp);
+			temp = temp_next;
+		}
 	}
 	// ft_printf("debug ft_free_token_list is done \n");
 }
