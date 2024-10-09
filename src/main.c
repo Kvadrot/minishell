@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/02 12:01:08 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/09 15:19:06 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ int	main(int argc, char **argv, char **env)
 	init_environment(&minishell, minishell->envir);
 //Uncomment to CheckUp ENV
 //=================================================================================
+
 	// print_environment(minishell.env);
 //=================================================================================
+	builtin_env(minishell->env);
+
 
 	environment_free_list(minishell->env);
 	minishell_loop(&minishell);

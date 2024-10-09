@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/03 15:44:29 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/09 15:13:12 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "../lib_ft/libft.h"
 # include "tokens.h"
 # include "parsing.h"
-# include "../src/built_in/built_in.h"
 # include "../src/common_tools/common_tools.h"
 # include <errno.h>
 # include <readline/history.h>
@@ -26,6 +25,8 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
+# include <limits.h>
+# include <stdio.h>
 
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
@@ -50,6 +51,8 @@ typedef struct s_data
 	struct termios	terminal;
 	struct s_data	*next;
 }					t_data;
+
+# include "../src/built_in/built_in.h"
 
 
 // DRBUG_FIELD

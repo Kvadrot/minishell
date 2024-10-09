@@ -1,17 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in.h                                         :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 10:21:20 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/09 15:03:39 by mbudkevi         ###   ########.fr       */
+/*   Created: 2024/10/09 14:25:18 by mbudkevi          #+#    #+#             */
+/*   Updated: 2024/10/09 15:09:01 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_bi_echo(t_command_full *cmd);
-int		builtin_pwd(void);
-int		builtin_env(t_env *node);
+// with no options or args
+
+int		builtin_env(t_env *node)
+{
+	t_env	*current;
+
+	current = node;
+	while (current != NULL)
+	{
+		printf("%s=%s\n", current->key, current->value);
+		current = current->next;
+	}
+}
