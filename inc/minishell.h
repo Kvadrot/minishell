@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/09 15:13:12 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:52:48 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_data
 {
 	char			*input;
 	char			**envir;
-	char			*environment;
 	int				stdin;
 	int				stdout;
 	t_tokens		*tokens;
