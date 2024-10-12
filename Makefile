@@ -30,6 +30,8 @@ SRC = main.c env.c \
 	built_in/builtin_env.c \
 	built_in/builtin_pwd.c \
 	built_in/builtin_cd.c \
+	built_in/builtin_export.c \
+	built_in/handle_builtins.c \
 	parsing/parsing.c \
 	parsing/parsing_help_fts.c \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \

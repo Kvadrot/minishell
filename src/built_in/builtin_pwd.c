@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:24:51 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/10 13:34:36 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/12 15:00:38 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	builtin_pwd(void)
 	else
 	{
 		perror("getcwd() in ft_bi_pwd error");
-		return (-1);
+		return (1);
 	}
 	return (0);
 }

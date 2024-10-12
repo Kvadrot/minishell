@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/11 11:09:15 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/12 18:05:09 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void	minishell_loop(t_data **minishell)
 		
 		// OR THIS?
 		// printf("environment: %s\n", (*minishell)->environment);
-		builtin_cd(minishell);
+		handle_builtins(minishell);
+		//ft_bi_echo((*minishell)->commands);
+		//builtin_cd(minishell);
 		ft_free_token_list((*minishell)->tokens);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
@@ -99,7 +101,7 @@ int	main(int argc, char **argv, char **env)
 //Uncomment to CheckUp ENV
 //=================================================================================
 
-	// print_environment(minishell.env);
+	//print_environment(minishell->env);
 //=================================================================================
 	
 

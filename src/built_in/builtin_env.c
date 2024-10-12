@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:25:18 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/10 13:34:48 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/12 13:20:31 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ int		builtin_env(t_env *node)
 	current = node;
 	if (!current)
 	{
-		// error handling!
-		perror("some issues with env");
+		ft_printf_full("some issues with env", 2, NULL);
 		return (-1);
-;	}
+	}
 	while (current != NULL)
 	{
 		printf("%s=%s\n", current->key, current->value);
