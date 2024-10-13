@@ -6,12 +6,11 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:57 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/13 12:50:13 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/13 12:54:59 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 void	swap(t_env *a, t_env *b)
 {
