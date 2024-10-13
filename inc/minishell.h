@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/10 15:52:48 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/13 12:05:19 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ void	minishell_loop(t_data **minishell);
 // Validate_input
 bool				ft_input_is_valid(char *input_str);
 
-t_env				*environment_new_node(char *key, char *value);
-void				environment_new_node_end(t_data *minishell, char *key, char *value);
-void				init_environment(t_data **minishell, char **envir);
-void				environment_free_list(t_env *head);
+t_env	*environment_new_node(char *key, char *value);
+void	environment_new_node_end(t_data *minishell, char *key, char *value);
+void	init_environment(t_data **minishell, char **envir);
+void	environment_free_list(t_env *head);
+void	add_to_env(t_data **minishell, char *key, char *new_value);
+void	delete_node(t_env **head_ref, t_env *node_to_delete);
 
 // tester functions
 void				print_environment(t_env *node);

@@ -6,11 +6,93 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:57 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/12 21:20:13 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/13 12:50:13 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+
+void	swap(t_env *a, t_env *b)
+{
+	char	*temp_key;
+	char	*temp_value;
+
+	temp_key = a->key;
+	temp_value = a->value;
+	a->key = b->key;
+	a->value = b->value;
+	b->key = temp_key;
+	b->value = temp_value;
+}
+
+// Function to sort the environment list in ascending order by 'key'
+void	sort_env_list(t_env **head)
+{
+	int		swapped;
+	t_env	*ptr1;
+	t_env	*lptr;
+	
+	lptr = NULL;
+	swapped = 1;
+	// If the list is empty or has only one element, it's already sorted
+	if (*head == NULL || (*head)->next == NULL)
+		return;
+	while (swapped)
+	{
+		swapped = 0; // Reset swapped for this iteration
+		ptr1 = *head;
+		while (ptr1->next != lptr)
+		{
+			// Compare the keys and swap if necessary
+			if (ft_strcmp(ptr1->key, ptr1->next->key) > 0)
+			{
+				swap(ptr1, ptr1->next);
+				swapped = 1; // Mark that we made a swap
+			}
+			ptr1 = ptr1->next;
+		}
+		lptr = ptr1; // Reduce the range for the next pass
+	}
+}
+
+char	*format_env_entry(t_env *node)
+{
+	char	*prefix;
+	char	*equal_sign;
+	char	*temp1;
+	char	*temp2;
+	char	*result;
+
+	prefix = "declare -x ";
+	equal_sign = "=";
+	temp1 = ft_strjoin(prefix, node->key);
+	temp2 = ft_strjoin(temp1, equal_sign);
+	free(temp1);
+	result = ft_strjoin(temp2, node->value);
+	free(temp2);
+	return (result);
+}
+
+void	export_no_args(t_data **minishell)
+{
+	t_env	*tmp;
+	char	*key_value;
+	char	*formatted;
+
+	sort_env_list(&((*minishell)->env));
+	tmp = (*minishell)->env;
+	while (tmp != NULL)
+	{
+		formatted = format_env_entry(tmp);
+		if (formatted)
+		{
+			printf("%s\n", formatted);
+			free(formatted);
+		}
+		tmp = tmp->next;
+	}
+}
 
 bool	is_valid_for_env(char *str)
 {
@@ -50,8 +132,8 @@ int	builtin_export(t_data **minishell)
 	i = 0;
 	if ((*minishell)->commands->args == NULL)
 	{
-		//declare -x + env
-		// return
+		export_no_args(minishell);
+		return (0);
 	}
 	while ((*minishell)->commands->args[i])
 	{
