@@ -6,11 +6,28 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 17:56:21 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/13 14:52:35 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/16 09:22:47 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+bool	is_builtin(t_command_full cmd)
+{
+	char		*name;
+	int			i;
+	const char	*builtins[] = {"cd", "echo", "env", "exit", "export", "pwd", "unset"};
+
+	i = 0;
+	name = cmd.args[0];
+	while (builtins[i])
+	{
+		if (ft_strcmp(name, builtins[i]) == 0)
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 void	handle_builtins(t_data **minishell)
 {

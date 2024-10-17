@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:57 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/13 12:54:59 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:54:12 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	builtin_export(t_data **minishell)
 	{
 		if (!ft_isalpha((*minishell)->commands->args[i][0]))
 		{
-			// ft_printf_full("not a valid identifier", 2, NULL); // zla funkcja
+			//ft_printf_full("not a valid identifier", 2, NULL); // zla funkcja
 			ft_putstr_fd("not a valid identifier\n", 2);
 			return (1);
 		}

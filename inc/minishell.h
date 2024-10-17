@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/13 12:05:19 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:03:50 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <sys/types.h>
 
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
