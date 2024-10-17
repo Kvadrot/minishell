@@ -3,18 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/27 19:18:01 by ssuchane         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/10/17 13:32:39 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../lib_ft_printf/ft_printf.h"
 # include "../lib_ft/libft.h"
 # include "tokens.h"
+# include "parsing.h"
+# include "../src/built_in/built_in.h"
+# include "../src/common_tools/common_tools.h"
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -22,56 +27,69 @@
 # include <termios.h>
 # include <unistd.h>
 
-# define PROMPT "MDshell > "
+# define PROMPT "Mini_hell > "
+# define HEREDOC_PROMPT "> "
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_data
+{
+	char			*input;
+	char			**envir;
+	char			*environment;
+	int				stdin;
+	int				stdout;
+	t_tokens		*tokens;
+	t_env			*env;
+	t_command_full		*commands;
+	struct termios	terminal;
+	struct s_data	*next;
+}					t_data;
+
 
 // DRBUG_FIELD
 // DELETE ME befor release
 //========================================================================================//
-# include "../lib_ft_printf/ft_printf.h"
+# include "../src/debug_functions/debuger.h"
 //========================================================================================//
 
-typedef struct s_env
-{
-	char				*key;
-	char				*value;
-	struct s_env		*next;
-}						t_env;
-
-typedef struct s_data
-{
-	char				*input;
-	char				**envir;
-	char				*environment;
-	int					stdin;
-	int					stdout;
-	t_tokens			*tokens;
-	t_env				*env;
-	struct termios		terminal;
-	struct s_minishell	*next;
-}						t_data;
+// LifeCycle
+void	minishell_loop(t_data **minishell);
 
 // Validate_input
-bool					ft_input_is_valid(char *input_str);
+bool				ft_input_is_valid(char *input_str);
 
-void					minishell_loop(t_data *minishell);
-
-t_env					*environment_new_node(char *key, char *value);
-void					environment_new_node_end(t_env **head, char *key,
-							char *value);
-void					init_environment(t_env **environment, char **env);
-void					environment_free_list(t_env *head);
-
-void					environment_free_list(t_env *head);
+t_env				*environment_new_node(char *key, char *value);
+void				environment_new_node_end(t_data *minishell, char *key, char *value);
+void				init_environment(t_data **minishell, char **envir);
+void				environment_free_list(t_env *head);
 
 // tester functions
-void					print_environment(t_env *node);
+void				print_environment(t_env *node);
 
 // tokens
-void					init_tokens(t_data *minishell);
+int					init_tokens(t_data *minishell);
+void				ft_free_token_list(t_tokens *token_list);
+int					validate_tokens(t_tokens *tokens);
 
 //	new potential libft function
-char					*ft_strncpy(char *dest, char *src, int num);
-void					ft_skip_whitespace(char **s);
-bool					ft_is_whitespace(char c);
+char				*ft_strncpy(char *dest, char *src, int num);
+void				ft_skip_whitespace(char **s);
+bool				ft_is_whitespace(char c);
+
+
+//Parsing
+t_command_full *ft_parse_tokens(t_data **minishell);
+void	ft_expand_input(t_data **minishell, t_command_full **cmd);
+
+
+// error handling
+void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
+
 
 #endif

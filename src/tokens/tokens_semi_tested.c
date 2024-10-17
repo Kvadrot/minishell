@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_semi_tested.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/08/28 13:01:49 by ssuchane         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:33:48 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 		else if (ft_is_whitespace(input[i]))
 			break ;
 		else
+		{
 			i++;
+			if (ft_strchr("><|", input[i]))
+				break ;
+		}
 	}
 	token->value = (char *)malloc(i + 1);
 	// if (!token->value)
 		// return not sufficient memory error
-	strncpy(token->value, input, i);
+	ft_strncpy(token->value, input, i);
 	token->value[i] = '\0';
 	token->type = type;
 	return (token);
@@ -87,19 +91,30 @@ void	append_token(t_tokens **tokens, t_tokens *new_token)
 	t_tokens	*current;
 
 	if (*tokens == NULL)
+	{
+		new_token->prev = NULL;
 		*tokens = new_token;
+	}
 	else
 	{
 		current = *tokens;
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_token;
+		new_token->prev = current;
 	}
 	new_token->next = NULL;
 }
 
 // pontentially catch syntax errors and return error message
-// how to return error that we want?
+// how to return error we want?
+
+// check for pipe at the beginning and at the end
+// check for > and >> at the end
+// check for < << at the beginning 
+// Return: Eerror_code:
+// 200 -> OK
+// -404 -> KO
 int	validate_tokens(t_tokens *tokens)
 {
 	t_tokens	*current;
@@ -107,25 +122,33 @@ int	validate_tokens(t_tokens *tokens)
 	current = tokens;
 	while (current && current->next)
 	{
-		if (current->type >= 1 && current->type <= 5 && current->next->type != 0)
+		if (current->type != 0 && current->next->type != 0)
 		{
 			// need actual error code to handle it
-			printf("bash: syntax error near unexpected token `%s'\n",
+			ft_printf("Mini_hell: syntax error near unexpected token `%s' - printed by: validate_tokens\n",
 				current->next->value);
-			return (1);
+			return (-404);
 		}
 		current = current->next;
 	}
-	return (0);
+	if (current->type > 0)
+	{
+		printf("Mini_hell: syntax error near unexpected token `%s' - printed by: validate_tokens\n",
+				current->value);
+		return (-405); 
+	}
+	return (200);
 }
 
-void	init_tokens(t_data *minishell)
+int	init_tokens(t_data *minishell)
 {
 	char		*string;
 	t_tokens	*token;
 
 	token = NULL;
-	string = minishell->input;
+	string = minishell->input; //<< fewrgewger >> ergewrg | d >>> f
+	if (!string)
+		return (200);
 	while (string && *string)
 	{
 		ft_skip_whitespace(&string);
@@ -136,6 +159,7 @@ void	init_tokens(t_data *minishell)
 			string += ft_strlen(token->value);
 		}
 	}
+	return (200);
 }
 
 // int	main(int ac, char **av)
