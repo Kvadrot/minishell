@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens_semi_tested.c                               :+:      :+:    :+:   */
+/*   tokens_semi_tested_without_libft.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/17 13:33:48 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:28:09 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+// first two inputs always give wrong values
+
+// in case of >>> or any other combination other than desired we should
+// return an error -
+// ------------------------------EXAMPLE------------------------------
+// ssuchane@c3r13s3:~$ |>
+// bash: syntax error near unexpected token `|'
+// ssuchane@c3r13s3:~$ |<
+// bash: syntax error near unexpected token `|'
+// ssuchane@c3r13s3:~$ >><
+// bash: syntax error near unexpected token `<'
 
 t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 {
@@ -32,15 +44,11 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 		else if (ft_is_whitespace(input[i]))
 			break ;
 		else
-		{
 			i++;
-			if (ft_strchr("><|", input[i]))
-				break ;
-		}
 	}
 	token->value = (char *)malloc(i + 1);
 	// if (!token->value)
-		// return not sufficient memory error
+	// return not sufficient memory error
 	ft_strncpy(token->value, input, i);
 	token->value[i] = '\0';
 	token->type = type;
@@ -49,11 +57,12 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 
 t_tokens	*update_token(t_tokens *token, char *input, int type)
 {
+	// updated from
 	token->value = (char *)malloc(3);
+	// token->value = (char *)malloc(ft_strlen(input) + 1);
 	// if (!token->value)
-		// return not sufficient memory error
-	ft_strncpy(token->value, input, ft_strlen(input));
-	token->value[ft_strlen(input)] = '\0';
+	// return not sufficient memory error
+	ft_strncpy(token->value, input, strlen(input));
 	token->type = type;
 	return (token);
 }
@@ -70,9 +79,10 @@ t_tokens	*get_token(char *input)
 	token->next = NULL;
 	if (*input)
 	{
-		if (!ft_strncmp(">>", input, 2))
+		// added ft_strlen(input) >= X &&
+		if (strlen(input) >= 2 && !strncmp(">>", input, 2))
 			return (update_token(token, ">>", T_DGREAT));
-		else if (!ft_strncmp("<<", input, 2))
+		else if (strlen(input) >= 2 && !strncmp("<<", input, 2))
 			return (update_token(token, "<<", T_DLESS));
 		else if (*input == '>')
 			return (update_token(token, ">", T_GREAT));
@@ -91,30 +101,17 @@ void	append_token(t_tokens **tokens, t_tokens *new_token)
 	t_tokens	*current;
 
 	if (*tokens == NULL)
-	{
-		new_token->prev = NULL;
 		*tokens = new_token;
-	}
 	else
 	{
 		current = *tokens;
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_token;
-		new_token->prev = current;
 	}
 	new_token->next = NULL;
 }
 
-// pontentially catch syntax errors and return error message
-// how to return error we want?
-
-// check for pipe at the beginning and at the end
-// check for > and >> at the end
-// check for < << at the beginning 
-// Return: Eerror_code:
-// 200 -> OK
-// -404 -> KO
 int	validate_tokens(t_tokens *tokens)
 {
 	t_tokens	*current;
@@ -122,33 +119,25 @@ int	validate_tokens(t_tokens *tokens)
 	current = tokens;
 	while (current && current->next)
 	{
-		if (current->type != 0 && current->next->type != 0)
+		if (current->type >= 1 && current->type <= 5 && current->next->type != 0)
 		{
 			// need actual error code to handle it
-			ft_printf("Mini_hell: syntax error near unexpected token `%s' - printed by: validate_tokens\n",
+			printf("bash: syntax error near unexpected token `%s'\n",
 				current->next->value);
-			return (-404);
+			return (1);
 		}
 		current = current->next;
 	}
-	if (current->type > 0)
-	{
-		printf("Mini_hell: syntax error near unexpected token `%s' - printed by: validate_tokens\n",
-				current->value);
-		return (-405); 
-	}
-	return (200);
+	return (0);
 }
 
-int	init_tokens(t_data *minishell)
+void	init_tokens(t_data *minishell)
 {
 	char		*string;
 	t_tokens	*token;
 
 	token = NULL;
-	string = minishell->input; //<< fewrgewger >> ergewrg | d >>> f
-	if (!string)
-		return (200);
+	string = minishell->input;
 	while (string && *string)
 	{
 		ft_skip_whitespace(&string);
@@ -156,28 +145,28 @@ int	init_tokens(t_data *minishell)
 		if (token)
 		{
 			append_token(&minishell->tokens, token);
-			string += ft_strlen(token->value);
+			string += strlen(token->value);
 		}
 	}
-	return (200);
 }
 
-// int	main(int ac, char **av)
-// {
-// 	t_data minishell;
-// 	minishell.tokens = NULL;
+int	main(int ac, char **av)
+{
+	t_data	minishell;
 
-// 	(void)ac;
-// 	minishell.input = av[1];
-// 	tokens(&minishell);
-
-// 	while (minishell.tokens != NULL)
-// 	{
-// 		printf("%s = %d\n", minishell.tokens->value, minishell.tokens->type);
-// 		minishell.tokens = minishell.tokens->next;
-// 	}
-// 	return (0);
-// }
+	minishell.tokens = NULL;
+	(void)ac;
+	minishell.input = av[1];
+	init_tokens(&minishell);
+	if (validate_tokens(minishell.tokens) != 0)
+		return (0);
+	while (minishell.tokens != NULL)
+	{
+		printf("%s = %d\n", minishell.tokens->value, minishell.tokens->type);
+		minishell.tokens = minishell.tokens->next;
+	}
+	return (0);
+}
 
 // abcd 42
 // "Abcd 42" = 0

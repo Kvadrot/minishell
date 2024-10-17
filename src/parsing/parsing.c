@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/03 17:32:40 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/17 11:02:39 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ t_redir	*ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cm
 	return (redirection);
 }
 
+
+
 /** TODO: ft_handle_redirection
 * @brief: initialize + adds any type of reidrecrtion into cmd_redir_list
 //=======================================================================//
@@ -161,6 +163,8 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 		ft_printf("my HEREDOC = %s", tempstr);
 	}
 }
+
+
 
 /** TODO: init_cmd
 * @brief: initialize cmd
@@ -221,8 +225,8 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 		}
 		temp_token = temp_token->next;
 	}
-
-	ft_debug_parsing(minishell);
+	// ft_expand_input();
+	// ft_debug_parsing(minishell);
 	return (cmd_head);
 }
 
