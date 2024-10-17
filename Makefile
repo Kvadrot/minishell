@@ -28,6 +28,7 @@ OBJ_DIR8 = obj/common_tools/
 SRC = main.c env.c \
 	built_in/bi_echo.c \
 	parsing/parsing.c \
+	parsing/expander.c  \
 	parsing/parsing_help_fts.c \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \
 	validation/validation.c \
