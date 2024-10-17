@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssuchane <ssuchane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/24 12:46:20 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:18:01 by ssuchane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../src/tokens/tokens.h"
 # include "../lib_ft/libft.h"
+# include "tokens.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -51,7 +51,7 @@ typedef struct s_data
 }						t_data;
 
 // Validate_input
-bool	ft_input_is_valid(char *input_str);
+bool					ft_input_is_valid(char *input_str);
 
 void					minishell_loop(t_data *minishell);
 
@@ -65,5 +65,13 @@ void					environment_free_list(t_env *head);
 
 // tester functions
 void					print_environment(t_env *node);
+
+// tokens
+void					init_tokens(t_data *minishell);
+
+//	new potential libft function
+char					*ft_strncpy(char *dest, char *src, int num);
+void					ft_skip_whitespace(char **s);
+bool					ft_is_whitespace(char c);
 
 #endif
