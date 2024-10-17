@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/24 10:21:25 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/02 12:00:06 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,23 +160,6 @@ int	init_tokens(t_data *minishell)
 		}
 	}
 	return (200);
-}
-
-void				ft_free_token_list(t_tokens *token_list)
-{
-	t_tokens *temp;
-	t_tokens *temp_next;
-
-	temp = token_list;
-	temp_next = NULL;
-	while (temp)
-	{
-		temp_next = temp->next;
-		free(temp->value);
-		free(temp);
-		temp = temp_next;
-	}
-	ft_printf("debug ft_free_token_list is done \n");
 }
 
 // int	main(int ac, char **av)

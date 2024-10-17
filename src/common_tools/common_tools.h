@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   common_tools.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/02 11:57:53 by ufo              ###   ########.fr       */
+/*   Created: 2024/10/03 15:34:37 by ufo               #+#    #+#             */
+/*   Updated: 2024/10/03 17:31:50 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "../../inc/minishell.h"
 
-# define MAX_ARGS 128
+int     ft_get_size_arr_of_str(char **arr_of_str);
+char    **append_string_to_array(char *new_str, char **args);
+char    *ft_join_with_delimeter(char *s1, char *s2, char *delimiter);
+int     ft_strcmp(const char *str1, const char *str2);
 
-# include "minishell.h"
 
-
-typedef enum e_token_type
-{
-	T_WORD,
-	T_LESS,
-	T_GREAT,
-	T_DLESS,
-	T_DGREAT,
-	T_PIPE,
-}					t_token_type;
-
-typedef struct s_tokens
-{
-	t_token_type	type;
-	char			*value;
-	struct s_tokens	*next;
-	struct s_tokens *prev;
-}					t_tokens;
-
-#endif

@@ -1,39 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/02 11:57:53 by ufo              ###   ########.fr       */
+/*   Created: 2024/10/02 10:21:20 by ufo               #+#    #+#             */
+/*   Updated: 2024/10/02 11:03:51 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "../../inc/minishell.h"
 
-# define MAX_ARGS 128
-
-# include "minishell.h"
-
-
-typedef enum e_token_type
-{
-	T_WORD,
-	T_LESS,
-	T_GREAT,
-	T_DLESS,
-	T_DGREAT,
-	T_PIPE,
-}					t_token_type;
-
-typedef struct s_tokens
-{
-	t_token_type	type;
-	char			*value;
-	struct s_tokens	*next;
-	struct s_tokens *prev;
-}					t_tokens;
-
-#endif
+void    ft_bi_echo(t_command_full *cmd);

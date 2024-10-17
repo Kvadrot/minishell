@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/23 18:32:31 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/16 15:52:35 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "../lib_ft/libft.h"
 # include "tokens.h"
 # include "parsing.h"
+# include "../src/built_in/built_in.h"
+# include "../src/common_tools/common_tools.h"
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -26,6 +28,7 @@
 # include <unistd.h>
 
 # define PROMPT "Mini_hell > "
+# define HEREDOC_PROMPT "> "
 
 typedef struct s_env
 {
@@ -82,9 +85,12 @@ bool				ft_is_whitespace(char c);
 
 //Parsing
 t_command_full *ft_parse_tokens(t_data **minishell);
+void	ft_expand_input(t_data **minishell, t_command_full **cmd);
+
 
 // error handling
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
+void	ft_free_tokens(t_data **minishell);
 
 
 

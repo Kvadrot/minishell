@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/01 13:19:04 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:50:23 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,11 @@ void	minishell_loop(t_data **minishell)
 		//TODO:
 		// free tokens list
 		// (*minishell)->commands = ft_parse_tokens(minishell);
-
 		ft_parse_tokens(minishell);
-		//TODO: free tokens;
-
+		ft_free_token_list((*minishell)->tokens);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		// ft_debug_parsing(minishell);
+		ft_debug_parsing(minishell);
 		//==================================================================================================================================
 		}
 	}

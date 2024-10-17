@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/09/29 12:45:45 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/17 11:02:39 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,84 +31,6 @@ t_redir *ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 	return (temp);
 }
 
-
-/** TODO: ft_get_size_arr_of_str
-* @brief: Countd lrngth ARR OF STRINGS
-//=======================================================================//
-//=======================================================================//
-* @returns: amount of strings inside: int
-*/
-int	ft_get_size_arr_of_str(char **arr_of_str)
-{
-	int	result;
-
-	result = 0;
-
-	if (!arr_of_str)
-		return (result);
-	while (arr_of_str[result] != NULL)
-	{
-		result++;
-	}
-	return (result);
-}
-
-/** TODO: ft_append_argument
-* @brief: appends new str to the end of arr
-//=======================================================================//
-* @HOW_IT_works:
-	coppies new_string, allocates mem for it
-	allocates mem for result: [[Str]], at the end +2 for new element & NULL
-	
-//=======================================================================//
-* @returns: t_redir	* - obj t_redir || NULL
-*/
- char **append_string_to_array(char *new_str, char **args)
-{
-    int i = 0;
-    int old_size = ft_get_size_arr_of_str(args); // Assuming this returns the length of the array
-    char **result;
-
-    // Allocate memory for the new array
-    result = (char **)malloc(sizeof(char *) * (old_size + 2)); // +1 for new string, +1 for NULL
-    if (!result) {
-        return NULL; // Check for allocation failure
-    }
-
-    // Copy existing strings to the new array
-    while (i < old_size) {
-        // Allocate memory for each string in the new array
-        result[i] = (char *)malloc(ft_strlen(args[i]) + 1); // +1 for null terminator
-        if (!result[i]) {
-            // Free already allocated memory if any malloc fails
-            while (i-- > 0)
-                free(result[i]);
-            free(result);
-            return NULL;
-        }
-
-        // Copy the string from the old array to the new array
-        ft_strlcpy(result[i], args[i], ft_strlen(args[i]) + 1); // Include null terminator
-        i++;
-    }
-
-    // Add the new string
-    result[i] = ft_strdup(new_str); // Duplicate the new string
-    if (!result[i]) {
-        free(result); // Free the new array if strdup fails
-        return NULL;
-    }
-
-    // Terminate the array with NULL
-    result[i + 1] = NULL;
-
-    // Free the old args array if it was allocated
-    free(args);
-
-    return (result); // Return the new array
-}
-
-
 void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data **minishell)
 {
 	if ((*temp_command)->cmd_name == NULL)
@@ -126,6 +48,51 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 		(*temp_command)->args = new_args; // Update args only after successful append
 	}
 	
+}
+
+char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
+{
+	bool	continue_reading;
+	char	*here_doc_next_line;
+	char	*result_text;
+	char	*temp_copy;
+
+	continue_reading = true;
+	result_text = NULL;
+	while (continue_reading == true)
+	{
+		here_doc_next_line = readline(HEREDOC_PROMPT);
+		if (here_doc_next_line == NULL)
+		{
+			if (result_text)
+				free(result_text);
+			return (NULL);
+		}
+		if (  ft_strlen(here_doc_next_line) != 0 && ft_strcmp(current_redir->file_name, here_doc_next_line) == 0)
+		{
+			free(here_doc_next_line);
+			break;
+		}
+		temp_copy = ft_join_with_delimeter(result_text, here_doc_next_line, "\n");
+		if (!temp_copy)
+			{
+				if (result_text)
+					free(result_text);
+				free(here_doc_next_line);
+				return (NULL);
+			}
+		if (result_text)
+			free(result_text);
+		result_text = ft_strdup(temp_copy);
+		if (!result_text)
+		{
+			free(temp_copy);
+			free(here_doc_next_line);
+			return (NULL);
+		}
+		free(here_doc_next_line);
+	}
+	return (result_text);
 }
 	
 
@@ -155,6 +122,8 @@ t_redir	*ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cm
 	return (redirection);
 }
 
+
+
 /** TODO: ft_handle_redirection
 * @brief: initialize + adds any type of reidrecrtion into cmd_redir_list
 //=======================================================================//
@@ -170,6 +139,7 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 {
 	t_redir *new_redirection;
 	t_redir	*prev_redir;
+	char	*tempstr;
 
 	prev_redir = ft_scroll_redir_list_to_last(cmd->redir_list_head);
 	new_redirection = ft_init_redir(token->prev, token, cmd);
@@ -184,7 +154,17 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 		prev_redir->next = new_redirection;
 	else
 		cmd->redir_list_head = new_redirection;
+	if (new_redirection->type == T_DLESS)
+	{
+		tempstr = ft_handle_here_doc(cmd, new_redirection);
+		if (!tempstr)
+			ft_handle_error(true, "error, printed by ft_handle_redirection\n", 4041, *minishell);
+		new_redirection->value = tempstr;
+		ft_printf("my HEREDOC = %s", tempstr);
+	}
 }
+
+
 
 /** TODO: init_cmd
 * @brief: initialize cmd
@@ -207,6 +187,8 @@ t_command_full *init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 	new_command->args = NULL;
 	new_command->redir_list_head = NULL;
 	new_command->cmd_name = NULL;
+	new_command->fd_in = 0;
+	new_command->fd_out = 1;
 	return (new_command);
 }
 
@@ -243,21 +225,8 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 		}
 		temp_token = temp_token->next;
 	}
-
-	ft_debug_parsing(minishell);
+	// ft_expand_input();
+	// ft_debug_parsing(minishell);
 	return (cmd_head);
-}
-
-// Function to free the args array in a command
-void	free_command_args(t_command_full *cmd)
-{
-	if (cmd->args)
-	{
-		for (int i = 0; cmd->args[i] != NULL; i++)
-		{
-			free(cmd->args[i]);
-		}
-		free(cmd->args);
-	}
 }
 
