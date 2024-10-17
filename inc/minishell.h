@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/17 13:32:39 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:50:28 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ bool				ft_is_whitespace(char c);
 
 
 //Parsing
-t_command_full *ft_parse_tokens(t_data **minishell);
-void	ft_expand_input(t_data **minishell, t_command_full **cmd);
+//t_command_full *ft_parse_tokens(t_data **minishell);
+//void	ft_expand_input(t_data **minishell, t_command_full **cmd);
 
 
 // error handling
-void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
+//void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
 
-
+//
 #endif
