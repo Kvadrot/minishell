@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/17 13:32:39 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:43:10 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "../lib_ft/libft.h"
 # include "tokens.h"
 # include "parsing.h"
-# include "../src/built_in/built_in.h"
 # include "../src/common_tools/common_tools.h"
 # include <errno.h>
 # include <readline/history.h>
@@ -26,6 +25,10 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
+# include <limits.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <sys/types.h>
 
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
@@ -41,7 +44,6 @@ typedef struct s_data
 {
 	char			*input;
 	char			**envir;
-	char			*environment;
 	int				stdin;
 	int				stdout;
 	t_tokens		*tokens;
@@ -50,6 +52,8 @@ typedef struct s_data
 	struct termios	terminal;
 	struct s_data	*next;
 }					t_data;
+
+# include "../src/built_in/built_in.h"
 
 
 // DRBUG_FIELD
@@ -64,10 +68,12 @@ void	minishell_loop(t_data **minishell);
 // Validate_input
 bool				ft_input_is_valid(char *input_str);
 
-t_env				*environment_new_node(char *key, char *value);
-void				environment_new_node_end(t_data *minishell, char *key, char *value);
-void				init_environment(t_data **minishell, char **envir);
-void				environment_free_list(t_env *head);
+t_env	*environment_new_node(char *key, char *value);
+void	environment_new_node_end(t_data *minishell, char *key, char *value);
+void	init_environment(t_data **minishell, char **envir);
+void	environment_free_list(t_env *head);
+void	add_to_env(t_data **minishell, char *key, char *new_value);
+void	delete_node(t_env **head_ref, t_env *node_to_delete);
 
 // tester functions
 void				print_environment(t_env *node);

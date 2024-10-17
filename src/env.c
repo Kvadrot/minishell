@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/17 13:33:32 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:43:50 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,64 @@ void	environment_free_list(t_env *head)
 	}
 }
 
-// tester function
-void	print_environment(t_env *node)
+void	delete_node(t_env **head, t_env *node_to_delete)
 {
-	t_env	*current;
+	t_env	*tmp;
+	t_env	*prev;
 
-	current = node;
-	while (current != NULL)
+	tmp = *head;
+	prev = NULL;
+	// Case 1: If the node to be deleted is the head node
+	if (tmp != NULL && tmp == node_to_delete)
 	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
+		*head = tmp->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+		return;
 	}
+	// Case 2: Search for the node in the rest of the list
+	while (tmp != NULL && tmp != node_to_delete)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	// If the node was not found
+	if (tmp == NULL)
+		return;
+	// Unlink the node from the list
+	prev->next = tmp->next;
+	free(tmp->key);
+	free(tmp->value);
+	free(tmp);
 }
+
+void	add_to_env(t_data **minishell, char *key, char *new_value)
+{
+	t_env	*tmp;
+	t_env	*prev;
+
+	tmp = (*minishell)->env;
+	prev = NULL;
+	//Check if the key exists and update if it does
+	while (tmp != NULL)
+	{
+		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
+			delete_node(&(*minishell)->env, tmp);
+		tmp = tmp->next;
+	}
+	environment_new_node_end(*minishell, key, new_value);
+}
+
+// tester function
+// void	print_environment(t_env *node)
+// {
+// 	t_env	*current;
+
+// 	current = node;
+// 	while (current != NULL)
+// 	{
+// 		printf("%s=%s\n", current->key, current->value);
+// 		current = current->next;
+// 	}
+// }
