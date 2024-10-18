@@ -27,6 +27,13 @@ OBJ_DIR8 = obj/common_tools/
 # Default sources
 SRC = main.c env.c \
 	built_in/bi_echo.c \
+	built_in/builtin_env.c \
+	built_in/builtin_pwd.c \
+	built_in/builtin_cd.c \
+	built_in/builtin_export.c \
+	built_in/builtin_unset.c \
+	built_in/builtin_exit.c \
+	built_in/handle_builtins.c \
 	parsing/parsing.c \
 	parsing/expander.c  \
 	parsing/parsing_help_fts.c \

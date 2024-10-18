@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/17 16:55:45 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:03:30 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	minishell_loop(t_data **minishell)
 				ft_handle_error(false, NULL, -400, (*minishell));
 				continue;
 			}
-
 			//Uncomment to Test Tokens
 		// =================================================================================
 			// while ((*minishell)->tokens != NULL)
@@ -52,10 +51,28 @@ void	minishell_loop(t_data **minishell)
 		// free tokens list
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
+
+		// THIS?
+		// t_env *tmp = (*minishell)->env;
+		// while (tmp)
+		// {
+		// 	printf("%s = %s\n", tmp->key, tmp->value);
+		// 	tmp = tmp->next;
+		// }
+
+		// THIS?
+		// for (int i = 0; (*minishell)->envir[i]; i++)
+		// 	printf("%s\n", (*minishell)->envir[i]);
+		
+		// OR THIS?
+		// printf("environment: %s\n", (*minishell)->environment);
+		handle_builtins(minishell);
+		//ft_bi_echo((*minishell)->commands);
+		//builtin_cd(minishell);
 		ft_free_token_list((*minishell)->tokens);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		ft_debug_parsing(minishell);
+		//ft_debug_parsing(minishell);
 		//==================================================================================================================================
 		}
 	}
@@ -83,10 +100,16 @@ int	main(int argc, char **argv, char **env)
 	init_environment(&minishell, minishell->envir);
 //Uncomment to CheckUp ENV
 //=================================================================================
-	// print_environment(minishell.env);
-//=================================================================================
 
-	environment_free_list(minishell->env);
+	//print_environment(minishell->env);
+//=================================================================================
+	
+
 	minishell_loop(&minishell);
+	environment_free_list(minishell->env);
+
+	// OLD ONE - WHY???
+	// environment_free_list(minishell->env);
+	// minishell_loop(&minishell);
 	return (0);
 }
