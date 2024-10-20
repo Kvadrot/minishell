@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/19 17:04:16 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/20 12:29:11 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,68 @@ int ft_get_arg_len(char *string)
           insert_ind
 //=======================================================================//
 * @HOW_IT_WORKS:
-
+1) Copies everything to the left from our insert_index if is able to do it
+2) Counts the right side (_something)
+*  right side = src (******_$ARG_something) - insert_ind(pointer on $) - old_part_len
+3) Joins left whith insertable_part = result
+4) Joins result with right_part
 //=======================================================================//
 * @returns: new string
 */
-char *ft_insert_str(char *src, int old_part_len,  char *insertable_str, int insert_ind)
+char *ft_insert_str(char *src, int old_part_len, char *insertable_str, int insert_ind)
 {
-    char    *result;
-    char    *left_part;
-    char    *right_part;
+    char *result;
+    char *left_part;
+    char *right_part;
+    int right_part_len;
 
+    left_part = NULL;
+    right_part = NULL;
+
+    // 1) Left part from the start to insert_index
     if (insert_ind > 0)
     {
         left_part = ft_strndup(src, insert_ind);
         if (!left_part)
-           return (NULL); 
+            return (NULL);
     }
-    right_part = ft_strndup(src, insert_ind + old_part_len);
+
+    // 2) Right part starts after the old part we are replacing
+    right_part_len = ft_strlen(src) - insert_ind - old_part_len;
+    right_part = ft_strndup(src + insert_ind + old_part_len, right_part_len);
     if (!right_part)
+    {
+        free(left_part); // Clean up before returning
         return (NULL);
+    }
+
+    // 3) Join left part with the insertable string
     result = ft_strjoin(left_part, insertable_str);
     if (!result)
+    {
+        free(left_part);
+        free(right_part);
         return (NULL);
-    result = ft_strjoin(result, right_part);
-    ft_printf("inserting result = %s\n", result);
-    return (result);
+    }
+
+    // 4) Join the result with the right part
+    char *final_result = ft_strjoin(result, right_part);
+    if (!final_result)
+    {
+        free(left_part);
+        free(right_part);
+        free(result);
+        return (NULL);
+    }
+
+    // Clean up
+    free(left_part);
+    free(right_part);
+    free(result);
+
+    return (final_result);
 }
+
 
 /** TODO: ft_substitude
 * @brief: substitudes values from environment instead of $ARG
@@ -90,39 +126,28 @@ int ft_substitude(t_data **minishell, char **full_arg, int start_index)
     char *arg_duplicate;
     int insertable_str_len;
 
-    // 1) Duplicate the argument after the '$'
-    arg_duplicate = ft_strndup(*full_arg + start_index + 1, ft_get_arg_len(*full_arg + start_index));
+    arg_duplicate = ft_strndup(*full_arg + start_index, ft_get_arg_len(*full_arg + start_index) + 1);
     if (!arg_duplicate)
-        ft_handle_error(true, "Malloc_error, printed by ft_substitute", 433, *minishell);
-    ft_printf("argduplicate = %s\n", arg_duplicate);
-    // 2) Iterate through the environment list
+        ft_handle_error(true, "Malloc_error, printed by ft_substitude", 433, *minishell);
+    // ft_printf("argduplicate = %s\n", arg_duplicate);
     temp_env = (*minishell)->env;
     while (temp_env)
     {
-        // 3) Compare the environment key with the duplicated argument
-        
-        if (ft_strcmp(temp_env->key, arg_duplicate) == 0)
+        if (ft_strcmp(temp_env->key, arg_duplicate + 1) == 0)
         {
-            // 4) If key matches, insert its value into full_arg
             insertable_str = temp_env->value;
             insertable_str_len = ft_strlen(insertable_str);
+            *full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg + start_index) + 1, insertable_str,  start_index);
 
-            // Assuming ft_insert_str modifies full_arg correctly
-            *full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg + start_index), insertable_str,  start_index);
-
-            free(arg_duplicate);  // Clean up
-            return insertable_str_len;  // Return the length of the substituted string
+            free(arg_duplicate);
+            return insertable_str_len;
         }
-        ft_printf("temp_env = %s\n", temp_env->key);
-        temp_env = temp_env->next;  // Move to the next environment variable
+        temp_env = temp_env->next;
     }
     ft_printf("*full_arg after substitution = %s\n", *full_arg);
-
-    // 5) If no match is found, remove the $ARG from full_arg
-    // *full_arg = ft_remove_str(*full_arg, start_index, ft_get_arg_len(*full_arg + start_index));
-
-    free(arg_duplicate);  // Clean up
-    return 0;  // No substitution occurred
+    *full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg + start_index) + 1, "",  start_index);
+    free(arg_duplicate);
+    return 0;
 }
 
 /** TODO: ft_is_able_to_substitute
@@ -248,5 +273,4 @@ void ft_expand_input(t_data **minishell)
         }
         temp_cmd = temp_cmd->next;
     }
-    ft_printf("expander\n");
 }
