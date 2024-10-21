@@ -12,21 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-int	count_commands(t_command_full *cmd)
-{
-	t_command_full	*tmp;
-	int				i;
-
-	tmp = cmd;
-	i = 0;
-	while (tmp != NULL)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
-
 char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
@@ -59,24 +44,62 @@ char	*find_path(char *cmd, char **envp)
 	return (0);
 }
 
-void	execute(char *argv, char **envp)
+int count_args(t_command_full *cmd)
 {
-	char	**split;
+	int i;
+	t_command_full *tmp;
+
+	i = 0;
+	tmp = cmd;
+	while (tmp->args[i] != NULL)
+		i++;
+	return (i);
+}
+
+char **make_exec_args(t_command_full *cmd)
+{
+	int     arg_count;
+	char    **res;
+	int		i;
+
+	arg_count = count_args(cmd);
+	res = malloc(sizeof(char *) * (arg_count + 2));  // +2 for cmd_name and NULL
+	if (!res)
+		return NULL;
+	res[0] = cmd->cmd_name;
+	i = 0;
+	while (i < arg_count)
+    {
+        res[i + 1] = cmd->args[i];
+        i++;
+    }
+    res[arg_count + 1] = NULL;
+	return (res);
+}
+
+void	execute(char **envp, t_command_full *cmd)
+{
 	int 	i;
 	char	*path;
+	char **exec_args;
 	
 	i = -1;
-	split = ft_split(argv, ' ');
-	path = find_path(split[0], envp);
+	path = find_path(cmd->cmd_name, envp);
+	exec_args = make_exec_args(cmd);
 	if (!path)	
 	{
-		while (split[++i])
-			free(split[i]);
-		free(split);
-		error_handling("something is wrong with PATH");
+		// free cmd here
+		free(exec_args);
+		ft_printf_full("Error: command not found in PATH\n", 2, NULL);
+		return ;
 	}
-	if (execve(path, split, envp) == -1)
-		error_handling("something is wrong with execve");
+	if (execve(path, exec_args, envp) == -1)
+	{
+    	free(exec_args);
+    	ft_printf_full("Error executing the command", 2, NULL);
+		return ;
+	}
+	free(exec_args);;
 }
 
 int	open_file(char *argv, int i)
@@ -91,96 +114,69 @@ int	open_file(char *argv, int i)
 	else if (i == 2)
 		file = open(argv, O_RDONLY, 0777);
 	if (file == -1)
-		error_handling("some issues with file opening");
+		ft_printf_full("some issues with file opening", 2, NULL);
 	return (file);
 }
 
-// struct s_command_full
-// {
-// 	char	*cmd_name;
-// 	char	**args;
-// 	int		fd_out;
-// 	int		fd_in;
-// 	t_redir *redir_list_head;         // This should be a pointer to an array or a single redirection struct
-// 	t_command_full *next;
-// 	t_command_full *prev;
-// };
-
-void	child_process()
+void setup_pipes_and_fds(t_command_full *command)
 {
-	
+    int fd[2];
+	t_command_full *cmd;
+
+	cmd = command;
+    while (cmd != NULL)
+    {
+        if (cmd->next != NULL)
+        {
+            pipe(fd);
+            // Set the output of the current command to the pipe's write end
+            cmd->fd_out = fd[1];
+            // Set the input of the next command to the pipe's read end
+            cmd->next->fd_in = fd[0];
+        }
+        cmd = cmd->next;
+    }
 }
 
-// void	child_process(char *argv, char **envp)
-// {
-// 	pid_t	pid;
-// 	int		fd[2];
-
-// 	if (pipe(fd) == -1)
-// 		error_handling("some issues with pipe");
-// 	pid = fork();
-// 	if (pid == -1)
-// 		error_handling("some issues with forking");
-// 	if (pid == 0)
-// 	{
-// 		close(fd[0]);
-// 		dup2(fd[1], STDOUT_FILENO);
-// 		execute(argv, envp);
-// 	}
-// 	else
-// 	{
-// 		close(fd[1]);
-// 		dup2(fd[0], STDIN_FILENO);
-// 		waitpid(pid, NULL, 0);
-// 	}
-// }
-
-void	here_doc(char *limiter)
+void execute_pipeline(t_command_full *cmd_list, char **envp)
 {
-	pid_t	pid;
-	int		fd[2];
-	char	*line;
+    t_command_full *cmd;
+    pid_t pid;
 
-	// if (argc < 6)
-	// 	error_handling("Please check your arguments!");
-	if (pipe(fd) == -1)
-		error_handling("something is wrong with the pipe (heredoc)");
-	pid = fork();
-	if (pid == 0) // Child process
-	{
-		close(fd[0]);  // Close the read end of the pipe
-		while (1)
-		{
-			line = get_next_line(STDIN_FILENO);
-			if (!line)
-				error_handling("Error reading input");
-			// If the line matches the limiter, exit
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 && line[ft_strlen(limiter)] == '\n')
-			{
-				free(line);
-				exit(EXIT_SUCCESS);
-			}
-			// Write the line to the pipe (to be used by the next process)
-			write(fd[1], line, ft_strlen(line));
-			free(line);  // Free the line after it's written to the pipe
-		}
-	}
-	else // Parent process
-	{
-		close(fd[1]);  // Close the write end of the pipe
-		dup2(fd[0], STDIN_FILENO);  // Redirect pipe read end to stdin
-		wait(NULL);  // Wait for the child process to finish
-	}
-}
+	cmd = cmd_list;
+    setup_pipes_and_fds(cmd_list);
+    while (cmd != NULL)
+    {
+        pid = fork();
+        if (pid == -1)
+            ft_printf_full("Fork failed", 2, NULL);
 
-int exec(t_command_full *cmd)
-{
-	t_command_full	*tmp;
-	pid_t	pid;
+        if (pid == 0)  // Child process
+        {
+            // Redirect input
+            if (cmd->fd_in != STDIN_FILENO)
+            {
+                dup2(cmd->fd_in, STDIN_FILENO);
+                close(cmd->fd_in);
+            }
 
-	tmp = cmd;
-	while (tmp != NULL)
-	{
-		
-	}
+            // Redirect output
+            if (cmd->fd_out != STDOUT_FILENO)
+            {
+                dup2(cmd->fd_out, STDOUT_FILENO);
+                close(cmd->fd_out);
+            }
+            execute(envp, cmd);
+            ft_printf_full("execve failed", 2, NULL);
+        }
+
+        // Parent process: close the pipe ends we don't need
+        if (cmd->fd_out != STDOUT_FILENO)
+            close(cmd->fd_out);
+        if (cmd->fd_in != STDIN_FILENO)
+            close(cmd->fd_in);
+
+        waitpid(pid, NULL, 0);  // Wait for child to finish
+        cmd = cmd->next;
+    }
 }

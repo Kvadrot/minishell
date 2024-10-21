@@ -97,5 +97,7 @@ void	ft_expand_input(t_data **minishell, t_command_full **cmd);
 // error handling
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
 
+//exec
+void execute_pipeline(t_command_full *cmd_list, char **envp);
 
 #endif
