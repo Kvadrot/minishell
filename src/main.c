@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/17 13:44:28 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:43:22 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,7 @@ void	minishell_loop(t_data **minishell)
 		// printf("environment: %s\n", (*minishell)->environment);
 		
 		if ((*minishell)->commands != NULL)
-		{
 			execute_pipeline((*minishell)->commands, (*minishell)->envir);
-		}
-
-
-		//ft_bi_echo((*minishell)->commands);
-		//builtin_cd(minishell);
-		while ((*minishell)->commands != NULL)
-		{
-			int i = 0;
-			while ((*minishell)->commands->args[i]) {
-				printf("command args: %s\n", (*minishell)->commands->args[i]);
-				i++;
-			}
-			printf("command name: %s\n", (*minishell)->commands->cmd_name);
-			printf("command fdin: %i\n", (*minishell)->commands->fd_in);
-			printf("command fdout: %i\n", (*minishell)->commands->fd_out);
-			(*minishell)->commands = (*minishell)->commands->next;
-		}
 		ft_free_token_list((*minishell)->tokens);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================

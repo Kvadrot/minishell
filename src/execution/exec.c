@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/22 11:24:29 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:36:46 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,29 @@ void	execute(char **envp, t_command_full *cmd)
 	
 	i = -1;
 	path = find_path(cmd->cmd_name, envp);
-	exec_args = make_exec_args(cmd);
-	if (!path)	
+	if (!path)
 	{
 		// free cmd here
-		free(exec_args);
+		//free(exec_args);
 		ft_printf_full("Error: command not found in PATH\n", 2, NULL);
+		exit(EXIT_FAILURE);
+	}
+	exec_args = make_exec_args(cmd);
+	if (!exec_args)
+	{
+		free(path);
+		ft_printf_full("Error: failed to create exec arguments\n", 2, NULL);
 		exit(EXIT_FAILURE);
 	}
 	if (execve(path, exec_args, envp) == -1)
 	{
 		free(exec_args);
+		free(path);
 		ft_printf_full("Error executing the command", 2, NULL);
 		exit(EXIT_FAILURE);
 	}
-	free(exec_args);;
+	free(exec_args);
+	free(path);
 }
 
 int	open_file(char *argv, int i)
