@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/19 12:21:47 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/21 21:24:40 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ bool				ft_is_whitespace(char c);
 //Parsing
 t_command_full *ft_parse_tokens(t_data **minishell);
 void	ft_expand_input(t_data **minishell);
-
+void	ft_errase_quote(t_data **minishell, char **temp_arg);
 
 // error handling
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);

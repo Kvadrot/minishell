@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/20 12:29:11 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/21 21:25:06 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,13 +225,11 @@ char *ft_expand_arg(t_data **minishell, char **temp_arg)
                 {
                     substituted_str_len = ft_substitude(minishell, temp_arg, counter);
                     ft_printf("temp_arg after substitution = %s\n", *temp_arg); // Dereference to print the string
-                    ft_printf("some at least it compiles\n");
                 }
             }
         }
         counter++;
     }
-
     return *temp_arg; // Return the modified argument
 }
 
@@ -259,7 +257,6 @@ void ft_expand_input(t_data **minishell)
         temp_arg = temp_cmd->args[arg_counter];
     else
         return;
-    ft_printf("temp_arg_ft_expand_inputlen\n");
 
     while (temp_cmd)
     {
@@ -267,8 +264,9 @@ void ft_expand_input(t_data **minishell)
         {
             ft_expand_arg(minishell, &temp_arg);
             // TODO:
-            //  ft_unwrap_quoetes();
+            ft_errase_quote(minishell, &temp_arg);
             arg_counter++;
+            ft_printf("parser result = %s\n", temp_arg);
             temp_arg = temp_cmd->args[arg_counter];
         }
         temp_cmd = temp_cmd->next;
