@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/23 11:49:31 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:14:21 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../lib_ft/libft.h"
 # include "tokens.h"
 # include "parsing.h"
+# include "../src/built_in/built_in.h"
 # include "../src/execution/execution.h"
 # include "../src/common_tools/common_tools.h"
 # include <errno.h>
