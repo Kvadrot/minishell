@@ -6,25 +6,39 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/23 11:46:05 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:49:43 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 /** TODO: find_path
-* @brief: look for path and returns it if it was found
+* @brief: looks for the executable file in directories listed in the PATH envir
 * @takes: command and environment
 //=======================================================================//
-* @HOW_IT_works:
-// envp[i] contains "PATH=/bin:/usr/bin:/some/other/dir"
-// skip the "PATH=" (5 characters) and split the directories by ':'
-// Construct the full path to the command
-// If access fails, free the current path and move to the next directory
-// Free the paths array if the command was not found
-// Return NULL if the command was not found in any path
+* @HOW_IT_WORKS:
+// Searches through the directories in the PATH environment variable.
+// Splits the PATH string into individual directories using ft_split.
+// Joins each directory with the command (cmd) to form a potential full path.
+// Uses access() to check if the command exists in the directory.
+// If the command is found, frees the paths array and returns the full path.
+// If no command is found, frees the paths array and returns NULL.
 //=======================================================================//
-* @returns: path
+* @returns: full path to the command if found,
+// or NULL if the command is not found
 */
 
 char	*find_path(char *cmd, char **envp)
@@ -45,15 +59,15 @@ char	*find_path(char *cmd, char **envp)
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
 		if (access(path, F_OK) == 0)
+		{
+			free_paths_array(paths);
 			return (path);
+		}
 		free(path);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
-	return (0);
+	free_array(paths);
+	return (NULL);
 }
 
 int	count_args(t_command_full *cmd)
@@ -124,7 +138,7 @@ void	execute(char **envp, t_command_full *cmd)
 	}
 	if (execve(path, exec_args, envp) == -1)
 	{
-		free(exec_args);
+		free_array(exec_args);
 		free(path);
 		ft_putstr_fd("Error executing the command\n", 2);
 		exit(EXIT_FAILURE);
