@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/23 13:49:43 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:21:02 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*find_path(char *cmd, char **envp)
 		free(part_path);
 		if (access(path, F_OK) == 0)
 		{
-			free_paths_array(paths);
+			free_array(paths);
 			return (path);
 		}
 		free(path);
