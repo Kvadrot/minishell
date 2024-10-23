@@ -36,6 +36,7 @@ SRC = main.c env.c \
 	built_in/builtin_exit.c \
 	built_in/handle_builtins.c \
 	execution/exec.c \
+	execution/helpers.c \
 	parsing/parsing.c \
 	parsing/expander.c  \
 	parsing/parsing_help_fts.c \
