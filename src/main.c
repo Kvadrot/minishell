@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/22 13:43:22 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:08:23 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	minishell_loop(t_data **minishell)
 		// printf("environment: %s\n", (*minishell)->environment);
 		
 		if ((*minishell)->commands != NULL)
-			execute_pipeline((*minishell)->commands, (*minishell)->envir);
+			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		ft_free_token_list((*minishell)->tokens);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================

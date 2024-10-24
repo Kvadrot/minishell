@@ -6,23 +6,13 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/23 17:14:21 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:07:33 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../lib_ft_printf/ft_printf.h"
-# include "../lib_ft/libft.h"
-# include "tokens.h"
-# include "parsing.h"
-# include "../src/built_in/built_in.h"
-# include "../src/execution/execution.h"
-# include "../src/common_tools/common_tools.h"
-# include <errno.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <termios.h>
@@ -32,6 +22,15 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include "../lib_ft_printf/ft_printf.h"
+# include "../lib_ft/libft.h"
+# include "tokens.h"
+# include "parsing.h"
+
+# include "../src/common_tools/common_tools.h"
 
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
@@ -57,7 +56,7 @@ typedef struct s_data
 }					t_data;
 
 # include "../src/built_in/built_in.h"
-
+# include "../src/execution/execution.h"
 
 // DRBUG_FIELD
 // DELETE ME befor release
@@ -99,8 +98,5 @@ void	ft_expand_input(t_data **minishell, t_command_full **cmd);
 
 // error handling
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
-
-//exec
-void execute_pipeline(t_command_full *cmd_list, char **envp);
 
 #endif
