@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/21 21:24:40 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/24 14:05:30 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_data
 	int				stdout;
 	t_tokens		*tokens;
 	t_env			*env;
-	t_command_full		*commands;
+	t_command_full	*commands;
 	struct termios	terminal;
 	struct s_data	*next;
 }					t_data;
@@ -93,9 +93,9 @@ bool				ft_is_whitespace(char c);
 t_command_full *ft_parse_tokens(t_data **minishell);
 void	ft_expand_input(t_data **minishell);
 void	ft_errase_quote(t_data **minishell, char **temp_arg);
+void	ft_handle_redirections(t_data **minishell);
 
 // error handling
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
-
 
 #endif
