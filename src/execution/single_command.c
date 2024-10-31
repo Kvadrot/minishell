@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:53:20 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/31 15:39:45 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:00:03 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	handle_1_cmd(t_command_full *cmd, char **envp, t_data **minishell)
 	}
 	else
 	{
-		setup_heredoc_as_stdin(cmd);
+		setup_heredoc(cmd);
 		execute_single_command(cmd, envp);
 	}
 }

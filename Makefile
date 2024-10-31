@@ -38,6 +38,7 @@ SRC = main.c env.c \
 	execution/single_command.c \
 	execution/exec.c \
 	execution/helpers.c \
+	execution/handle_heredoc.c \
 	parsing/parsing.c \
 	parsing/quote_erraser.c \
 	parsing/expander.c  \
