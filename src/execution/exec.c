@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/24 17:09:07 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:41:43 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ void	setup_pipes_and_fds(t_command_full *command)
 	{
 		if (cmd->next != NULL)
 		{
-			pipe(fd);
+			if (pipe(fd) == -1)
+			{
+				ft_putstr_fd("Pipe failed\n", 2);
+				exit(EXIT_FAILURE);
+			}
 			cmd->fd_out = fd[1];
 			cmd->next->fd_in = fd[0];
 		}
