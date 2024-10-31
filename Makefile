@@ -39,8 +39,10 @@ SRC = main.c env.c \
 	execution/exec.c \
 	execution/helpers.c \
 	parsing/parsing.c \
+	parsing/quote_erraser.c \
 	parsing/expander.c  \
 	parsing/parsing_help_fts.c \
+	parsing/redirection_handler.c  \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \
 	validation/validation.c \
 	error_handler/error_handling.c \

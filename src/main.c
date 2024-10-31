@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/24 17:08:23 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:17:19 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,12 @@ void	minishell_loop(t_data **minishell)
 		// free tokens list
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
+		ft_expand_input(minishell);
+		ft_handle_redirections(minishell);
 
-		// THIS?
-		// t_env *tmp = (*minishell)->env;
-		// while (tmp)
-		// {
-		// 	printf("%s = %s\n", tmp->key, tmp->value);
-		// 	tmp = tmp->next;
-		// }
-
-		// THIS?
-		// for (int i = 0; (*minishell)->envir[i]; i++)
-		// 	printf("%s\n", (*minishell)->envir[i]);
-		
-		// OR THIS?
-		// printf("environment: %s\n", (*minishell)->environment);
-		
-		if ((*minishell)->commands != NULL)
-			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
-		ft_free_token_list((*minishell)->tokens);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		//ft_debug_parsing(minishell);
+		// ft_debug_parsing(minishell);
 		//==================================================================================================================================
 		}
 	}
