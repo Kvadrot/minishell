@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:07:28 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/24 16:46:36 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:15:21 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	builtin_echo(char **args)
 	bool	is_n;
 
 	is_n = false;
-	i = 0;
+	i = 1;
 	while (args[i] && is_n_flag(args[i]))
 	{
 		is_n = true;

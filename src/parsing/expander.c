@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/23 15:44:29 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/31 12:36:18 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ void ft_expand_input(t_data **minishell)
             // TODO:
             ft_errase_quote(minishell, &temp_arg);
             arg_counter++;
-            ft_printf("parser result = %s\n", temp_arg);
+            ft_printf("exapnd result = %s\n", temp_arg);
             temp_arg = temp_cmd->args[arg_counter];
         }
         temp_cmd = temp_cmd->next;
