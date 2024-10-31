@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/17 13:44:28 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:05:48 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,12 @@ void	minishell_loop(t_data **minishell)
 		// free tokens list
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
+		ft_expand_input(minishell);
+		ft_handle_redirections(minishell);
 
-		// THIS?
-		// t_env *tmp = (*minishell)->env;
-		// while (tmp)
-		// {
-		// 	printf("%s = %s\n", tmp->key, tmp->value);
-		// 	tmp = tmp->next;
-		// }
-
-		// THIS?
-		// for (int i = 0; (*minishell)->envir[i]; i++)
-		// 	printf("%s\n", (*minishell)->envir[i]);
-		
-		// OR THIS?
-		// printf("environment: %s\n", (*minishell)->environment);
-		handle_builtins(minishell);
-		//ft_bi_echo((*minishell)->commands);
-		//builtin_cd(minishell);
-		ft_free_token_list((*minishell)->tokens);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		//ft_debug_parsing(minishell);
+		// ft_debug_parsing(minishell);
 		//==================================================================================================================================
 		}
 	}
