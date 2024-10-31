@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:46:48 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/31 16:03:20 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 	}
 	// ft_expand_input();
 	// ft_debug_parsing(minishell);
+	temp_command->next = NULL;
 	return (cmd_head);
 }
 
