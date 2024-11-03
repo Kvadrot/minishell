@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/03 15:33:29 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:11:37 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,17 @@ void	minishell_loop(t_data **minishell)
 		// free tokens list
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
-		// ft_expand_input(minishell);
-		// ft_handle_redirections(minishell);
-		
-       // ft_printf("transition result, arg_0 = %s\n", (*minishell)->commands->args[0]);
-		while ((*minishell)->commands->next != NULL)
-		{
-			printf("cmd name: %s\n", (*minishell)->commands->cmd_name);
-			printf("cmd arg[o]: %s\n", (*minishell)->commands->args[0]);
-			(*minishell)->commands->next;
-		}
+		perror("");
+		ft_expand_input(minishell);
+		ft_handle_redirections(minishell);
 
-		if ((*minishell)->commands != NULL)
-			//printf("first arg is: %s\n", (*minishell)->commands->args[0]);
-			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
 		ft_printf("MAIN>C Calls debuger after parsing\n");
 		ft_debug_parsing(minishell);
 		//==================================================================================================================================
+		if ((*minishell)->commands != NULL)
+			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		}
 	}
 }
