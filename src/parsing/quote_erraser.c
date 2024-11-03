@@ -6,13 +6,13 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:44:48 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/22 13:10:33 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/31 16:31:24 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void ft_errase_quote(t_data **minishell, char **temp_arg)
+char    *ft_errase_quote(t_data **minishell, char **temp_arg)
 {
     char    *cleaned_arg;
     int     old_counter;
@@ -50,6 +50,6 @@ void ft_errase_quote(t_data **minishell, char **temp_arg)
 
     cleaned_arg[clean_counter] = '\0';
     free(*temp_arg);
-    ft_printf("%s\n", cleaned_arg);
-    *temp_arg = cleaned_arg; // Update the string in-place
+    // *temp_arg = cleaned_arg; // Update the string in-place
+    return (cleaned_arg);
 }

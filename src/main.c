@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/31 14:09:11 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:33:29 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	minishell_loop(t_data **minishell)
 			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		// ft_debug_parsing(minishell);
+		ft_printf("MAIN>C Calls debuger after parsing\n");
+		ft_debug_parsing(minishell);
 		//==================================================================================================================================
 		}
 	}

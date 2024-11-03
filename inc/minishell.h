@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/31 12:15:50 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:32:30 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ bool				ft_is_whitespace(char c);
 //Parsing
 t_command_full *ft_parse_tokens(t_data **minishell);
 void	ft_expand_input(t_data **minishell);
-void	ft_errase_quote(t_data **minishell, char **temp_arg);
+char	*ft_errase_quote(t_data **minishell, char **temp_arg);
 void	ft_handle_redirections(t_data **minishell);
 
 // error handling

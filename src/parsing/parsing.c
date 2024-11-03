@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/31 12:43:41 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:33:51 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,9 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 		}
 		temp_token = temp_token->next;
 	}
-
+	// ft_expand_input();
+	// ft_debug_parsing(minishell);
+	temp_command->next = NULL;
 	return (cmd_head);
 }
 

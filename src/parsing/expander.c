@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/31 12:36:18 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:32:16 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,6 @@ void ft_expand_input(t_data **minishell)
     char *temp_arg;
     int arg_counter;
 
-    arg_counter = 0;
     temp_cmd = (*minishell)->commands;
     if (temp_cmd->args != NULL)
         temp_arg = temp_cmd->args[arg_counter];
@@ -260,15 +259,18 @@ void ft_expand_input(t_data **minishell)
 
     while (temp_cmd)
     {
+        arg_counter = 0;
+        temp_arg = temp_cmd->args[arg_counter];
         while (temp_arg)
         {
-            ft_expand_arg(minishell, &temp_arg);
+            temp_cmd->args[arg_counter] = ft_expand_arg(minishell, &temp_arg);
             // TODO:
-            ft_errase_quote(minishell, &temp_arg);
+            temp_cmd->args[arg_counter] = ft_errase_quote(minishell, &temp_arg);
+            ft_printf("ft_errase_quote result = %s\n", temp_cmd->args[arg_counter]);
             arg_counter++;
-            ft_printf("exapnd result = %s\n", temp_arg);
             temp_arg = temp_cmd->args[arg_counter];
         }
         temp_cmd = temp_cmd->next;
     }
 }
+
