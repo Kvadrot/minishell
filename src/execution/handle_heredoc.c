@@ -28,7 +28,7 @@ void	setup_heredoc(t_command_full *cmd)
 				exit(EXIT_FAILURE);
 			}
 			// Write the heredoc content to the write end of the pipe
-			write(pipe_fds[1], redir->value, strlen(redir->value));
+			write(pipe_fds[1], redir->value, ft_strlen(redir->value));
 			close(pipe_fds[1]);
 			// Assign heredoc pipe read end as fd_in for this command
 			cmd->fd_in = pipe_fds[0];

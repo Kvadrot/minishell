@@ -86,9 +86,13 @@ void	child_process(t_command_full *cmd, char **envp)
 void	handle_cmd_exec(t_command_full *cmd, char **envp, t_data **minishell)
 {
 	pid_t	pid;
+	int		orig_stdin;
+	int		orig_stdout;
 
 	if (is_builtin(cmd))
 	{
+		orig_stdin = dup(STDIN_FILENO);
+		orig_stdout = dup(STDOUT_FILENO);
 		if (cmd->fd_in != STDIN_FILENO)
 		{
 			dup2(cmd->fd_in, STDIN_FILENO);
@@ -100,6 +104,10 @@ void	handle_cmd_exec(t_command_full *cmd, char **envp, t_data **minishell)
 			close(cmd->fd_out);
 		}
 		handle_builtins(minishell);
+		dup2(original_stdin, STDIN_FILENO);
+		dup2(original_stdout, STDOUT_FILENO);
+		close(orig_stdin);
+		close(orig_stdout);
 	}
 	else
 	{
@@ -111,7 +119,8 @@ void	handle_cmd_exec(t_command_full *cmd, char **envp, t_data **minishell)
 		}
 		if (pid == 0)
 			child_process(cmd, envp);
-		waitpid(pid, NULL, 0);
+		else
+			waitpid(pid, NULL, 0);
 	}
 }
 
