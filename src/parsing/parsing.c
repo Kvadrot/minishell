@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/17 11:02:39 by ufo              ###   ########.fr       */
+/*   Updated: 2024/10/31 16:03:20 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 	{
 		(*temp_command)->cmd_name = ft_strdup(temp_token->value);
 	}
-	else
-	{
+	// else
+	// {
 		char **new_args = append_string_to_array(temp_token->value ,(*temp_command)->args);
 		if (new_args == NULL)
 		{
@@ -46,7 +46,7 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 			return; // Early return to avoid using NULL pointer
 		}
 		(*temp_command)->args = new_args; // Update args only after successful append
-	}
+	// }
 	
 }
 
@@ -227,6 +227,7 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 	}
 	// ft_expand_input();
 	// ft_debug_parsing(minishell);
+	temp_command->next = NULL;
 	return (cmd_head);
 }
 

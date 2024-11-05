@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in.h                                         :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 10:21:20 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/16 09:23:09 by mbudkevi         ###   ########.fr       */
+/*   Created: 2024/10/09 14:25:18 by mbudkevi          #+#    #+#             */
+/*   Updated: 2024/10/12 13:20:31 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-bool	is_builtin(t_command_full cmd);
-void	handle_builtins(t_data **minishell);
-int 	builtin_echo(char **args);
-int		builtin_pwd(void);
-int		builtin_env(t_env *node);
-int		builtin_cd(t_data **minishell);
-int		builtin_export(t_data **minishell);
-void	builtin_unset(t_data **minishell);
-void	builtin_exit(void);
+// with no options or args
+
+int		builtin_env(t_env *node)
+{
+	t_env	*current;
+
+	current = node;
+	if (!current)
+	{
+		ft_printf_full("some issues with env", 2, NULL);
+		return (-1);
+	}
+	while (current != NULL)
+	{
+		printf("%s=%s\n", current->key, current->value);
+		current = current->next;
+	}
+	return (0);
+}
