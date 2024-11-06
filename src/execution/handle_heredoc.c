@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:30:18 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/31 15:45:35 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:01:16 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	setup_heredoc(t_command_full *cmd)
 	int		pipe_fds[2];
 
 	redir = cmd->redir_list_head;
-	while (redir)
-	{
+	// while (redir)
+	// {
 		if (redir->value != NULL)
 		{
 			if (pipe(pipe_fds) == -1)
@@ -33,8 +33,8 @@ void	setup_heredoc(t_command_full *cmd)
 			// Assign heredoc pipe read end as fd_in for this command
 			cmd->fd_in = pipe_fds[0];
 			// Exit the loop after setting up the first detected heredoc
-			break;
+			//break;
 		}
-		redir = redir->next;
-	}
+	// 	redir = redir->next;
+	// }
 }
