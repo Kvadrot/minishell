@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/31 14:41:43 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/06 10:22:14 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ void	handle_cmd_exec(t_command_full *cmd, char **envp, t_data **minishell)
 			close(cmd->fd_out);
 		}
 		handle_builtins(minishell);
-		dup2(original_stdin, STDIN_FILENO);
-		dup2(original_stdout, STDOUT_FILENO);
+		dup2(orig_stdin, STDIN_FILENO);
+		dup2(orig_stdout, STDOUT_FILENO);
 		close(orig_stdin);
 		close(orig_stdout);
 	}
