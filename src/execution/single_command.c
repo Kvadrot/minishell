@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:53:20 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/06 14:01:26 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:47:46 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void	execute_single_command(t_command_full *cmd, char **envp)
 void	handle_1_cmd(t_command_full *cmd, char **envp, t_data **minishell)
 {
 	if (is_builtin(cmd))
-	{
-		setup_heredoc(cmd);
 		handle_builtins(minishell);
-	}
 	else
 	{
 		setup_heredoc(cmd);

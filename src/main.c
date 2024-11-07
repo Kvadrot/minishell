@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/03 16:11:37 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:38:33 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	minishell_loop(t_data **minishell)
 		// free tokens list
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
-		perror("");
 		ft_expand_input(minishell);
 		ft_handle_redirections(minishell);
 

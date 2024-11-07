@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/06 10:22:14 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:54:01 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	exec_loop(t_command_full *cmd_list, char **envp, t_data **minishell)
 
 void	exec_pipeline(t_command_full *cmd_list, char **envp, t_data **minishell)
 {
+	t_command_full *cmd = cmd_list;
 	if (cmd_list == NULL)
 		return ;
 	if (cmd_list->next == NULL)
@@ -167,5 +168,11 @@ void	exec_pipeline(t_command_full *cmd_list, char **envp, t_data **minishell)
 		return ;
 	}
 	setup_pipes_and_fds(cmd_list);
+	while (cmd != NULL)
+	{
+		if (cmd->redir_list_head && cmd->redir_list_head->value != NULL)
+			setup_heredoc(cmd);
+		cmd = cmd->next;
+	}
 	exec_loop(cmd_list, envp, minishell);
 }
