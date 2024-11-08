@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/31 16:35:41 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/07 12:38:33 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	minishell_loop(t_data **minishell)
 		ft_printf("MAIN>C Calls debuger after parsing\n");
 		ft_debug_parsing(minishell);
 		//==================================================================================================================================
+		if ((*minishell)->commands != NULL)
+			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		}
 	}
 }

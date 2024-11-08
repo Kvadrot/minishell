@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 14:25:18 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/23 15:24:21 by mbudkevi         ###   ########.fr       */
+/*   Created: 2024/10/24 16:53:20 by mbudkevi          #+#    #+#             */
+/*   Updated: 2024/11/07 12:47:46 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	builtin_env(t_env *node)
+void	execute_single_command(t_command_full *cmd, char **envp)
 {
-	t_env	*current;
+	pid_t	pid;
 
-	current = node;
-	if (!current)
+	pid = fork();
+	if (pid == -1)
 	{
-		ft_printf_full("some issues with env", 2, NULL);
-		return (-1);
+		ft_putstr_fd("Fork failed\n", 2);
+		return ;
 	}
-	while (current != NULL)
+	if (pid == 0)
+		child_process(cmd, envp);
+	else
+		waitpid(pid, NULL, 0);
+}
+
+void	handle_1_cmd(t_command_full *cmd, char **envp, t_data **minishell)
+{
+	if (is_builtin(cmd))
+		handle_builtins(minishell);
+	else
 	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
+		setup_heredoc(cmd);
+		execute_single_command(cmd, envp);
 	}
-	return (0);
 }

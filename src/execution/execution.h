@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 14:25:18 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/23 15:24:21 by mbudkevi         ###   ########.fr       */
+/*   Created: 2024/10/23 11:47:26 by mbudkevi          #+#    #+#             */
+/*   Updated: 2024/10/31 15:59:34 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	builtin_env(t_env *node)
-{
-	t_env	*current;
-
-	current = node;
-	if (!current)
-	{
-		ft_printf_full("some issues with env", 2, NULL);
-		return (-1);
-	}
-	while (current != NULL)
-	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-	return (0);
-}
+void	execute(char **envp, t_command_full *cmd);
+void	child_process(t_command_full *cmd, char **envp);
+void	handle_1_cmd(t_command_full *cmd, char **envp, t_data **minishell);
+void	exec_pipeline(t_command_full *cmd_list, char **envp, t_data **minishell);
+void	setup_heredoc(t_command_full *cmd);

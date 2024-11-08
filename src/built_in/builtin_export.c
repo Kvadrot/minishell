@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:57 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/17 12:54:12 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:33:48 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,43 @@ void	swap(t_env *a, t_env *b)
 	b->value = temp_value;
 }
 
-// Function to sort the environment list in ascending order by 'key'
+/** TODO: sort_env_list
+* @brief: to sort env list in ascending order by 'key'
+* @takes: environment
+//=======================================================================//
+* @HOW_IT_works:
+// If the list is empty or has only one element, it's already sorted
+// Compare the keys and swap if necessary
+// Mark that we made a swap
+// Reduce the range for the next pass
+//=======================================================================//
+* @returns: void
+*/
+
 void	sort_env_list(t_env **head)
 {
 	int		swapped;
 	t_env	*ptr1;
 	t_env	*lptr;
-	
+
 	lptr = NULL;
 	swapped = 1;
-	// If the list is empty or has only one element, it's already sorted
 	if (*head == NULL || (*head)->next == NULL)
-		return;
+		return ;
 	while (swapped)
 	{
-		swapped = 0; // Reset swapped for this iteration
+		swapped = 0;
 		ptr1 = *head;
 		while (ptr1->next != lptr)
 		{
-			// Compare the keys and swap if necessary
 			if (ft_strcmp(ptr1->key, ptr1->next->key) > 0)
 			{
 				swap(ptr1, ptr1->next);
-				swapped = 1; // Mark that we made a swap
+				swapped = 1;
 			}
 			ptr1 = ptr1->next;
 		}
-		lptr = ptr1; // Reduce the range for the next pass
+		lptr = ptr1;
 	}
 }
 
@@ -115,7 +125,7 @@ bool	is_valid_for_env(char *str)
 int	key_size(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i] != '=')
 		i++;
@@ -138,7 +148,6 @@ int	builtin_export(t_data **minishell)
 	{
 		if (!ft_isalpha((*minishell)->commands->args[i][0]))
 		{
-			//ft_printf_full("not a valid identifier", 2, NULL); // zla funkcja
 			ft_putstr_fd("not a valid identifier\n", 2);
 			return (1);
 		}

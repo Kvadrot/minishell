@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/31 16:15:35 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/03 15:56:00 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../lib_ft_printf/ft_printf.h"
-# include "../lib_ft/libft.h"
-# include "tokens.h"
-# include "parsing.h"
-# include "../src/common_tools/common_tools.h"
-# include <errno.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <termios.h>
@@ -29,6 +21,16 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <sys/types.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include "../lib_ft_printf/ft_printf.h"
+# include "../lib_ft/libft.h"
+# include "tokens.h"
+# include "parsing.h"
+
+# include "../src/common_tools/common_tools.h"
 
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
@@ -54,7 +56,7 @@ typedef struct s_data
 }					t_data;
 
 # include "../src/built_in/built_in.h"
-
+# include "../src/execution/execution.h"
 
 // DRBUG_FIELD
 // DELETE ME befor release

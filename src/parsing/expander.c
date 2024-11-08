@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/31 17:07:08 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/05 17:02:59 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,7 @@ void ft_expand_input(t_data **minishell)
     char *temp_arg;
     int arg_counter;
 
+    arg_counter = 0;
     temp_cmd = (*minishell)->commands;
     if (temp_cmd->args != NULL)
         temp_arg = temp_cmd->args[arg_counter];
