@@ -6,11 +6,69 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:19:59 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/25 12:09:32 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/09 18:08:31 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+/** TODO: ft_close_redirections_before
+* @brief: Closes file descriptors for redirections in the provided redirection list.
+* @takes: redirect - Pointer to the head of the redirection list.
+* =======================================================================
+* @HOW_IT_WORKS:
+1) Iterates through the redirection list in reverse order (using the `prev` pointer).
+2) For each redirection, checks if the file descriptor (fd) is valid (greater than zero).
+3) Closes the file descriptor if valid.
+* =======================================================================
+* @returns: void
+*/
+static void    ft_close_redirections_before(t_redir *redirect)
+{
+    t_redir *temp_redir;
+    
+    temp_redir = redirect;
+    while (temp_redir)
+    {
+        if (temp_redir->fd > 0) 
+            close(temp_redir->fd);
+        temp_redir = temp_redir->prev;
+    }
+    return ;
+}
+
+/** TODO: ft_close_all_redirections
+* @brief: Closes all file descriptors for redirections in a command chain, starting with the current command and working backwards.
+* @takes: cmd - Pointer to the current command whose redirection list should be processed first.
+*         redirect_list - Pointer to the head of the redirection list of the current command.
+* =======================================================================
+* @HOW_IT WORKS:
+1) First, calls `ft_close_redirections_before` to close redirections for the current command.
+2) Then, iterates through the previous commands in the pipeline (using the `prev` pointer).
+3) For each previous command, processes its redirection list and closes any valid file descriptors (fd).
+4) Continues until all commands in the pipeline have been processed.
+* =======================================================================
+* @returns: void
+*/
+void    ft_close_all_redirections(t_command_full *cmd, t_redir *redirect_list)
+{
+    t_command_full *temp_cmd;
+    t_redir *temp_redir;
+
+    ft_close_redirections_before(redirect_list);
+    temp_cmd = cmd->prev;
+    while (temp_cmd)
+    {
+        temp_redir = temp_cmd->redir_list_head;
+        while (temp_redir)
+        {
+            if (temp_redir->fd > 0) 
+                close(temp_redir->fd);
+            temp_redir = temp_redir->next;
+        }
+        temp_cmd = temp_cmd->prev;
+    }
+}
 
 /** TODO: ft_handle_dgreat
 * @brief: Opens a file for appending if it exists or creates it if not (>> redirection).
@@ -114,10 +172,11 @@ int ft_handle_output(t_redir *redir)
 static int ft_handle_less(char *filename)
 {
     int fd_result;
+    fd_result = -1;
 
     if (access(filename, F_OK) == -1)
     {
-        perror("File does not exist");
+        perror("File does not exist !!!!");
         return -1;
     }
 
@@ -173,7 +232,8 @@ int ft_handle_input(t_redir *redir)
 //=======================================================================//
 * @returns: void
 */
-void ft_handle_redirections(t_data **minishell)
+
+int ft_handle_redirections(t_data **minishell)
 {
     t_command_full *cmd_head;
     t_command_full *temp_cmd;
@@ -189,12 +249,28 @@ void ft_handle_redirections(t_data **minishell)
             while (temp_redir)
             {
                 if (temp_redir->type == T_GREAT || temp_redir->type == T_DGREAT)
+                {
                     temp_cmd->fd_out = ft_handle_output(temp_redir);
+                    // if (temp_cmd->fd_out == -1)
+                    // {
+                    //     ft_close_all_before(temp_cmd, temp_redir);
+                    //     return (-400);
+                    // }
+
+                }
                 else if (temp_redir->type == T_LESS || temp_redir->type == T_DLESS)
+                {
                     temp_cmd->fd_in = ft_handle_input(temp_redir);
+                    if (temp_cmd->fd_in == -1)
+                    {
+                        ft_close_all_redirections(temp_cmd, temp_redir);
+                        return (-401);
+                    }
+                }
                 temp_redir = temp_redir->next;
             }
         }
         temp_cmd = temp_cmd->next;
     }
+    return (200);
 }

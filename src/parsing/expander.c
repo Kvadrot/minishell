@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/05 17:02:59 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:51:50 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,6 @@ void ft_expand_input(t_data **minishell)
         while (temp_arg)
         {
             temp_cmd->args[arg_counter] = ft_expand_arg(minishell, &temp_arg);
-            // TODO:
             temp_cmd->args[arg_counter] = ft_errase_quote(minishell, &temp_arg);
             ft_printf("ft_errase_quote result = %s\n", temp_cmd->args[arg_counter]);
             arg_counter++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/07 12:38:33 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:16:22 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@
 
 void	minishell_loop(t_data **minishell)
 {
-	while (1)
+	int i = 1;
+	while (i >= 1)
 	{
 		(*minishell)->tokens = NULL;
 		(*minishell)->input = readline(PROMPT);
+		
+
 		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history
@@ -52,7 +55,15 @@ void	minishell_loop(t_data **minishell)
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
 		ft_expand_input(minishell);
-		ft_handle_redirections(minishell);
+		// ft_handle_redirections(minishell);
+
+		if (ft_handle_redirections(minishell) < 0)
+		{
+
+			ft_handle_error(false, NULL, -400, minishell);
+			i++;
+			continue;
+		}
 
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
@@ -62,6 +73,7 @@ void	minishell_loop(t_data **minishell)
 		if ((*minishell)->commands != NULL)
 			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		}
+		i++;
 	}
 }
 

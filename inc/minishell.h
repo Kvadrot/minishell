@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/03 15:56:00 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/09 16:32:46 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ bool				ft_is_whitespace(char c);
 t_command_full *ft_parse_tokens(t_data **minishell);
 void	ft_expand_input(t_data **minishell);
 char	*ft_errase_quote(t_data **minishell, char **temp_arg);
-void	ft_handle_redirections(t_data **minishell);
+int		ft_handle_redirections(t_data **minishell);
 
 // error handling
-void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
+void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell);
 
 #endif
