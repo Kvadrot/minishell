@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/09 17:16:22 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/09 19:34:44 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 
 void	minishell_loop(t_data **minishell)
 {
-	int i = 1;
-	while (i >= 1)
+	while (1)
 	{
 		(*minishell)->tokens = NULL;
 		(*minishell)->input = readline(PROMPT);
@@ -39,7 +38,7 @@ void	minishell_loop(t_data **minishell)
 			init_tokens((*minishell));
 			if (validate_tokens((*minishell)->tokens) < 0)
 			{
-				ft_handle_error(false, NULL, -400, (*minishell));
+				ft_handle_error(false, NULL, -400, (minishell));
 				continue;
 			}
 			//Uncomment to Test Tokens
@@ -55,13 +54,11 @@ void	minishell_loop(t_data **minishell)
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
 		ft_expand_input(minishell);
-		// ft_handle_redirections(minishell);
 
 		if (ft_handle_redirections(minishell) < 0)
 		{
 
 			ft_handle_error(false, NULL, -400, minishell);
-			i++;
 			continue;
 		}
 
@@ -73,7 +70,6 @@ void	minishell_loop(t_data **minishell)
 		if ((*minishell)->commands != NULL)
 			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		}
-		i++;
 	}
 }
 
@@ -81,7 +77,7 @@ void	init_minishell(t_data **minishell, char **env)
 {
 	*minishell = (t_data *)malloc(sizeof(t_data));
 	if (!minishell)
-		(ft_handle_error(true, "ERROR is thrown by init_minishell - malloc\n", 433, *minishell));
+		(ft_handle_error(true, "ERROR is thrown by init_minishell - malloc\n", 433, minishell));
 	(*minishell)->envir = env;
 	(*minishell)->stdin = dup(0);
 	(*minishell)->stdout = dup(1);

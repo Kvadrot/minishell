@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:19:59 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/09 18:08:31 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/09 19:52:01 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void    ft_close_redirections_before(t_redir *redirect)
     temp_redir = redirect;
     while (temp_redir)
     {
-        if (temp_redir->fd > 0) 
-            close(temp_redir->fd);
+        if (temp_redir->fd && *(temp_redir->fd) > 0) 
+            close(*(temp_redir->fd));
         temp_redir = temp_redir->prev;
     }
     return ;
@@ -62,8 +62,8 @@ void    ft_close_all_redirections(t_command_full *cmd, t_redir *redirect_list)
         temp_redir = temp_cmd->redir_list_head;
         while (temp_redir)
         {
-            if (temp_redir->fd > 0) 
-                close(temp_redir->fd);
+            if (temp_redir->fd && *(temp_redir->fd) > 0) 
+                close(*(temp_redir->fd));
             temp_redir = temp_redir->next;
         }
         temp_cmd = temp_cmd->prev;
@@ -251,12 +251,11 @@ int ft_handle_redirections(t_data **minishell)
                 if (temp_redir->type == T_GREAT || temp_redir->type == T_DGREAT)
                 {
                     temp_cmd->fd_out = ft_handle_output(temp_redir);
-                    // if (temp_cmd->fd_out == -1)
-                    // {
-                    //     ft_close_all_before(temp_cmd, temp_redir);
-                    //     return (-400);
-                    // }
-
+                    if (temp_cmd->fd_out == -1)
+                    {
+                        ft_close_all_redirections(temp_cmd, temp_redir);
+                        return (-400);
+                    }
                 }
                 else if (temp_redir->type == T_LESS || temp_redir->type == T_DLESS)
                 {

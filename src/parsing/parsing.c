@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/03 15:33:51 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:37:55 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 		char **new_args = append_string_to_array(temp_token->value ,(*temp_command)->args);
 		if (new_args == NULL)
 		{
-			ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, *minishell);
+			ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, minishell);
 			return; // Early return to avoid using NULL pointer
 		}
 		(*temp_command)->args = new_args; // Update args only after successful append
@@ -145,7 +145,7 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 	new_redirection = ft_init_redir(token->prev, token, cmd);
 	if (!new_redirection)
 	{
-		ft_handle_error(true, "malloc error - printed by ft_handle_redirection\n", 447, *minishell);
+		ft_handle_error(true, "malloc error - printed by ft_handle_redirection\n", 447, minishell);
 	}
 	new_redirection->type = token->prev->type;
 	new_redirection->file_name = token->value;
@@ -158,7 +158,7 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 	{
 		tempstr = ft_handle_here_doc(cmd, new_redirection);
 		if (!tempstr)
-			ft_handle_error(true, "error, printed by ft_handle_redirection\n", 4041, *minishell);
+			ft_handle_error(true, "error, printed by ft_handle_redirection\n", 4041, minishell);
 		new_redirection->value = tempstr;
 		ft_printf("my HEREDOC = %s", tempstr);
 	}
@@ -201,7 +201,7 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 
 	cmd_head = init_cmd(NULL, (*minishell)->tokens);
 	if (!cmd_head)
-		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n", 444, *minishell);
+		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n", 444, minishell);
 	temp_command = cmd_head;
 	temp_token = (*minishell)->tokens;
 	(*minishell)->commands = cmd_head;
@@ -219,7 +219,7 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 		} else if (temp_token->type == T_PIPE) {
 			new_command = init_cmd(temp_command, temp_token);
 			if (!new_command)
-				ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, *minishell);
+				ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, minishell);
 			temp_command->next = new_command;
 			temp_command = temp_command->next;
 		}

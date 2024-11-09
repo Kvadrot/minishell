@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/09 14:51:50 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/09 19:37:19 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int ft_substitude(t_data **minishell, char **full_arg, int start_index)
 
     arg_duplicate = ft_strndup(*full_arg + start_index, ft_get_arg_len(*full_arg + start_index) + 1);
     if (!arg_duplicate)
-        ft_handle_error(true, "Malloc_error, printed by ft_substitude", 433, *minishell);
+        ft_handle_error(true, "Malloc_error, printed by ft_substitude", 433, minishell);
     // ft_printf("argduplicate = %s\n", arg_duplicate);
     temp_env = (*minishell)->env;
     while (temp_env)

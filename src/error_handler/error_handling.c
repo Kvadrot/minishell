@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/09 18:05:09 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/09 19:37:04 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ void ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data
     {
         ft_free_minishell(minishell, is_crashable);
     	free(*minishell);
-   		*minishell = NULL; // Nullify pointer to avoid dangling pointer
-        exit(1);  // If crashable, exit the program after freeing
+        exit(1);
     }
     else
     {
