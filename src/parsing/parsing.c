@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/09 19:37:55 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/10 14:41:21 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 	char	*temp_copy;
 
 	continue_reading = true;
-	result_text = NULL;
+	result_text = "";
 	while (continue_reading == true)
 	{
 		here_doc_next_line = readline(HEREDOC_PROMPT);
@@ -68,7 +68,7 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 				free(result_text);
 			return (NULL);
 		}
-		if (  ft_strlen(here_doc_next_line) != 0 && ft_strcmp(current_redir->file_name, here_doc_next_line) == 0)
+		if (ft_strlen(here_doc_next_line) != 0 && ft_strcmp(current_redir->file_name, here_doc_next_line) == 0)
 		{
 			free(here_doc_next_line);
 			break;
@@ -92,6 +92,7 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 		}
 		free(here_doc_next_line);
 	}
+	ft_printf("here %s\n ", result_text);
 	return (result_text);
 }
 	
@@ -189,6 +190,7 @@ t_command_full *init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 	new_command->cmd_name = NULL;
 	new_command->fd_in = 0;
 	new_command->fd_out = 1;
+	new_command->here_doc = NULL;
 	return (new_command);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:19:59 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/09 19:52:01 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/09 21:13:26 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ static int ft_handle_less(char *filename)
 *   - Calls ft_handle_less for file reading
 2) Handles T_DLESS (Heredoc) separately as a future TODO
 * Returns the file descriptor;
+3) if heredoc is our redir, we retrun 0 stdin, as here doc is separate property in struct
 //=======================================================================//
 * @returns: fd - file descriptor, or -1 if error occurs
 */
@@ -214,9 +215,8 @@ int ft_handle_input(t_redir *redir)
     if (redir->type == T_LESS)
         fd_result = ft_handle_less(redir->file_name);
     else
-        return -666; // Placeholder for future HEREDOC handling
-
-    return fd_result;
+        return (0); // Placeholder for future HEREDOC handling
+    return (fd_result);
 }
 
 /** TODO: ft_handle_redirections
@@ -264,6 +264,15 @@ int ft_handle_redirections(t_data **minishell)
                     {
                         ft_close_all_redirections(temp_cmd, temp_redir);
                         return (-401);
+                    }
+                    if (temp_redir->type == T_LESS)
+                    {
+                        if (temp_cmd->here_doc)
+                            free(temp_cmd->here_doc);
+                        temp_cmd->here_doc = NULL;
+                    } else if (temp_redir->type == T_DLESS)
+                    {
+                        temp_cmd->here_doc = temp_redir->value;
                     }
                 }
                 temp_redir = temp_redir->next;
