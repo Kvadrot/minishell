@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/11 17:11:38 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:24:56 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <limits.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
@@ -33,7 +32,7 @@
 # include "parsing.h"
 
 # include "../src/common_tools/common_tools.h"
-
+# include "../src/signals/signals.h"
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
 
@@ -59,7 +58,6 @@ typedef struct s_data
 
 # include "../src/built_in/built_in.h"
 # include "../src/execution/execution.h"
-# include "../src/signals/signals.h"
 
 // DRBUG_FIELD
 // DELETE ME befor release
