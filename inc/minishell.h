@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/09 16:32:46 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/11 17:11:38 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define MINISHELL_H
 
 # include <stdbool.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
 # include <limits.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
@@ -57,6 +59,7 @@ typedef struct s_data
 
 # include "../src/built_in/built_in.h"
 # include "../src/execution/execution.h"
+# include "../src/signals/signals.h"
 
 // DRBUG_FIELD
 // DELETE ME befor release

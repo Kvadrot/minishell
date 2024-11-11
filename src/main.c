@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/11 15:30:17 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:00:01 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@
 
 void	minishell_loop(t_data **minishell)
 {
+	setup_signal_handlers();
 	while (1)
 	{
 		(*minishell)->tokens = NULL;
 		(*minishell)->input = readline(PROMPT);
 		
-
+		if (!(*minishell)->input)
+		{
+			ft_printf("exit\n");
+			break ;
+		}
 		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history

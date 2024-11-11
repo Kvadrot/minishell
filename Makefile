@@ -23,6 +23,7 @@ OBJ_DIR6 = obj/debug_functions/
 OBJ_DIR7 = obj/built_in/
 OBJ_DIR8 = obj/common_tools/
 OBJ_DIR9 = obj/execution/
+OBJ_DIR10 = obj/signals/
 
 
 # Default sources
@@ -39,6 +40,7 @@ SRC = main.c env.c \
 	execution/exec.c \
 	execution/helpers.c \
 	execution/handle_heredoc.c \
+	signals/signals.c \
 	parsing/parsing.c \
 	parsing/quote_erraser.c \
 	parsing/expander.c  \
@@ -68,6 +70,7 @@ $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR7)
 	@mkdir -p $(OBJ_DIR8)
 	@mkdir -p $(OBJ_DIR9)
+	@mkdir -p $(OBJ_DIR10)
 
 
 
