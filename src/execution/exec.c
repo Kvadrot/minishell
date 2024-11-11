@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/07 13:54:01 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/11 14:56:50 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	exec_pipeline(t_command_full *cmd_list, char **envp, t_data **minishell)
 	setup_pipes_and_fds(cmd_list);
 	while (cmd != NULL)
 	{
-		if (cmd->redir_list_head && cmd->redir_list_head->value != NULL)
+		if (cmd->here_doc != NULL)
 			setup_heredoc(cmd);
 		cmd = cmd->next;
 	}
