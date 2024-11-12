@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/11 14:56:50 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:22:57 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,41 +86,21 @@ void	child_process(t_command_full *cmd, char **envp)
 void	handle_cmd_exec(t_command_full *cmd, char **envp, t_data **minishell)
 {
 	pid_t	pid;
-	int		orig_stdin;
-	int		orig_stdout;
+	int		status;
 
-	if (is_builtin(cmd))
+	pid = fork();
+	if (pid == -1)
 	{
-		orig_stdin = dup(STDIN_FILENO);
-		orig_stdout = dup(STDOUT_FILENO);
-		if (cmd->fd_in != STDIN_FILENO)
-		{
-			dup2(cmd->fd_in, STDIN_FILENO);
-			close(cmd->fd_in);
-		}
-		if (cmd->fd_out != STDOUT_FILENO)
-		{
-			dup2(cmd->fd_out, STDOUT_FILENO);
-			close(cmd->fd_out);
-		}
-		handle_builtins(minishell);
-		dup2(orig_stdin, STDIN_FILENO);
-		dup2(orig_stdout, STDOUT_FILENO);
-		close(orig_stdin);
-		close(orig_stdout);
+		ft_putstr_fd("Fork failed\n", 2);
+		return ;
 	}
+	if (pid == 0)
+		child_process(cmd, envp);
 	else
 	{
-		pid = fork();
-		if (pid == -1)
-		{
-			ft_putstr_fd("Fork failed\n", 2);
-			return ;
-		}
-		if (pid == 0)
-			child_process(cmd, envp);
-		else
-			waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			last_exit_status = WEXITSTATUS(status);
 	}
 }
 
@@ -166,13 +146,15 @@ void	exec_pipeline(t_command_full *cmd_list, char **envp, t_data **minishell)
 	{
 		handle_1_cmd(cmd_list, envp, minishell);
 		return ;
-	}
-	setup_pipes_and_fds(cmd_list);
-	while (cmd != NULL)
+	} else
+	{
+		setup_pipes_and_fds(cmd_list);
+		while (cmd != NULL)
 	{
 		if (cmd->here_doc != NULL)
 			setup_heredoc(cmd);
 		cmd = cmd->next;
 	}
 	exec_loop(cmd_list, envp, minishell);
+	}
 }

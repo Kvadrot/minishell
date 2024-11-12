@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/11 17:00:01 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:24:21 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 // 4) Parser (Tokens -> Logical_groups -> cmd_groups)
 
 #include "../inc/minishell.h"
+
+int last_exit_status = 0;
 
 void	minishell_loop(t_data **minishell)
 {
@@ -67,8 +69,8 @@ void	minishell_loop(t_data **minishell)
 		
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		ft_printf("MAIN>C Calls debuger after parsing\n");
-		ft_debug_parsing(minishell);
+		// ft_printf("MAIN>C Calls debuger after parsing\n");
+		// ft_debug_parsing(minishell);
 		//==================================================================================================================================
 		if ((*minishell)->commands != NULL)
 			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);

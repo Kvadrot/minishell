@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:30:18 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/11 15:00:29 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:02:15 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	setup_heredoc(t_command_full *cmd)
 {
-	//t_redir	*redir;
 	int		pipe_fds[2];
 
-	//redir = cmd->redir_list_head;
 	if (cmd->here_doc != NULL)
 	{
 		printf("heredoc is: %s\n", cmd->here_doc);

@@ -6,13 +6,14 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/11 19:24:56 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:28:12 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+extern int last_exit_status;
 # include <stdbool.h>
 # include <signal.h>
 # include <stdlib.h>
