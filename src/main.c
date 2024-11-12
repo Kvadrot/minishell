@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/09 19:34:44 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/12 15:24:21 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,21 @@
 
 #include "../inc/minishell.h"
 
+int last_exit_status = 0;
+
 void	minishell_loop(t_data **minishell)
 {
+	setup_signal_handlers();
 	while (1)
 	{
 		(*minishell)->tokens = NULL;
 		(*minishell)->input = readline(PROMPT);
 		
-
+		if (!(*minishell)->input)
+		{
+			ft_printf("exit\n");
+			break ;
+		}
 		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history
@@ -54,18 +61,16 @@ void	minishell_loop(t_data **minishell)
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
 		ft_expand_input(minishell);
-
 		if (ft_handle_redirections(minishell) < 0)
 		{
-
 			ft_handle_error(false, NULL, -400, minishell);
 			continue;
 		}
-
+		
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		ft_printf("MAIN>C Calls debuger after parsing\n");
-		ft_debug_parsing(minishell);
+		// ft_printf("MAIN>C Calls debuger after parsing\n");
+		// ft_debug_parsing(minishell);
 		//==================================================================================================================================
 		if ((*minishell)->commands != NULL)
 			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);

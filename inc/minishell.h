@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/09 16:32:46 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/12 14:28:12 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+extern int last_exit_status;
 # include <stdbool.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
@@ -31,7 +33,7 @@
 # include "parsing.h"
 
 # include "../src/common_tools/common_tools.h"
-
+# include "../src/signals/signals.h"
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
 

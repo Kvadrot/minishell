@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/10 14:41:21 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/11 15:29:44 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 	char	*temp_copy;
 
 	continue_reading = true;
-	result_text = "";
+	result_text = NULL;
+	result_text =  malloc(sizeof(char *) * 1);
+	if (!result_text)
+		return (NULL);
 	while (continue_reading == true)
 	{
 		here_doc_next_line = readline(HEREDOC_PROMPT);
@@ -71,7 +74,7 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 		if (ft_strlen(here_doc_next_line) != 0 && ft_strcmp(current_redir->file_name, here_doc_next_line) == 0)
 		{
 			free(here_doc_next_line);
-			break;
+			break ;
 		}
 		temp_copy = ft_join_with_delimeter(result_text, here_doc_next_line, "\n");
 		if (!temp_copy)
@@ -95,7 +98,6 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 	ft_printf("here %s\n ", result_text);
 	return (result_text);
 }
-	
 
 /** TODO: ft_init_redir
 * @brief: Initialize obj type t_redir 
@@ -122,8 +124,6 @@ t_redir	*ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cm
 
 	return (redirection);
 }
-
-
 
 /** TODO: ft_handle_redirection
 * @brief: initialize + adds any type of reidrecrtion into cmd_redir_list
@@ -164,8 +164,6 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 		ft_printf("my HEREDOC = %s", tempstr);
 	}
 }
-
-
 
 /** TODO: init_cmd
 * @brief: initialize cmd

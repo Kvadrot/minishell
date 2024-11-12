@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/31 12:45:27 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:23:57 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,38 +84,6 @@ int	count_args(t_command_full *cmd)
 	return (i);
 }
 
-/** TODO: make_exec_args
-* @brief: builds array of strngs which we gonna use in execve func
-* @takes: command
-//=======================================================================//
-* @HOW_IT_works:
-// allocates memory for array (+2 for cmd_name and NULL)
-// the first elememt is command name, the last elememt is NULL
-//=======================================================================//
-* @returns: array of strings for execve
-*/
-
-// char	**make_exec_args(t_command_full *cmd)
-// {
-// 	int		arg_count;
-// 	char	**res;
-// 	int		i;
-
-// 	arg_count = count_args(cmd);
-// 	res = malloc(sizeof(char *) * (arg_count + 2));
-// 	if (!res)
-// 		return (NULL);
-// 	res[0] = cmd->cmd_name;
-// 	i = 0;
-// 	while (i < arg_count)
-// 	{
-// 		res[i + 1] = cmd->args[i];
-// 		i++;
-// 	}
-// 	res[arg_count + 1] = NULL;
-// 	return (res);
-// }
-
 void	execute(char **envp, t_command_full *cmd)
 {
 	int		i;
@@ -126,7 +94,7 @@ void	execute(char **envp, t_command_full *cmd)
 	path = find_path(cmd->cmd_name, envp);
 	if (!path)
 	{
-		ft_putstr_fd("Error: command not found in PATH\n", 2);
+		//ft_putstr_fd("Error: command not found in PATH\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	exec_args = cmd->args;
