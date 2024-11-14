@@ -36,7 +36,7 @@ void	handle_builtins(t_data **minishell)
 {
 	if (ft_strncmp((*minishell)->commands->cmd_name, "echo",
 			ft_strlen("echo")) == 0)
-		builtin_echo((*minishell)->commands->args);
+		builtin_echo((*minishell)->commands->args, (*minishell)->commands->fd_out);
 	if (ft_strncmp((*minishell)->commands->cmd_name, "cd",
 			ft_strlen("cd")) == 0)
 		builtin_cd(minishell);

@@ -14,7 +14,7 @@
 
 bool	is_builtin(t_command_full *cmd);
 void	handle_builtins(t_data **minishell);
-int 	builtin_echo(char **args);
+int 	builtin_echo(char **args, int fd_out);
 int		builtin_pwd(void);
 int		builtin_env(t_env *node);
 int		builtin_cd(t_data **minishell);

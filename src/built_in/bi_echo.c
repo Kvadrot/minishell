@@ -26,7 +26,7 @@ bool	is_n_flag(char *arg)
 	return (true);
 }
 
-void	echo_print_args(char **args, bool is_n)
+void	echo_print_args(char **args, bool is_n, int fd_out)
 {
 	int	i;
 
@@ -34,21 +34,21 @@ void	echo_print_args(char **args, bool is_n)
 	if (!args[i])
 	{
 		if (!is_n)
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", fd_out);
 		return ;
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], fd_out);
 		if (args[i + 1])
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", fd_out);
 		i++;
 	}
 	if (!is_n)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", fd_out);
 }
 
-int	builtin_echo(char **args)
+int	builtin_echo(char **args, int fd_out)
 {
 	int		i;
 	bool	is_n;
@@ -60,6 +60,6 @@ int	builtin_echo(char **args)
 		is_n = true;
 		i++;
 	}
-	echo_print_args(args + i, is_n);
+	echo_print_args(args + i, is_n, fd_out);
 	return (0);
 }
