@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/09 19:37:19 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/14 12:11:24 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int ft_get_arg_len(char *string)
 
     len = 0;
     string++;
+    if (string[len++] == '?')
+        return (len);
     while (string[len] != '\0' && (ft_isdigit(string[len]) || ft_isalpha(string[len]) || string[len] == '_'))
         len++;
     return (len);
@@ -130,6 +132,16 @@ int ft_substitude(t_data **minishell, char **full_arg, int start_index)
     if (!arg_duplicate)
         ft_handle_error(true, "Malloc_error, printed by ft_substitude", 433, minishell);
     // ft_printf("argduplicate = %s\n", arg_duplicate);
+
+    if (ft_strcmp(arg_duplicate, "$?") == 0)
+    {
+        ft_printf("status = %d\n", last_exit_status);
+        insertable_str = ft_itoa(last_exit_status);
+        insertable_str_len = ft_strlen(insertable_str);
+        *full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg + start_index) + 1, insertable_str,  start_index);
+        free(arg_duplicate);
+        return insertable_str_len;
+    }
     temp_env = (*minishell)->env;
     while (temp_env)
     {
@@ -224,7 +236,7 @@ char *ft_expand_arg(t_data **minishell, char **temp_arg)
                 if (ft_is_able_to_substitude(*temp_arg, &(*temp_arg)[counter]) == true) // Pass pointer to the character
                 {
                     substituted_str_len = ft_substitude(minishell, temp_arg, counter);
-                    ft_printf("temp_arg after substitution = %s\n", *temp_arg); // Dereference to print the string
+                    ft_printf("temp_arg after substitution = %s\n", *temp_arg);
                 }
             }
         }
@@ -239,7 +251,7 @@ char *ft_expand_arg(t_data **minishell, char **temp_arg)
 //=======================================================================//
 * @HOW_IT_works:
 1) iterates through all cmd_list through all commands
-2) iterates through all argumnets
+2) iterates through each argumnet
 3) expands argument
 4) deletes unnecessary quotes
 //=======================================================================//

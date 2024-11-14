@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:31:38 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/12 17:25:49 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:13:51 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	handle_sigint(int sig)
 	(void) sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// MARK: UNCOMMENT ME
+	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 
