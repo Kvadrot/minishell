@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/05 12:07:19 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:37:15 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,21 @@
 
 #include "../inc/minishell.h"
 
+int last_exit_status = 0;
+
 void	minishell_loop(t_data **minishell)
 {
+	setup_signal_handlers();
 	while (1)
 	{
 		(*minishell)->tokens = NULL;
 		(*minishell)->input = readline(PROMPT);
+		
+		if (!(*minishell)->input)
+		{
+			ft_printf("exit\n");
+			break ;
+		}
 		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history
@@ -36,7 +45,7 @@ void	minishell_loop(t_data **minishell)
 			init_tokens((*minishell));
 			if (validate_tokens((*minishell)->tokens) < 0)
 			{
-				ft_handle_error(false, NULL, -400, (*minishell));
+				ft_handle_error(false, NULL, -400, (minishell));
 				continue;
 			}
 			//Uncomment to Test Tokens
@@ -52,13 +61,19 @@ void	minishell_loop(t_data **minishell)
 		// (*minishell)->commands = ft_parse_tokens(minishell);
 		ft_parse_tokens(minishell);
 		ft_expand_input(minishell);
-		ft_handle_redirections(minishell);
-
+		if (ft_handle_redirections(minishell) < 0)
+		{
+			ft_handle_error(false, NULL, -400, minishell);
+			continue;
+		}
+		
 		//Uncomment to Test COMMANDS
 		// ==================================================================================================================================
-		ft_printf("MAIN>C Calls debuger after parsing\n");
-		ft_debug_parsing(minishell);
+		// ft_printf("MAIN>C Calls debuger after parsing\n");
+		// ft_debug_parsing(minishell);
 		//==================================================================================================================================
+		if ((*minishell)->commands != NULL)
+			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
 		}
 	}
 }
@@ -67,7 +82,7 @@ void	init_minishell(t_data **minishell, char **env)
 {
 	*minishell = (t_data *)malloc(sizeof(t_data));
 	if (!minishell)
-		(ft_handle_error(true, "ERROR is thrown by init_minishell - malloc\n", 433, *minishell));
+		(ft_handle_error(true, "ERROR is thrown by init_minishell - malloc\n", 433, minishell));
 	(*minishell)->envir = env;
 	(*minishell)->stdin = dup(0);
 	(*minishell)->stdout = dup(1);

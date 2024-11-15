@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/17 13:43:50 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:41:08 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	environment_new_node_end(t_data *minishell, char *key, char *value)
 	new_node = environment_new_node(key, value);
 	if (!new_node)
 	{
-		ft_handle_error(true, "Malloc_error, printed in environment_new_node_end", 433, minishell);
+		ft_handle_error(true, "Malloc_error, printed in environment_new_node_end", 433, &minishell);
 	}
 	if (minishell->env == NULL)
 		minishell->env = new_node;
@@ -63,10 +63,10 @@ void	init_environment(t_data **minishell, char **envir)
 		{
 			key = ft_strndup(envir[i], delimiter_pos - envir[i]);
 			if (!key)
-				ft_handle_error(true , "unexpected ERROR dup_is_faild, printed by init_environment\n", 422, *minishell);
+				ft_handle_error(true , "unexpected ERROR dup_is_faild, printed by init_environment\n", 422, minishell);
 			value = ft_strdup(delimiter_pos + 1);
 			if (!value)
-				ft_handle_error(true , "unexpected ERROR dup_is_faild, printed by init_environment\n", 423, *minishell);
+				ft_handle_error(true , "unexpected ERROR dup_is_faild, printed by init_environment\n", 423, minishell);
 			// environment_new_node_end((*minishell)->env, key, value);
 
 			environment_new_node_end(*minishell, key, value);

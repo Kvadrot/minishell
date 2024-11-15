@@ -3,86 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/17 12:15:23 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:37:04 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// Function to free the args array in a command
-void	free_command_args(t_command_full *cmd)
+void free_command_args(t_command_full *cmd)
 {
-	if (cmd->args)
+    if (cmd->args)
+    {
+        for (int i = 0; cmd->args[i] != NULL; i++)
+        {
+            free(cmd->args[i]);
+        }
+        free(cmd->args);
+    }
+}
+
+void ft_free_token_list(t_tokens *token_list)
+{
+    t_tokens *temp;
+    t_tokens *temp_next;
+
+    if (token_list)
+    {
+        temp = token_list;
+        temp_next = NULL;
+        while (temp)
+        {
+            temp_next = temp->next;
+            free(temp->value);
+            free(temp);
+            temp = temp_next;
+        }
+    }
+}
+
+void ft_free_minishell(t_data **minishell, bool is_crash)
+{
+    if (*minishell == NULL)
+        return;
+
+    // Free input if it exists
+    if ((*minishell)->input)
 	{
-		for (int i = 0; cmd->args[i] != NULL; i++)
-		{
-			free(cmd->args[i]);
-		}
-		free(cmd->args);
+        // free((*minishell)->input);
+		(*minishell)->input = NULL;
 	}
+
+    // Free environment variables
+    if ((*minishell)->env && is_crash)
+        environment_free_list((*minishell)->env);
+
+    // Free envir if required
+    if ((*minishell)->envir)
+        ft_printf("TODO: free envir\n");
+
+    // Free commands if required
+    if ((*minishell)->commands)
+        ft_printf("TODO: free commands\n");
+
+    // Free tokens
+    if ((*minishell)->tokens)
+        ft_free_token_list((*minishell)->tokens);
 }
 
-void				ft_free_token_list(t_tokens *token_list)
+void ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell)
 {
-	t_tokens *temp;
-	t_tokens *temp_next;
+    if (error_text)
+        ft_printf("ERROR: %s ERR_status: %d\n", error_text, err_status);
 
-	if (token_list)
-	{
-		temp = token_list;
-		temp_next = NULL;
-		while (temp)
-		{
-			temp_next = temp->next;
-			free(temp->value);
-			free(temp);
-			temp = temp_next;
-		}
-	}
-	// ft_printf("debug ft_free_token_list is done \n");
+    // Free minishell resources before exit if needed
+    if (is_crashable)
+    {
+        ft_free_minishell(minishell, is_crashable);
+    	free(*minishell);
+        exit(1);
+    }
+    else
+    {
+        ft_free_minishell(minishell, is_crashable);
+		ft_printf("freeeing ___ \n");
+        // Return or continue to next operation
+    }
 }
-
-void	ft_free_minishell(t_data *entire_data)
-{
-	if (entire_data->input)
-		free(entire_data->input);
-	if (entire_data->env)
-		environment_free_list(entire_data->env);
-	if (entire_data->envir)
-		ft_printf("TODO: free envir\n");
-	if (entire_data->commands)
-		ft_printf("TODO: free commands\n");
-	if (entire_data->tokens)
-		ft_free_token_list(entire_data->tokens);
-}
-
-void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell)
-{
-	char *path;
-
-	if (error_text)
-		ft_printf("ERROR: %sERR_status: %d", error_text, err_status);
-	if (is_crashable == true)
-	{
-		ft_free_minishell(minishell);
-		exit(1);
-	}
-}
-
-
-// typedef struct s_data
-// {
-// 	char			*input;
-// 	char			**envir;
-// 	char			*environment;
-// 	int				stdin;
-// 	int				stdout;
-// 	t_tokens		*tokens;
-// 	t_env			*env;
-// 	t_command_full		*commands;
-// 	struct termios	terminal;
-// 	struct s_data	*next;
-// }					t_data;

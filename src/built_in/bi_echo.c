@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:07:28 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/13 16:26:34 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:15:21 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,18 @@
 bool	is_n_flag(char *arg)
 {
 	int		i;
-	bool	n_flag;
 
-	n_flag = false;
-	i = 0;
-	if (arg[i] != '-')
+	if (arg[0] != '-')
 		return (false);
-	i++;
-	while (arg[i] && arg[i] == 'n')
+	i = 1;
+	while (arg[i] == 'n')
 		i++;
-	if (arg[i] == '\0')
-		n_flag = true;
-	return (n_flag);
+	if (arg[i] != '\0')
+		return (false);
+	return (true);
 }
 
-void	echo_print_args(char **args, bool is_n)
+void	echo_print_args(char **args, bool is_n, int fd_out)
 {
 	int	i;
 
@@ -37,33 +34,32 @@ void	echo_print_args(char **args, bool is_n)
 	if (!args[i])
 	{
 		if (!is_n)
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", fd_out);
 		return ;
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], fd_out);
 		if (args[i + 1])
-			ft_putstr_fd(" ", 1);
-		else if (!args[i + 1] && !is_n)
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd(" ", fd_out);
 		i++;
 	}
+	if (!is_n)
+		ft_putstr_fd("\n", fd_out);
 }
 
-int	builtin_echo(char **args)
+int	builtin_echo(char **args, int fd_out)
 {
 	int		i;
 	bool	is_n;
 
 	is_n = false;
-	i = 0;
+	i = 1;
 	while (args[i] && is_n_flag(args[i]))
 	{
 		is_n = true;
 		i++;
 	}
-	echo_print_args(args + i, is_n);
+	echo_print_args(args + i, is_n, fd_out);
 	return (0);
 }
-

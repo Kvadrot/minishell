@@ -6,22 +6,16 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/05 12:07:26 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:37:25 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../lib_ft_printf/ft_printf.h"
-# include "../lib_ft/libft.h"
-# include "tokens.h"
-# include "parsing.h"
-# include "../src/common_tools/common_tools.h"
-# include <errno.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+extern int last_exit_status;
 # include <stdbool.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
@@ -29,7 +23,17 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <sys/types.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include "../lib_ft_printf/ft_printf.h"
+# include "../lib_ft/libft.h"
+# include "tokens.h"
+# include "parsing.h"
 
+# include "../src/common_tools/common_tools.h"
+# include "../src/signals/signals.h"
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
 
@@ -54,7 +58,7 @@ typedef struct s_data
 }					t_data;
 
 # include "../src/built_in/built_in.h"
-
+# include "../src/execution/execution.h"
 
 // DRBUG_FIELD
 // DELETE ME befor release
@@ -93,9 +97,9 @@ bool				ft_is_whitespace(char c);
 t_command_full *ft_parse_tokens(t_data **minishell);
 void	ft_expand_input(t_data **minishell);
 char	*ft_errase_quote(t_data **minishell, char **temp_arg);
-void	ft_handle_redirections(t_data **minishell);
+int		ft_handle_redirections(t_data **minishell);
 
 // error handling
-void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data *minishell);
+void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell);
 
 #endif
