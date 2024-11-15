@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 17:56:21 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/23 16:38:03 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:54:42 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	handle_builtins(t_data **minishell)
 		builtin_unset(minishell);
 	if (ft_strncmp((*minishell)->commands->cmd_name, "exit",
 			ft_strlen("exit")) == 0)
-		builtin_exit();
+		builtin_exit(minishell);
 }

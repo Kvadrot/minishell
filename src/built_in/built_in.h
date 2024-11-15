@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:21:20 by ufo               #+#    #+#             */
-/*   Updated: 2024/10/24 16:46:43 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:54:10 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,4 @@ int		builtin_env(t_env *node);
 int		builtin_cd(t_data **minishell);
 int		builtin_export(t_data **minishell);
 void	builtin_unset(t_data **minishell);
-void	builtin_exit(void);
+void	builtin_exit(t_data **minishell);

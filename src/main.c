@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/15 13:37:15 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:30:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,24 @@ void	minishell_loop(t_data **minishell)
 		//TODO:
 
 		// (*minishell)->commands = ft_parse_tokens(minishell);
-		ft_parse_tokens(minishell);
-		ft_expand_input(minishell);
-		if (ft_handle_redirections(minishell) < 0)
-		{
-			ft_handle_error(false, NULL, -400, minishell);
-			continue;
-		}
-		
-		//Uncomment to Test COMMANDS
-		// ==================================================================================================================================
-		// ft_printf("MAIN>C Calls debuger after parsing\n");
-		// ft_debug_parsing(minishell);
-		//==================================================================================================================================
-		if ((*minishell)->commands != NULL)
-			exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
+			ft_parse_tokens(minishell);
+			ft_expand_input(minishell);
+			if (ft_handle_redirections(minishell) < 0)
+			{
+				ft_handle_error(false, NULL, -400, minishell);
+				continue;
+			}
+			
+			//Uncomment to Test COMMANDS
+			// ==================================================================================================================================
+			// ft_printf("MAIN>C Calls debuger after parsing\n");
+			// ft_debug_parsing(minishell);
+			//==================================================================================================================================
+			if ((*minishell)->commands != NULL)
+			{
+				exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
+				ft_free_minishell(minishell, false);
+			}
 		}
 	}
 }

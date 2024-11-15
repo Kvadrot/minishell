@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 13:37:25 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:29:06 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				print_environment(t_env *node);
 
 // tokens
 int					init_tokens(t_data *minishell);
-void				ft_free_token_list(t_tokens *token_list);
+void				ft_free_token_list(t_tokens **token_list);
 int					validate_tokens(t_tokens *tokens);
 
 //	new potential libft function
@@ -100,6 +100,7 @@ char	*ft_errase_quote(t_data **minishell, char **temp_arg);
 int		ft_handle_redirections(t_data **minishell);
 
 // error handling
+void	ft_free_minishell(t_data **minishell, bool is_crash);
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell);
 
 #endif
