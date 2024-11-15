@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/10/17 13:33:48 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:11:50 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,43 +47,61 @@ t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 	return (token);
 }
 
-t_tokens	*update_token(t_tokens *token, char *input, int type)
+t_tokens *update_token(t_tokens *token, char *input, int type)
 {
-	token->value = (char *)malloc(3);
-	// if (!token->value)
-		// return not sufficient memory error
-	ft_strncpy(token->value, input, ft_strlen(input));
-	token->value[ft_strlen(input)] = '\0';
-	token->type = type;
-	return (token);
+    // Free existing value if already allocated
+    if (token->value)
+        free(token->value);
+
+    // Allocate memory dynamically based on the input length
+    token->value = (char *)malloc(ft_strlen(input) + 1); // +1 for null terminator
+    if (!token->value)
+        return NULL; // Handle memory allocation failure
+
+    // Copy input to the token's value
+    ft_strncpy(token->value, input, ft_strlen(input));
+    token->value[ft_strlen(input)] = '\0'; // Null-terminate the string
+
+    // Update the token type
+    token->type = type;
+
+    return token;
 }
 
-t_tokens	*get_token(char *input)
+t_tokens *get_token(char *input)
 {
-	t_tokens	*token;
+    t_tokens *token;
 
-	token = (t_tokens *)malloc(sizeof(t_tokens));
-	if (!token)
-		return (NULL);
-	token->value = NULL;
-	token->type = 0;
-	token->next = NULL;
-	if (*input)
-	{
-		if (!ft_strncmp(">>", input, 2))
-			return (update_token(token, ">>", T_DGREAT));
-		else if (!ft_strncmp("<<", input, 2))
-			return (update_token(token, "<<", T_DLESS));
-		else if (*input == '>')
-			return (update_token(token, ">", T_GREAT));
-		else if (*input == '<')
-			return (update_token(token, "<", T_LESS));
-		else if (*input == '|')
-			return (update_token(token, "|", T_PIPE));
-		else
-			return (update_token_word(token, input, T_WORD));
-	}
-	return (NULL);
+    // Allocate memory for the token struct
+    token = (t_tokens *)malloc(sizeof(t_tokens));
+    if (!token)
+        return NULL; // Handle memory allocation failure
+
+    // Initialize the token fields
+    token->value = NULL;
+    token->type = 0;
+    token->next = NULL;
+
+    // Update the token based on input
+    if (*input)
+    {
+        if (!ft_strncmp(">>", input, 2))
+            return update_token(token, ">>", T_DGREAT);
+        else if (!ft_strncmp("<<", input, 2))
+            return update_token(token, "<<", T_DLESS);
+        else if (*input == '>')
+            return update_token(token, ">", T_GREAT);
+        else if (*input == '<')
+            return update_token(token, "<", T_LESS);
+        else if (*input == '|')
+            return update_token(token, "|", T_PIPE);
+        else
+            return update_token_word(token, input, T_WORD); // Assuming `update_token_word` is defined
+    }
+
+    // Free the token if no valid input was found
+    free(token);
+    return NULL;
 }
 
 void	append_token(t_tokens **tokens, t_tokens *new_token)

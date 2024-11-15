@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/11 15:29:44 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:18:42 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,15 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 	{
 		(*temp_command)->cmd_name = ft_strdup(temp_token->value);
 	}
-	// else
-	// {
-		char **new_args = append_string_to_array(temp_token->value ,(*temp_command)->args);
-		if (new_args == NULL)
-		{
-			ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, minishell);
-			return; // Early return to avoid using NULL pointer
-		}
-		(*temp_command)->args = new_args; // Update args only after successful append
-	// }
-	
+	char **new_args = append_string_to_array(temp_token->value, (*temp_command)->args);
+	if (new_args == NULL)
+	{
+		ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, minishell);
+		return;
+	}
+	if ((*temp_command)->args)
+		free((*temp_command)->args);
+	(*temp_command)->args = new_args;
 }
 
 char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
