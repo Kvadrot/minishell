@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:53:20 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/12 14:55:18 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:23:11 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	execute_single_command(t_command_full *cmd, char **envp)
 	if (pid == 0)
 		child_process(cmd, envp);
 	else
+	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			last_exit_status = WEXITSTATUS(status);
+	}
 }
 
 void	handle_1_cmd(t_command_full *cmd, char **envp, t_data **minishell)

@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/12 15:23:57 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:25:20 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ int	count_args(t_command_full *cmd)
 
 void	execute(char **envp, t_command_full *cmd)
 {
-	int		i;
+	//int		i;
 	char	*path;
 	char	**exec_args;
 
-	i = -1;
+	//i = -1;
 	path = find_path(cmd->cmd_name, envp);
 	if (!path)
 	{

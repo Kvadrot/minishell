@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/09 19:41:08 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/18 16:22:08 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,10 @@ void	delete_node(t_env **head, t_env *node_to_delete)
 void	add_to_env(t_data **minishell, char *key, char *new_value)
 {
 	t_env	*tmp;
-	t_env	*prev;
+	//t_env	*prev;
 
 	tmp = (*minishell)->env;
-	prev = NULL;
+	//prev = NULL;
 	//Check if the key exists and update if it does
 	while (tmp != NULL)
 	{

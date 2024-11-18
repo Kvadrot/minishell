@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/12 17:28:07 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:24:36 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	child_process(t_command_full *cmd, char **envp)
 * @returns: void
 */
 
-void	handle_cmd_exec(t_command_full *cmd, char **envp, t_data **minishell)
+void	handle_cmd_exec(t_command_full *cmd, char **envp)
 {
 	pid_t	pid;
 	int		status;
@@ -104,14 +104,14 @@ void	handle_cmd_exec(t_command_full *cmd, char **envp, t_data **minishell)
 	}
 }
 
-void	exec_loop(t_command_full *cmd_list, char **envp, t_data **minishell)
+void	exec_loop(t_command_full *cmd_list, char **envp)
 {
 	t_command_full	*cmd;
 
 	cmd = cmd_list;
 	while (cmd != NULL)
 	{
-		handle_cmd_exec(cmd, envp, minishell);
+		handle_cmd_exec(cmd, envp);
 		if (cmd->fd_out != STDOUT_FILENO)
 			close(cmd->fd_out);
 		if (cmd->fd_in != STDIN_FILENO)
@@ -158,6 +158,6 @@ void	exec_pipeline(t_command_full *cmd_list, char **envp, t_data **minishell)
 				setup_heredoc(cmd);
 			cmd = cmd->next;
 		}
-		exec_loop(cmd_list, envp, minishell);
+		exec_loop(cmd_list, envp);
 	}
 }
