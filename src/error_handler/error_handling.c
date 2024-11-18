@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/15 18:37:10 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:13:02 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,11 +162,12 @@ void ft_free_redir_list(t_command_full **cmd)
             pt_holder = temp_redir->next;
             if (temp_redir->file_name)
                 free(temp_redir->file_name);
-            if (temp_redir->fd)
-                free(temp_redir->fd);  // Only free if `fd` was dynamically allocated
+            // if (temp_redir->fd)
+            //     free(temp_redir->fd);  // Only free if `fd` was dynamically allocated
             if (temp_redir->value)
                 free(temp_redir->value);
-            free(temp_redir);
+			if(temp_redir)
+				free(temp_redir);
             temp_redir = pt_holder;
         }
         (*cmd)->redir_list_head = NULL;
@@ -194,6 +195,7 @@ void ft_free_commands(t_data **minishell)
     t_command_full *cmd_pt_holder;
 
     temp_cmd = (*minishell)->commands;
+	// fr_printf("")
     while (temp_cmd != NULL)
     {
         cmd_pt_holder = temp_cmd->next;
@@ -203,12 +205,17 @@ void ft_free_commands(t_data **minishell)
             free(temp_cmd->here_doc);
         if (temp_cmd->cmd_name)
             free(temp_cmd->cmd_name);
-        free(temp_cmd);
+		if(temp_cmd)
+        	free(temp_cmd);
+		
         temp_cmd = cmd_pt_holder; 
     }
     // Free commands list pointer if dynamically allocated
-    free((*minishell)->commands);
-    (*minishell)->commands = NULL;
+    // free((*minishell)->commands);
+		perror("PREEE ft_free_commands");
+
+	if ((*minishell)->commands)
+    	(*minishell)->commands = NULL;
     ft_printf("commands clean up\n");
 }
 
@@ -224,8 +231,11 @@ void ft_free_token_list(t_tokens **token_list)
         while (temp)
         {
             temp_next = temp->next;
-            if (temp->value)  // Check if value exists before freeing
+            if (temp->value)
+			{
                 free(temp->value);
+				temp->value = NULL;
+			}
             free(temp);
             temp = temp_next;
         }

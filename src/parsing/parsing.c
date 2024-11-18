@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/15 18:18:42 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:32:49 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_redir *ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 {
 	t_redir *temp;
 	
+	temp = NULL;
 	if (!redir_list_head)
 		return (NULL);
 	temp = redir_list_head;
@@ -43,9 +44,12 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 		ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, minishell);
 		return;
 	}
-	if ((*temp_command)->args)
-		free((*temp_command)->args);
+	// if ((*temp_command)->args)
+	// 	free((*temp_command)->args);
 	(*temp_command)->args = new_args;
+	
+	perror("HEEEEELLLLLOOO");
+
 }
 
 char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
@@ -93,6 +97,7 @@ char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 		}
 		free(here_doc_next_line);
 	}
+
 	ft_printf("here %s\n ", result_text);
 	return (result_text);
 }
@@ -140,6 +145,7 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 	t_redir	*prev_redir;
 	char	*tempstr;
 
+	prev_redir = NULL;
 	prev_redir = ft_scroll_redir_list_to_last(cmd->redir_list_head);
 	new_redirection = ft_init_redir(token->prev, token, cmd);
 	if (!new_redirection)
@@ -147,12 +153,9 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 		ft_handle_error(true, "malloc error - printed by ft_handle_redirection\n", 447, minishell);
 	}
 	new_redirection->type = token->prev->type;
-	new_redirection->file_name = token->value;
+	new_redirection->file_name = ft_strdup(token->value);
 	new_redirection->prev = prev_redir;
-	if (prev_redir)
-		prev_redir->next = new_redirection;
-	else
-		cmd->redir_list_head = new_redirection;
+
 	if (new_redirection->type == T_DLESS)
 	{
 		tempstr = ft_handle_here_doc(cmd, new_redirection);
@@ -161,6 +164,11 @@ void	ft_handle_redirection(t_command_full *cmd ,t_tokens *token, t_data **minish
 		new_redirection->value = tempstr;
 		ft_printf("my HEREDOC = %s", tempstr);
 	}
+
+	if (prev_redir)
+		prev_redir->next = new_redirection;
+	else
+		cmd->redir_list_head = new_redirection;
 }
 
 /** TODO: init_cmd
@@ -207,24 +215,36 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 	{
 		if (temp_token->type == T_WORD)
 		{
+	perror("T_WORD");
+
 			ft_handle_word(&temp_command, temp_token, minishell);
+
 		}
 		else if (temp_token->type == T_LESS || temp_token->type == T_GREAT 
 			|| temp_token->type == T_DLESS || temp_token->type == T_DGREAT )
 		{
+	perror("T_DLESS");
+
 			temp_token = temp_token->next;
 			ft_handle_redirection(temp_command, temp_token, minishell);
+
 		} else if (temp_token->type == T_PIPE) {
+	perror("T_PIPE");
+
 			new_command = init_cmd(temp_command, temp_token);
 			if (!new_command)
 				ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, minishell);
 			temp_command->next = new_command;
 			temp_command = temp_command->next;
+
 		}
 		temp_token = temp_token->next;
+
 	}
 	// ft_expand_input();
 	// ft_debug_parsing(minishell);
+	perror("GAMMNOOO");
+
 	temp_command->next = NULL;
 	return (cmd_head);
 }
