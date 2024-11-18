@@ -11,7 +11,7 @@ HEADERS = -I./lib_ft -I./lib_ft_printf -I./inc
 #LDFLAGS = -L./lib_ft -l:libft.a -L./lib_ft_printf -lftprintf $(RLFLAG)
 
 #Mac flags
-#LDFLAGS = -L./lib_ft -lft -L./lib_ft_printf -lftprintf $(RLFLAG)
+LDFLAGS = -L./lib_ft -lft -L./lib_ft_printf -lftprintf $(RLFLAG)
 
 SRC_DIR = src/
 OBJ_DIR = obj/
