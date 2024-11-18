@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/18 18:18:13 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:41:49 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,7 @@ int	main(int argc, char **argv, char **env)
 
     if (minishell)
     {
-        ft_free_minishell(&minishell, false);
-        free(minishell);  // Free the structure itself
-        minishell = NULL;
+        ft_free_minishell(&minishell, true);
     }
 	// OLD ONE - WHY???
 	// environment_free_list(minishell->env);
