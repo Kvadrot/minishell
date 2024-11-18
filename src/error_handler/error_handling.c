@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/15 18:37:10 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:35:36 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,7 @@ void ft_free_minishell(t_data **minishell, bool is_crash)
     // Free commands if required
     if ((*minishell)->commands)
 	{
-		ft_free_commands(minishell);	
+		ft_free_commands(minishell);
 	}
 }
 
