@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/18 13:36:19 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:18:13 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ void	minishell_loop(t_data **minishell)
 	{
 		(*minishell)->tokens = NULL;
 		(*minishell)->input = readline(PROMPT);
-		
 		if (!(*minishell)->input)
 		{
-			ft_free_minishell(minishell, false);
+			ft_free_minishell(minishell, true);
 			ft_printf("exit\n");
 			break ;
 		}
-		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
+		else if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history
 			add_history((*minishell)->input);
@@ -110,8 +109,15 @@ int	main(int argc, char **argv, char **env)
 	
 
 	minishell_loop(&minishell);
-	environment_free_list(minishell->env);
+	//environment_free_list(minishell->env);
 
+
+    if (minishell)
+    {
+        ft_free_minishell(&minishell, false);
+        free(minishell);  // Free the structure itself
+        minishell = NULL;
+    }
 	// OLD ONE - WHY???
 	// environment_free_list(minishell->env);
 	// minishell_loop(&minishell);

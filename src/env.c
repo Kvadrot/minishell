@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/18 16:22:08 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:57:11 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,3 @@ void	add_to_env(t_data **minishell, char *key, char *new_value)
 	}
 	environment_new_node_end(*minishell, key, new_value);
 }
-
-// tester function
-// void	print_environment(t_env *node)
-// {
-// 	t_env	*current;
-
-// 	current = node;
-// 	while (current != NULL)
-// 	{
-// 		printf("%s=%s\n", current->key, current->value);
-// 		current = current->next;
-// 	}
-// }
