@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:48:08 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/09 21:08:38 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/18 15:01:46 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ struct s_command_full
 	int		fd_out;
 	int		fd_in;
 	char	*here_doc;
-	t_redir *redir_list_head;         // This should be a pointer to an array or a single redirection struct
+	t_redir *redir_list_head;
 	t_command_full *next;
 	t_command_full *prev;
 };

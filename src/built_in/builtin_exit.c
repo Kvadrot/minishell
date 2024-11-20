@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:05 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/15 15:53:52 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:31:43 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	builtin_exit(t_data **minishell)
 	// 	exit(1);
 	// }
 	// printf("This line will not be executed.\n");
+	rl_clear_history();
 	ft_free_minishell(minishell, true);
 	exit(0);
 }

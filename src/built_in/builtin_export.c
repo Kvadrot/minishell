@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:57 by mbudkevi          #+#    #+#             */
 /*   Updated: 2024/11/18 16:22:33 by mbudkevi         ###   ########.fr       */
@@ -86,7 +86,6 @@ char	*format_env_entry(t_env *node)
 void	export_no_args(t_data **minishell)
 {
 	t_env	*tmp;
-	//char	*key_value;
 	char	*formatted;
 
 	sort_env_list(&((*minishell)->env));

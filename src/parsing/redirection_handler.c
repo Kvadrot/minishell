@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:19:59 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/09 21:13:26 by ufo              ###   ########.fr       */
+/*   Updated: 2024/11/19 17:46:54 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ int ft_handle_input(t_redir *redir)
     return (fd_result);
 }
 
-/** TODO: ft_handle_redirections
+/** TODO: ft_process_redirection_list
 * @brief: Processes all redirections (input and output) for each command.
 * @takes: minishell - pointer to the minishell data structure
 //=======================================================================//
@@ -233,7 +233,7 @@ int ft_handle_input(t_redir *redir)
 * @returns: void
 */
 
-int ft_handle_redirections(t_data **minishell)
+int ft_process_redirection_list(t_data **minishell)
 {
     t_command_full *cmd_head;
     t_command_full *temp_cmd;
@@ -268,11 +268,14 @@ int ft_handle_redirections(t_data **minishell)
                     if (temp_redir->type == T_LESS)
                     {
                         if (temp_cmd->here_doc)
+						{
                             free(temp_cmd->here_doc);
+							temp_cmd->here_doc = NULL;
+						}
                         temp_cmd->here_doc = NULL;
                     } else if (temp_redir->type == T_DLESS)
                     {
-                        temp_cmd->here_doc = temp_redir->value;
+                        temp_cmd->here_doc = ft_strdup(temp_redir->value);
                     }
                 }
                 temp_redir = temp_redir->next;

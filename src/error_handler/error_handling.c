@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/18 18:22:03 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:17:19 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,26 @@ void ft_free_redir_list(t_command_full **cmd)
         {
             pt_holder = temp_redir->next;
             if (temp_redir->file_name)
-                free(temp_redir->file_name);
+			{
+				free(temp_redir->file_name);
+				temp_redir->file_name = NULL;
+			}
+               
             if (temp_redir->fd)
+			{
                 free(temp_redir->fd);  // Only free if `fd` was dynamically allocated
+				temp_redir->fd = NULL;
+			}
             if (temp_redir->value)
+			{
                 free(temp_redir->value);
-            free(temp_redir);
+				temp_redir->value = NULL;
+			}
+			if(temp_redir)
+			{
+				free(temp_redir);
+				temp_redir = NULL;
+			}
             temp_redir = pt_holder;
         }
         (*cmd)->redir_list_head = NULL;
@@ -44,11 +58,11 @@ void free_command_args(t_command_full *cmd)
         for (int i = 0; cmd->args[i] != NULL; i++)
         {
             free(cmd->args[i]);
+			cmd->args[i] = NULL;
         }
         free(cmd->args);
         cmd->args = NULL;
     }
-    ft_printf("free_command_args clean up\n");
 }
 
 void ft_free_commands(t_data **minishell)
@@ -57,6 +71,7 @@ void ft_free_commands(t_data **minishell)
     t_command_full *cmd_pt_holder;
 
     temp_cmd = (*minishell)->commands;
+	// fr_printf("")
     while (temp_cmd != NULL)
     {
         cmd_pt_holder = temp_cmd->next;
@@ -64,16 +79,25 @@ void ft_free_commands(t_data **minishell)
         perror("");
         free_command_args(temp_cmd);
         if (temp_cmd->here_doc)
+		{
             free(temp_cmd->here_doc);
+			temp_cmd->here_doc = NULL;
+		}
         if (temp_cmd->cmd_name)
+		{
             free(temp_cmd->cmd_name);
-        free(temp_cmd);
+			temp_cmd->cmd_name = NULL;
+		}
+		if(temp_cmd)
+		{
+        	free(temp_cmd);
+			temp_cmd = NULL;
+		}
+		
         temp_cmd = cmd_pt_holder; 
     }
-    // Free commands list pointer if dynamically allocated
-    //free((*minishell)->commands);
-    (*minishell)->commands = NULL;
-    ft_printf("commands clean up\n");
+	if ((*minishell)->commands)
+    	(*minishell)->commands = NULL;
 }
 
 void ft_free_token_list(t_tokens **token_list)
@@ -88,9 +112,13 @@ void ft_free_token_list(t_tokens **token_list)
         while (temp)
         {
             temp_next = temp->next;
-            if (temp->value)  // Check if value exists before freeing
+            if (temp->value)
+			{
                 free(temp->value);
+				temp->value = NULL;
+			}
             free(temp);
+			temp = NULL;
             temp = temp_next;
         }
         *token_list = NULL;  // Nullify the list pointer
@@ -119,24 +147,17 @@ void ft_free_minishell(t_data **minishell, bool is_crash)
         environment_free_list((*minishell)->env);
         (*minishell)->env = NULL;
     }
-
-
-    // Free envir if required (TODO: Implement this part)
-    if ((*minishell)->envir)
-    {
-        //free((*minishell)->envir);  // Only if dynamically allocated
-        (*minishell)->envir = NULL;
-    }
-    // Free commands if required
     if ((*minishell)->commands)
-	{
-		ft_free_commands(minishell);
-	}
-    if (is_crash)
     {
-        free(*minishell);  // Free the t_data structure
-        *minishell = NULL;
+      ft_free_commands(minishell);
     }
+    if (is_crash == true)
+    {
+      free(minishell);
+      *minishell = NULL;
+    }
+
+	perror("FREE_MNINISHELL");
 }
 
 void ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell)

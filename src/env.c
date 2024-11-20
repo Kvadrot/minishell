@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/18 17:57:11 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:18:54 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ void	init_environment(t_data **minishell, char **envir)
 			value = ft_strdup(delimiter_pos + 1);
 			if (!value)
 				ft_handle_error(true , "unexpected ERROR dup_is_faild, printed by init_environment\n", 423, minishell);
-			// environment_new_node_end((*minishell)->env, key, value);
 
 			environment_new_node_end(*minishell, key, value);
-
 			free(key);
 			free(value);
 		}
@@ -78,7 +76,6 @@ void	init_environment(t_data **minishell, char **envir)
 	}
 }
 
-// function to free the list
 void	environment_free_list(t_env *head)
 {
 	t_env	*tmp;
@@ -128,11 +125,7 @@ void	delete_node(t_env **head, t_env *node_to_delete)
 void	add_to_env(t_data **minishell, char *key, char *new_value)
 {
 	t_env	*tmp;
-	//t_env	*prev;
-
 	tmp = (*minishell)->env;
-	//prev = NULL;
-	//Check if the key exists and update if it does
 	while (tmp != NULL)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)

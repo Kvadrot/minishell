@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/15 18:11:50 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:01:37 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int	init_tokens(t_data *minishell)
 	t_tokens	*token;
 
 	token = NULL;
-	string = minishell->input; //<< fewrgewger >> ergewrg | d >>> f
+	string = minishell->input;
 	if (!string)
 		return (200);
 	while (string && *string)
@@ -179,34 +179,3 @@ int	init_tokens(t_data *minishell)
 	}
 	return (200);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	t_data minishell;
-// 	minishell.tokens = NULL;
-
-// 	(void)ac;
-// 	minishell.input = av[1];
-// 	tokens(&minishell);
-
-// 	while (minishell.tokens != NULL)
-// 	{
-// 		printf("%s = %d\n", minishell.tokens->value, minishell.tokens->type);
-// 		minishell.tokens = minishell.tokens->next;
-// 	}
-// 	return (0);
-// }
-
-// abcd 42
-// "Abcd 42" = 0
-
-// ' Abcd 42 '
-// ' Abcd 42 ' = 0
-
-// "$Arg 1"42'some_text' >> <
-// "$Arg 1"42'some_text' = 0
-
-// < < '<<< >> '"ARG">
-// <��U = 1
-// <<��U = 3
-// '"ARG"> = 0

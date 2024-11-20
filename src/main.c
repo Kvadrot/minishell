@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/18 18:41:49 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:52:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,9 @@ void	minishell_loop(t_data **minishell)
 			// }
 		// =================================================================================
 		//TODO:
-
-		// (*minishell)->commands = ft_parse_tokens(minishell);
 			ft_parse_tokens(minishell);
 			ft_expand_input(minishell);
-			if (ft_handle_redirections(minishell) < 0)
+			if (ft_process_redirection_list(minishell) < 0)
 			{
 				ft_handle_error(false, NULL, -400, minishell);
 				continue;
@@ -75,8 +73,10 @@ void	minishell_loop(t_data **minishell)
 			if ((*minishell)->commands != NULL)
 			{
 				exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
-				ft_free_minishell(minishell, false);
 			}
+			ft_free_minishell(minishell, false);
+
+			perror("MINISHELL_NEW_LOOP");
 		}
 	}
 }
@@ -109,15 +109,6 @@ int	main(int argc, char **argv, char **env)
 	
 
 	minishell_loop(&minishell);
-	//environment_free_list(minishell->env);
-
-
-    if (minishell)
-    {
-        ft_free_minishell(&minishell, true);
-    }
-	// OLD ONE - WHY???
-	// environment_free_list(minishell->env);
-	// minishell_loop(&minishell);
+	environment_free_list(minishell->env);
 	return (0);
 }
