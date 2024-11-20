@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/20 12:52:58 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:39:50 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_minishell(&minishell, env);
 	init_environment(&minishell, minishell->envir);
-//Uncomment to CheckUp ENV
-//=================================================================================
-
-	//print_environment(minishell->env);
-//=================================================================================
-	
-
 	minishell_loop(&minishell);
-	environment_free_list(minishell->env);
 	return (0);
 }
