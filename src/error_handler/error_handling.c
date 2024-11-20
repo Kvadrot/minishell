@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
 /*   Updated: 2024/11/20 13:17:19 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../inc/minishell.h"
 
@@ -77,6 +76,7 @@ void ft_free_commands(t_data **minishell)
     {
         cmd_pt_holder = temp_cmd->next;
         ft_free_redir_list(&temp_cmd);
+        perror("");
         free_command_args(temp_cmd);
         if (temp_cmd->here_doc)
 		{
@@ -125,7 +125,6 @@ void ft_free_token_list(t_tokens **token_list)
     }
 }
 
-
 void ft_free_minishell(t_data **minishell, bool is_crash)
 {
     if (*minishell == NULL)
@@ -134,7 +133,7 @@ void ft_free_minishell(t_data **minishell, bool is_crash)
     // Free input if it exists and was dynamically allocated
     if ((*minishell)->input)
     {
-        free((*minishell)->input);
+       // free((*minishell)->input);
 		(*minishell)->input = NULL;
 	}
 
@@ -144,18 +143,20 @@ void ft_free_minishell(t_data **minishell, bool is_crash)
 
     // Free environment variables if required
     if ((*minishell)->env && is_crash)
+    {
         environment_free_list((*minishell)->env);
-
-    // Free envir if required (TODO: Implement this part)
-    // if ((*minishell)->envir)
-        // ft_free_arr_of_arr((*minishell)->envir);
-
+        (*minishell)->env = NULL;
+    }
     if ((*minishell)->commands)
-	{
-		ft_free_commands(minishell);	
-	}
-	if (is_crash == true)
-		free(minishell);
+    {
+      ft_free_commands(minishell);
+    }
+    if (is_crash == true)
+    {
+      free(minishell);
+      *minishell = NULL;
+    }
+
 	perror("FREE_MNINISHELL");
 }
 

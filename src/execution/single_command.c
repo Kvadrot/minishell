@@ -26,9 +26,11 @@ void	execute_single_command(t_command_full *cmd, char **envp)
 	if (pid == 0)
 		child_process(cmd, envp);
 	else
+	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			last_exit_status = WEXITSTATUS(status);
+	}
 }
 
 void	handle_1_cmd(t_command_full *cmd, char **envp, t_data **minishell)

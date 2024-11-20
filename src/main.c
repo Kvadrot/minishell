@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
 /*   Updated: 2024/11/20 12:52:58 by itykhono         ###   ########.fr       */
@@ -26,13 +26,13 @@ void	minishell_loop(t_data **minishell)
 	{
 		(*minishell)->tokens = NULL;
 		(*minishell)->input = readline(PROMPT);
-		
 		if (!(*minishell)->input)
 		{
+			ft_free_minishell(minishell, true);
 			ft_printf("exit\n");
 			break ;
 		}
-		if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
+		else if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
 			//TODO: add to history
 			add_history((*minishell)->input);

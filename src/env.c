@@ -125,7 +125,6 @@ void	delete_node(t_env **head, t_env *node_to_delete)
 void	add_to_env(t_data **minishell, char *key, char *new_value)
 {
 	t_env	*tmp;
-
 	tmp = (*minishell)->env;
 	while (tmp != NULL)
 	{
