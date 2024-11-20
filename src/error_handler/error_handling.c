@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/19 17:54:52 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:17:19 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,6 @@ void ft_free_token_list(t_tokens **token_list)
 }
 
 
-
-
 void ft_free_minishell(t_data **minishell, bool is_crash)
 {
     if (*minishell == NULL)
@@ -149,13 +147,15 @@ void ft_free_minishell(t_data **minishell, bool is_crash)
         environment_free_list((*minishell)->env);
 
     // Free envir if required (TODO: Implement this part)
-    if ((*minishell)->envir)
-        ft_printf("TODO: free envir\n");
+    // if ((*minishell)->envir)
+        // ft_free_arr_of_arr((*minishell)->envir);
 
     if ((*minishell)->commands)
 	{
 		ft_free_commands(minishell);	
 	}
+	if (is_crash == true)
+		free(minishell);
 	perror("FREE_MNINISHELL");
 }
 

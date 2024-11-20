@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/19 17:49:17 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:52:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,5 @@ int	main(int argc, char **argv, char **env)
 
 	minishell_loop(&minishell);
 	environment_free_list(minishell->env);
-
-	// OLD ONE - WHY???
-	// environment_free_list(minishell->env);
-	// minishell_loop(&minishell);
 	return (0);
 }
