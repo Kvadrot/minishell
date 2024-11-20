@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/20 12:52:58 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:01:06 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ int	main(int argc, char **argv, char **env)
 	
 
 	minishell_loop(&minishell);
-	environment_free_list(minishell->env);
+	//environment_free_list(minishell->env);
 	return (0);
 }
