@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/20 17:00:23 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:36:22 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,9 @@ void	exec_pipeline(t_command_full *cmd_list, char **envp, t_data **minishell)
 {
 	t_command_full	*cmd;
 
-	cmd = cmd_list;
 	if (cmd_list == NULL)
 		return ;
+	cmd = cmd_list;
 	if (cmd_list->next == NULL)
 	{
 		handle_1_cmd(cmd_list, envp, minishell);

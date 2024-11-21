@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/20 16:46:35 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:48:33 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,14 @@ void	minishell_loop(t_data **minishell)
 		}
 		else if ((*minishell)->input != NULL && ft_strlen((*minishell)->input) > 0)
 		{
+			if (ft_is_only_whitespace((*minishell)->input))
+			{
+				free((*minishell)->input);
+				continue ;
+			}
 			//TODO: add to history
-			add_history((*minishell)->input);
+			if (!ft_is_only_whitespace((*minishell)->input))
+				add_history((*minishell)->input);
 			if (ft_input_is_valid((*minishell)->input) == false) //initial validation
 			{
 				free((*minishell)->input);
@@ -64,7 +70,6 @@ void	minishell_loop(t_data **minishell)
 				ft_handle_error(false, NULL, -400, minishell);
 				continue;
 			}
-			
 			//Uncomment to Test COMMANDS
 			// ==================================================================================================================================
 			// ft_printf("MAIN>C Calls debuger after parsing\n");
@@ -107,7 +112,6 @@ int	main(int argc, char **argv, char **env)
 	//print_environment(minishell->env);
 //=================================================================================
 	
-
 	minishell_loop(&minishell);
 	//environment_free_list(minishell->env);
 	return (0);
