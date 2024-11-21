@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/21 13:48:33 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:34:41 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,20 @@
 
 int last_exit_status = 0;
 
+// void	restore_terminal_settings(t_data *minishell)
+// {
+// 	termios_change(true); // Re-enable ECHOCTL
+// 	tcsetattr(STDIN_FILENO, TCSANOW, &minishell->terminal);
+// }
+
 void	minishell_loop(t_data **minishell)
 {
-	setup_signal_handlers();
+	//setup_signal_handlers();
+	// if (termios_change(true) == 1)
+	// {
+	// 	write(STDERR_FILENO, "Error: Failed to enable terminal settings\n", 43);
+	// 	return ;
+	// }
 	while (1)
 	{
 		(*minishell)->tokens = NULL;
@@ -84,6 +95,7 @@ void	minishell_loop(t_data **minishell)
 			//("MINISHELL_NEW_LOOP");
 		}
 	}
+	//restore_terminal_settings(*minishell);
 }
 
 void	init_minishell(t_data **minishell, char **env)
@@ -105,6 +117,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	init_minishell(&minishell, env);
+	//setup_signal_handlers();
 	init_environment(&minishell, minishell->envir);
 //Uncomment to CheckUp ENV
 //=================================================================================
@@ -113,6 +126,7 @@ int	main(int argc, char **argv, char **env)
 //=================================================================================
 	
 	minishell_loop(&minishell);
+	//restore_terminal_settings(&minishell);
 	//environment_free_list(minishell->env);
 	return (0);
 }

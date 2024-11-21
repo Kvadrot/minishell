@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:53:20 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/20 15:17:39 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:11:55 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@ void	execute_single_command(t_command_full *cmd, char **envp)
 	pid_t	pid;
 	int		status;
 
-	printf("%s\n", cmd->cmd_name);
-	int i = 0;
-	while (cmd->args != NULL)
-	{
-		printf("arg is %s\n", cmd->args[i]);
-		i++;
-	}
 	pid = fork();
 	if (pid == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:31 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/20 16:43:02 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:12:19 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	builtin_cd(t_data **minishell)
 	}
 	else
 		target_dir = (*minishell)->commands->args[1];
-	perror("");
 	if (chdir(target_dir) == -1)
 	{
 		ft_putstr_fd("No such file or directory\n", 2);
