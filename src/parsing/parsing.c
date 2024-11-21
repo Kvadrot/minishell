@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/19 17:56:14 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:54:46 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ t_redir *ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 */
 void ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data **minishell)
 {
+	char **new_args;
+	new_args = NULL;
+
 	if ((*temp_command)->cmd_name == NULL)
 	{
 		(*temp_command)->cmd_name = ft_strdup(temp_token->value);
 	}
-	char **new_args = append_string_to_array(temp_token->value, (*temp_command)->args);
+	new_args = append_string_to_array(temp_token->value, (*temp_command)->args);
 	if (new_args == NULL)
 	{
 		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n", 444, minishell);
