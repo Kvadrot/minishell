@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/20 15:01:06 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:46:35 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	minishell_loop(t_data **minishell)
 			}
 			ft_free_minishell(minishell, false);
 
-			perror("MINISHELL_NEW_LOOP");
+			//("MINISHELL_NEW_LOOP");
 		}
 	}
 }

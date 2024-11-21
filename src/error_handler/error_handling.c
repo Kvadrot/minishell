@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/20 15:03:21 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:13:45 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void ft_free_redir_list(t_command_full **cmd)
             temp_redir = pt_holder;
         }
         (*cmd)->redir_list_head = NULL;
-        ft_printf("redir clean up\n");
+        //ft_printf("redir clean up\n");
     }
 }
 
@@ -76,7 +76,6 @@ void ft_free_commands(t_data **minishell)
     {
         cmd_pt_holder = temp_cmd->next;
         ft_free_redir_list(&temp_cmd);
-        perror("");
         free_command_args(temp_cmd);
         if (temp_cmd->here_doc)
 		{
@@ -157,7 +156,7 @@ void ft_free_minishell(t_data **minishell, bool is_crash)
       *minishell = NULL;
     }
 
-	perror("FREE_MNINISHELL");
+	//perror("FREE_MNINISHELL");
 }
 
 void ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell)
