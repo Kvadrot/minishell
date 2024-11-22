@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/21 17:43:38 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:05:55 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void ft_free_redir_list(t_command_full **cmd)
             temp_redir = pt_holder;
         }
         (*cmd)->redir_list_head = NULL;
-        //ft_printf("redir clean up\n");
+        ft_printf("redir clean up\n");
     }
 }
 
@@ -156,7 +156,7 @@ void ft_free_minishell(t_data **minishell, bool is_crash)
       *minishell = NULL;
     }
 
-	//perror("FREE_MNINISHELL");
+	perror("FREE_MNINISHELL");
 }
 
 void ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell)

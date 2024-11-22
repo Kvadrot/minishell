@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:30:18 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/12 17:26:25 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:12:20 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	setup_heredoc(t_command_full *cmd)
 
 	if (cmd->here_doc != NULL)
 	{
-		printf("heredoc is: %s\n", cmd->here_doc);
+		//printf("heredoc is: %s\n", cmd->here_doc);
 		if (pipe(pipe_fds) == -1)
 		{
 			perror("Failed to create heredoc pipe");

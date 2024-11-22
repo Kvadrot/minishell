@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_semi_tested.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/19 18:01:37 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:07:20 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,17 @@ void	append_token(t_tokens **tokens, t_tokens *new_token)
 	new_token->next = NULL;
 }
 
+int	ft_is_only_whitespace(char *str)
+{
+	while (*str)
+	{
+		if (!ft_is_whitespace(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
 // pontentially catch syntax errors and return error message
 // how to return error we want?
 
@@ -137,6 +148,8 @@ int	validate_tokens(t_tokens *tokens)
 {
 	t_tokens	*current;
 
+	if (!tokens)
+		return (200);
 	current = tokens;
 	while (current && current->next)
 	{
@@ -165,7 +178,7 @@ int	init_tokens(t_data *minishell)
 
 	token = NULL;
 	string = minishell->input;
-	if (!string)
+	if (!string || ft_strlen(string) == 0 || ft_is_only_whitespace(string))
 		return (200);
 	while (string && *string)
 	{

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:45:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/21 17:43:38 by mbudkevi         ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2024/11/20 15:13:45 by mbudkevi         ###   ########.fr       */
+=======
+/*   Updated: 2024/11/21 15:05:55 by itykhono         ###   ########.fr       */
+>>>>>>> 2f533d51828284b4795c2ff48374ae10c76096b8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +80,11 @@ void ft_free_commands(t_data **minishell)
     {
         cmd_pt_holder = temp_cmd->next;
         ft_free_redir_list(&temp_cmd);
+<<<<<<< HEAD
+        free_command_args(temp_cmd);
+=======
         free_command_args(&temp_cmd);
+>>>>>>> 2f533d51828284b4795c2ff48374ae10c76096b8
         if (temp_cmd->here_doc)
 		{
             free(temp_cmd->here_doc);

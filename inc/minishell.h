@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/20 12:58:47 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:46:11 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int					validate_tokens(t_tokens *tokens);
 char				*ft_strncpy(char *dest, char *src, int num);
 void				ft_skip_whitespace(char **s);
 bool				ft_is_whitespace(char c);
+int					ft_is_only_whitespace(char *str);
 
 
 //Parsing

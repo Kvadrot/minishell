@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:44:57 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/18 16:22:33 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:45:20 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	export_no_args(t_data **minishell)
 		formatted = format_env_entry(tmp);
 		if (formatted)
 		{
-			printf("%s\n", formatted);
+			ft_printf("%s\n", formatted);
 			free(formatted);
 		}
 		tmp = tmp->next;
@@ -138,7 +138,7 @@ int	builtin_export(t_data **minishell)
 	int		key_s;
 
 	i = 0;
-	if ((*minishell)->commands->args == NULL)
+	if (!(*minishell)->commands->args[1])
 	{
 		export_no_args(minishell);
 		return (0);

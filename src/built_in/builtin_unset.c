@@ -6,35 +6,34 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:45:22 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/10/23 15:25:56 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:37:33 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	builtin_unset(t_data **minishell)
+int	builtin_unset(t_data **minishell)
 {
-	int		i;
-	t_env	*tmp;
+	int i;
+	t_env *tmp;
 
-	i = 0;
-	tmp = (*minishell)->env;
-	if ((*minishell)->commands->args)
+	if (!(*minishell)->commands->args || !(*minishell)->commands->args[1])
+		return (0);
+	i = 1;
+	while ((*minishell)->commands->args[i])
 	{
-		while ((*minishell)->commands->args[i])
+		tmp = (*minishell)->env;
+		while (tmp != NULL)
 		{
-			while (tmp != NULL)
+			if (ft_strncmp(tmp->key, (*minishell)->commands->args[i],
+					ft_strlen((*minishell)->commands->args[i]) + 1) == 0)
 			{
-				if (ft_strncmp(tmp->key, (*minishell)->commands->args[i],
-						ft_strlen(tmp->key)) == 0)
-				{
-					delete_node(&(*minishell)->env, tmp);
-					break ;
-				}
-				tmp = tmp->next;
+				delete_node(&(*minishell)->env, tmp);
+				break ;
 			}
-			tmp = (*minishell)->env;
-			i++;
+			tmp = tmp->next;
 		}
+		i++;
 	}
+	return (0);
 }

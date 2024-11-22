@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:19:59 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/19 17:46:54 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:11:35 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int ft_handle_dgreat(char *filename)
     fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (fd == -1)
     {
-        perror("Error opening file for appending");
+       // perror("Error opening file for appending");
         return -1;
     }
 
@@ -116,7 +116,7 @@ int ft_handle_great(char *filename)
         fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
         if (fd == -1)
         {
-            perror("Error creating file");
+           // perror("Error creating file");
             return -1;
         }
     }
@@ -125,7 +125,7 @@ int ft_handle_great(char *filename)
         fd = open(filename, O_WRONLY | O_TRUNC);
         if (fd == -1)
         {
-            perror("Error opening file for writing");
+            //perror("Error opening file for writing");
             return -1;
         }
     }
@@ -176,20 +176,20 @@ static int ft_handle_less(char *filename)
 
     if (access(filename, F_OK) == -1)
     {
-        perror("File does not exist !!!!");
+        //perror("File does not exist !!!!");
         return -1;
     }
 
     if (access(filename, R_OK) == -1)
     {
-        perror("File is not accessible");
+       // perror("File is not accessible");
         return -1;
     }
 
     fd_result = open(filename, O_RDONLY);
     if (fd_result == -1)
     {
-        perror("Error opening file");
+       // perror("Error opening file");
         return -1;
     } 
     return fd_result;

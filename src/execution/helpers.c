@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/18 17:30:50 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:56:26 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,31 +70,29 @@ char	*find_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-int	count_args(t_command_full *cmd)
-{
-	int				i;
-	t_command_full	*tmp;
+// int	count_args(t_command_full *cmd)
+// {
+// 	int				i;
+// 	t_command_full	*tmp;
 
-	i = 0;
-	tmp = cmd;
-	if (cmd->args == NULL)
-		return (0);
-	while (tmp->args[i] != NULL)
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	tmp = cmd;
+// 	if (cmd->args == NULL)
+// 		return (0);
+// 	while (tmp->args[i] != NULL)
+// 		i++;
+// 	return (i);
+// }
 
 void	execute(char **envp, t_command_full *cmd)
 {
-	//int		i;
 	char	*path;
 	char	**exec_args;
 
-	//i = -1;
 	path = find_path(cmd->cmd_name, envp);
 	if (!path)
 	{
-		//ft_putstr_fd("Error: command not found in PATH\n", 2);
+		ft_putstr_fd("Error: command not found\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	exec_args = cmd->args;
