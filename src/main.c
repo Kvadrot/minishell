@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/21 17:44:14 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:18:22 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,21 @@
 
 #include "../inc/minishell.h"
 
-int last_exit_status = 0;
-
-// void	restore_terminal_settings(t_data *minishell)
-// {
-// 	termios_change(true); // Re-enable ECHOCTL
-// 	tcsetattr(STDIN_FILENO, TCSANOW, &minishell->terminal);
-// }
+int	last_exit_status = 0;
 
 void	minishell_loop(t_data **minishell)
 {
-	//setup_signal_handlers();
-	// if (termios_change(true) == 1)
-	// {
-	// 	write(STDERR_FILENO, "Error: Failed to enable terminal settings\n", 43);
-	// 	return ;
-	// }
+	struct termios term;
+	
 	while (1)
 	{
 		(*minishell)->tokens = NULL;
+		tcgetattr(STDIN_FILENO, &term);
+		if (!(term.c_lflag & ECHOCTL))
+		{
+			term.c_lflag |= ECHOCTL;
+			tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		}
 		(*minishell)->input = readline(PROMPT);
 		if (!(*minishell)->input)
 		{
@@ -50,7 +46,6 @@ void	minishell_loop(t_data **minishell)
 				free((*minishell)->input);
 				continue ;
 			}
-			//TODO: add to history
 			if (!ft_is_only_whitespace((*minishell)->input))
 				add_history((*minishell)->input);
 			if (ft_input_is_valid((*minishell)->input) == false) //initial validation
@@ -81,21 +76,11 @@ void	minishell_loop(t_data **minishell)
 				ft_handle_error(false, NULL, -400, minishell);
 				continue;
 			}
-			//Uncomment to Test COMMANDS
-			// ==================================================================================================================================
-			// ft_printf("MAIN>C Calls debuger after parsing\n");
-			// ft_debug_parsing(minishell);
-			//==================================================================================================================================
 			if ((*minishell)->commands != NULL)
-			{
 				exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
-			}
 			ft_free_minishell(minishell, false);
-
-			//("MINISHELL_NEW_LOOP");
 		}
 	}
-	//restore_terminal_settings(*minishell);
 }
 
 void	init_minishell(t_data **minishell, char **env)
@@ -110,6 +95,15 @@ void	init_minishell(t_data **minishell, char **env)
 	(*minishell)->tokens = NULL;
 }
 
+void	disable_echoctl(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term); // Get current terminal settings
+	term.c_lflag &= ~ECHOCTL;       // Disable echoing of control characters
+	tcsetattr(STDIN_FILENO, TCSANOW, &term); // Apply changes immediately
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	*minishell;
@@ -117,16 +111,9 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	init_minishell(&minishell, env);
-	//setup_signal_handlers();
+	setup_signal_handlers();
+	disable_echoctl();
 	init_environment(&minishell, minishell->envir);
-//Uncomment to CheckUp ENV
-//=================================================================================
-
-	//print_environment(minishell->env);
-//=================================================================================
-	
 	minishell_loop(&minishell);
-	//restore_terminal_settings(&minishell);
-	//environment_free_list(minishell->env);
 	return (0);
 }
