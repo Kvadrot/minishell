@@ -28,6 +28,7 @@ OBJ_DIR10 = obj/signals/
 
 # Default sources
 SRC = main.c env.c \
+	minishell_loop_helpers.c \
 	built_in/bi_echo.c \
 	built_in/builtin_env.c \
 	built_in/builtin_pwd.c \
@@ -35,6 +36,7 @@ SRC = main.c env.c \
 	built_in/builtin_export.c \
 	built_in/builtin_unset.c \
 	built_in/builtin_exit.c \
+	built_in/helpers.c \
 	built_in/handle_builtins.c \
 	execution/single_command.c \
 	execution/exec.c \

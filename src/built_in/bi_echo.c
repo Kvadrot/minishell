@@ -6,13 +6,13 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:07:28 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/31 14:15:21 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:41:33 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-bool	is_n_flag(char *arg)
+static bool	is_n_flag(char *arg)
 {
 	int		i;
 
@@ -26,7 +26,7 @@ bool	is_n_flag(char *arg)
 	return (true);
 }
 
-void	echo_print_args(char **args, bool is_n, int fd_out)
+static void	echo_print_args(char **args, bool is_n, int fd_out)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 17:56:21 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/20 15:20:49 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:50:20 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	handle_builtins(t_data **minishell)
 {
 	if (ft_strncmp((*minishell)->commands->cmd_name, "echo",
 			ft_strlen("echo")) == 0)
-		return (builtin_echo((*minishell)->commands->args, (*minishell)->commands->fd_out));
+		return (builtin_echo((*minishell)->commands->args,
+				(*minishell)->commands->fd_out));
 	if (ft_strncmp((*minishell)->commands->cmd_name, "cd",
 			ft_strlen("cd")) == 0)
 		return (builtin_cd(minishell));

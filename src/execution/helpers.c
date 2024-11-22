@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/21 15:56:26 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:33:39 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,6 @@ char	*find_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-// int	count_args(t_command_full *cmd)
-// {
-// 	int				i;
-// 	t_command_full	*tmp;
-
-// 	i = 0;
-// 	tmp = cmd;
-// 	if (cmd->args == NULL)
-// 		return (0);
-// 	while (tmp->args[i] != NULL)
-// 		i++;
-// 	return (i);
-// }
-
 void	execute(char **envp, t_command_full *cmd)
 {
 	char	*path;
@@ -96,13 +82,6 @@ void	execute(char **envp, t_command_full *cmd)
 		exit(EXIT_FAILURE);
 	}
 	exec_args = cmd->args;
-	// if (!exec_args)
-	// {
-	// 	free(path);
-	// 	perror("");
-	// 	ft_putstr_fd("Error: failed to create exec arguments\n", 2);
-	// 	exit(EXIT_FAILURE);
-	// }
 	if (execve(path, exec_args, envp) == -1)
 	{
 		free_array(exec_args);

@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:21:20 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/20 15:39:58 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:48:05 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,3 +21,6 @@ int		builtin_cd(t_data **minishell);
 int		builtin_export(t_data **minishell);
 int		builtin_unset(t_data **minishell);
 int		builtin_exit(t_data **minishell);
+void	swap(t_env *a, t_env *b);
+void	sort_env_list(t_env **head);
+char	*format_env_entry(t_env *node);

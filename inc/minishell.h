@@ -6,14 +6,14 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/21 13:46:11 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/22 19:13:05 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int last_exit_status;
+extern int g_last_exit_status;
 # include <stdbool.h>
 # include <signal.h>
 # include <stdlib.h>
@@ -67,6 +67,11 @@ typedef struct s_data
 //========================================================================================//
 
 // LifeCycle
+void	reset_echoctl(void);
+bool	handle_empty_input(t_data **minishell);
+bool	handle_whitespace_or_syntax(t_data **minishell);
+bool	process_tokens(t_data **minishell);
+void	execute_commands(t_data **minishell);
 void	minishell_loop(t_data **minishell);
 
 // Validate_input

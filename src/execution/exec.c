@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:14:58 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/21 15:08:13 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:55:39 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	handle_cmd_exec(t_command_full *cmd, char **envp)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			last_exit_status = WEXITSTATUS(status);
+			g_last_exit_status = WEXITSTATUS(status);
 	}
 }
 

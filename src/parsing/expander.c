@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/15 13:37:05 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:55:39 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ int ft_substitude(t_data **minishell, char **full_arg, int start_index)
 
     if (ft_strcmp(arg_duplicate, "$?") == 0)
     {
-        ft_printf("status = %d\n", last_exit_status);
-        insertable_str = ft_itoa(last_exit_status);
+        ft_printf("status = %d\n", g_last_exit_status);
+        insertable_str = ft_itoa(g_last_exit_status);
         insertable_str_len = ft_strlen(insertable_str);
         *full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg + start_index) + 1, insertable_str,  start_index);
         free(arg_duplicate);
