@@ -6,12 +6,11 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/20 15:54:46 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/23 18:32:11 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 /** TODO: ft_scroll_redir_list_to_last
 * @brief: returns last node from t_redir * list
@@ -20,9 +19,9 @@
 //=======================================================================//
 * @returns: t_redir * - obj t_redir || NULL
 */
-t_redir *ft_scroll_redir_list_to_last(t_redir *redir_list_head)
+t_redir	*ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 {
-	t_redir *temp;
+	t_redir	*temp;
 
 	temp = NULL;
 	if (!redir_list_head)
@@ -41,11 +40,12 @@ t_redir *ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 	// Otherwise, appends the token value to the argument list.
 //=======================================================================//
 */
-void ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data **minishell)
+void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token,
+		t_data **minishell)
 {
-	char **new_args;
-	new_args = NULL;
+	char	**new_args;
 
+	new_args = NULL;
 	if ((*temp_command)->cmd_name == NULL)
 	{
 		(*temp_command)->cmd_name = ft_strdup(temp_token->value);
@@ -53,8 +53,9 @@ void ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 	new_args = append_string_to_array(temp_token->value, (*temp_command)->args);
 	if (new_args == NULL)
 	{
-		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n", 444, minishell);
-		return;
+		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n",
+			444, minishell);
+		return ;
 	}
 	(*temp_command)->args = new_args;
 }
@@ -68,90 +69,54 @@ void ft_handle_word(t_command_full **temp_command, t_tokens *temp_token, t_data 
 //=======================================================================//
 * @returns: char * - heredoc content || NULL
 */
+
+// char *
+
+char	*ft_handle_handle_here_doc_helper(char **here_doc_next_line,
+		char **result_text, char **temp_copy)
+{
+	if (*here_doc_next_line)
+	{
+		free(*here_doc_next_line);
+		*here_doc_next_line = NULL;
+	}
+	if (*result_text)
+		free(*result_text);
+	*result_text = ft_strdup(*temp_copy);
+	if (*temp_copy)
+	{
+		free(*temp_copy);
+		*temp_copy = NULL;
+	}
+}
+
 char	*ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 {
-	bool	continue_reading;
 	char	*here_doc_next_line;
 	char	*result_text;
 	char	*temp_copy;
 
-	continue_reading = true;
 	here_doc_next_line = NULL;
 	result_text = ft_strdup("");
 	if (!result_text)
 		return (NULL);
-
-	while (continue_reading == true)
+	while (1)
 	{
-		// Get next line from readline
 		here_doc_next_line = readline(HEREDOC_PROMPT);
-
-		// Exit loop if EOF or delimiter match
-		if (here_doc_next_line == NULL || ft_strcmp(current_redir->file_name, here_doc_next_line) == 0)
+		if (here_doc_next_line == NULL || ft_strcmp(current_redir->file_name,
+				here_doc_next_line) == 0)
 		{
 			if (here_doc_next_line != NULL)
-			{
-				// free(here_doc_next_line);
-				here_doc_next_line = NULL; // Reset to avoid invalid free
-			}
+				here_doc_next_line = NULL;
 			break ;
 		}
-
-		// Append next line to the result
-		temp_copy = ft_join_with_delimeter(result_text, here_doc_next_line, "\n");
-
-		// free(here_doc_next_line); // Free current line after use
-
-		here_doc_next_line = NULL; // Reset pointer
-
-		if (!temp_copy) // Handle memory allocation failure
-		{
-			free(result_text);
-			return (NULL);
-		}
-		if (result_text)
-			free(result_text); // Free old result
-
-		result_text = temp_copy; // Update with new result
+		temp_copy = ft_join_with_delimeter(result_text, here_doc_next_line,
+				"\n");
+		ft_handle_handle_here_doc_helper(&here_doc_next_line, &result_text,
+			&temp_copy);
 	}
-
 	return (result_text);
 }
-
-// char *ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
-// {
-// 	bool continue_reading;
-// 	char *here_doc_next_line;
-// 	char *result_text;
-// 	char *temp_copy;
-
-// 	continue_reading = true;
-// 	result_text = ft_strdup(""); // Start with an empty string
-// 	if (!result_text)
-// 		return (NULL);
-
-// 	while (continue_reading == true)
-// 	{
-// 		here_doc_next_line = readline(HEREDOC_PROMPT);
-// 		if (here_doc_next_line == NULL || ft_strcmp(current_redir->file_name, here_doc_next_line) == 0)
-// 		{
-// 			free(here_doc_next_line);
-// 			break;
-// 		}
-// 		temp_copy = ft_join_with_delimeter(result_text, here_doc_next_line, "\n");
-// 		free(here_doc_next_line);
-// 		if (!temp_copy)
-// 		{
-// 			free(result_text);
-// 			return (NULL);
-// 		}
-// 		free(result_text);
-// 		result_text = temp_copy;
-// 	}
-
-// 	ft_printf("here %s\n", result_text);
-// 	return (result_text);
-// }
 
 /** TODO: ft_init_redir
 * @brief: Initialize obj type t_redir
@@ -163,9 +128,10 @@ char	*ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 //=======================================================================//
 * @returns: t_redir * - obj t_redir || NULL
 */
-t_redir *ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cmd)
+t_redir	*ft_init_redir(t_tokens *prev_token, t_tokens *token,
+		t_command_full *cmd)
 {
-	t_redir *redirection;
+	t_redir	*redirection;
 
 	redirection = (t_redir *)malloc(sizeof(t_redir));
 	if (!redirection)
@@ -175,8 +141,7 @@ t_redir *ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cm
 	redirection->fd = NULL;
 	redirection->prev = NULL;
 	redirection->next = NULL;
-	redirection->value = NULL; // Initialize value to NULL for HEREDOC
-
+	redirection->value = NULL;
 	return (redirection);
 }
 
@@ -191,42 +156,64 @@ t_redir *ft_init_redir(t_tokens *prev_token, t_tokens *token, t_command_full *cm
 //=======================================================================//
 * @returns: t_redir * - obj t_redir || NULL
 */
-void ft_handle_redirection(t_command_full *cmd, t_tokens *token, t_data **minishell)
+
+void	ft_helper_handle_redirection(t_command_full **cmd, t_redir **redir,
+		t_data **minishell)
 {
-	t_redir *new_redirection;
-	t_redir *prev_redir;
-	char *tempstr;
+	char	*temp_str;
+
+	if ((*redir)->type != T_DLESS)
+		return ;
+	temp_str = ft_handle_here_doc(*cmd, *redir);
+	if (!temp_str)
+	{
+		if ((*redir)->prev)
+			(*redir)->prev->next = NULL;
+		else
+			(*cmd)->redir_list_head = NULL;
+		free((*redir)->file_name);
+		*redir = NULL;
+		free(redir);
+		ft_handle_error(true, "Failed to handle here-document redirection\n",
+			4041, minishell);
+		return ;
+	}
+	(*redir)->value = temp_str;
+}
+
+int	ft_set_redirection_properties(t_redir *redir, t_tokens *token, t_data **shell)
+{
+	if (token->prev)
+		redir->type = token->prev->type;
+	else
+		return (ft_handle_error(true, "Token has no prev node\n", 448, shell), 0);
+	if (token->value)
+		redir->file_name = ft_strdup(token->value);
+	else
+		return (ft_handle_error(true, "Token value is NULL\n", 449, shell), 0);
+	return (1);
+}
+
+
+void	ft_handle_redirection(t_command_full *cmd, t_tokens *token, t_data **shell)
+{
+	t_redir	*new_redir;
+	t_redir	*prev_redir;
 
 	prev_redir = ft_scroll_redir_list_to_last(cmd->redir_list_head);
-	new_redirection = ft_init_redir(token->prev, token, cmd);
-	if (!new_redirection)
-	{
-		ft_handle_error(true, "malloc error - printed by ft_handle_redirection\n", 447, minishell);
-		return;
-	}
-	new_redirection->type = token->prev->type;
-	new_redirection->file_name = ft_strdup(token->value);
-	new_redirection->prev = prev_redir;
-	ft_printf("filename = %s\n", new_redirection->file_name);
-	if (new_redirection->type == T_DLESS)
-	{
-		tempstr = ft_handle_here_doc(cmd, new_redirection);
-		if (!tempstr)
-		{
-			free(new_redirection->file_name);
-			new_redirection = NULL;
-			free(new_redirection);
-			ft_handle_error(true, "error, printed by ft_handle_redirection\n", 4041, minishell);
-			return;
-		}
-		new_redirection->value = tempstr;
-	}
-
+	new_redir = ft_init_redir(token->prev, token, cmd);
+	if (!new_redir)
+		return (ft_handle_error(true, "Malloc error\n", 447, shell));
+	if (!ft_set_redirection_properties(new_redir, token, shell))
+		return ;
+	new_redir->prev = prev_redir;
+	ft_helper_handle_redirection(&cmd, &new_redir, shell);
 	if (prev_redir)
-		prev_redir->next = new_redirection;
+		prev_redir->next = new_redir;
 	else
-		cmd->redir_list_head = new_redirection;
+		cmd->redir_list_head = new_redir;
 }
+
 
 /** TODO: init_cmd
 * @brief: initialize cmd
@@ -238,9 +225,9 @@ void ft_handle_redirection(t_command_full *cmd, t_tokens *token, t_data **minish
 //=======================================================================//
 * @returns: new_cmd connected to the cmd_list
 */
-t_command_full *init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
+t_command_full	*init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 {
-	t_command_full *new_command;
+	t_command_full	*new_command;
 
 	new_command = (t_command_full *)malloc(sizeof(t_command_full));
 	if (!new_command)
@@ -265,16 +252,17 @@ t_command_full *init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 //=======================================================================//
 * @returns: t_command_full * - the head of the command list
 */
-t_command_full *ft_parse_tokens(t_data **minishell)
+t_command_full	*ft_parse_tokens(t_data **minishell)
 {
-	t_command_full *cmd_head;
-	t_command_full *temp_command;
-	t_command_full *new_command;
-	t_tokens *temp_token;
+	t_command_full	*cmd_head;
+	t_command_full	*temp_command;
+	t_command_full	*new_command;
+	t_tokens		*temp_token;
 
 	cmd_head = init_cmd(NULL, (*minishell)->tokens);
 	if (!cmd_head)
-		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n", 444, minishell);
+		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n",
+			444, minishell);
 	temp_command = cmd_head;
 	temp_token = (*minishell)->tokens;
 	(*minishell)->commands = cmd_head;
@@ -284,8 +272,8 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 		{
 			ft_handle_word(&temp_command, temp_token, minishell);
 		}
-		else if (temp_token->type == T_LESS || temp_token->type == T_GREAT || 
-		         temp_token->type == T_DLESS || temp_token->type == T_DGREAT)
+		else if (temp_token->type == T_LESS || temp_token->type == T_GREAT
+			|| temp_token->type == T_DLESS || temp_token->type == T_DGREAT)
 		{
 			temp_token = temp_token->next;
 			ft_handle_redirection(temp_command, temp_token, minishell);
@@ -294,7 +282,7 @@ t_command_full *ft_parse_tokens(t_data **minishell)
 		{
 			new_command = init_cmd(temp_command, temp_token);
 			if (!new_command)
-				ft_handle_error(true, "malloc error1 - printed by ft_parse_tokens\n", 444, minishell);
+				ft_handle_error(true, "malloc error\n", 444, minishell);
 			temp_command->next = new_command;
 			temp_command = temp_command->next;
 		}
