@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/22 19:13:05 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/23 18:04:03 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*ft_errase_quote(t_data **minishell, char **temp_arg);
 int		ft_process_redirection_list(t_data **minishell);
 
 // error handling
+void	ft_free_commands(t_data **minishell);
 void	ft_free_minishell(t_data **minishell, bool is_crash);
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell);
 

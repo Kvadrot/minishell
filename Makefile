@@ -24,10 +24,13 @@ OBJ_DIR7 = obj/built_in/
 OBJ_DIR8 = obj/common_tools/
 OBJ_DIR9 = obj/execution/
 OBJ_DIR10 = obj/signals/
+OBJ_DIR11 = obj/environment/
 
 
 # Default sources
-SRC = main.c env.c \
+SRC = main.c \
+	environment/env_helpers.c \
+	environment/env.c \
 	minishell_loop_helpers.c \
 	built_in/bi_echo.c \
 	built_in/builtin_env.c \
@@ -50,10 +53,10 @@ SRC = main.c env.c \
 	parsing/redirection_handler.c  \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \
 	validation/validation.c \
+	error_handler/error_handler_helpers.c \
 	error_handler/error_handling.c \
 	debug_functions/parsing_debuger.c \
 	common_tools/append_string_to_array.c \
-	common_tools/ft_get_size_arr_of_str.c \
 	common_tools/ft_join_with_delimeter.c \
 	common_tools/ft_strcmp.c \
 
@@ -73,6 +76,7 @@ $(OBJ_DIR)%.o:  $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR8)
 	@mkdir -p $(OBJ_DIR9)
 	@mkdir -p $(OBJ_DIR10)
+	@mkdir -p $(OBJ_DIR11)
 
 
 

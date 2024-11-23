@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append_string_to_array.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:38:33 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/20 15:46:36 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/23 17:05:21 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,68 +22,92 @@
 //=======================================================================//
 * @returns: t_redir	* - obj t_redir || NULL
 */
- static void free_string_array(char **arr) {
-    int i = 0;
+static void	free_string_array(char **arr)
+{
+	int	i;
 
-    if (!arr)
-        return;
-
-    while (arr[i]) {
-        free(arr[i]);
-        arr[i] = NULL;
-        i++;
-    }
-    free(arr);
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
 }
 
-char **append_string_to_array(char *new_str, char **args) {
-    int i = 0;
-    int old_size = 0;
-    char **result;
+static int	get_array_size(char **args)
+{
+	int	size;
 
-    // Calculate the size of the old array
-    if (args) {
-        while (args[old_size])
-            old_size++;
-    }
+	size = 0;
+	if (args)
+	{
+		while (args[size])
+			size++;
+	}
+	return (size);
+}
 
-    // Allocate memory for the new array
-    result = (char **)malloc(sizeof(char *) * (old_size + 2));
-    if (!result)
-        return NULL;
+static char	**allocate_and_copy(char **args, int old_size)
+{
+	char	**result;
+	int		i;
 
-    // Copy existing strings to the new array
-    while (i < old_size) {
-        result[i] = ft_strdup(args[i]); // Duplicate string
-        if (!result[i]) {
-            while (i-- > 0) {
-                free(result[i]);
-                result[i] = NULL;
-            }
-            free(result);
-            result = NULL;
-            return NULL;
-        }
-        i++;
-    }
+	result = (char **)malloc(sizeof(char *) * (old_size + 2));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < old_size)
+	{
+		result[i] = ft_strdup(args[i]);
+		if (!result[i])
+		{
+			while (i-- > 0)
+			{
+				free(result[i]);
+				result[i] = NULL;
+			}
+			free(result);
+			result = NULL;
+			return (NULL);
+		}
+		i++;
+	}
+	return (result);
+}
 
-    // Add the new string to the array
-    result[i] = ft_strdup(new_str);
-    if (!result[i]) {
-        while (i-- > 0) {
-            free(result[i]);
-            result[i] = NULL;
-        }
-        free(result);
-        result = NULL;
-        return NULL;
-    }
+static int	append_new_string(char **result, char *new_str, int old_size)
+{
+	result[old_size] = ft_strdup(new_str);
+	if (!result[old_size])
+	{
+		while (old_size-- > 0)
+		{
+			free(result[old_size]);
+			result[old_size] = NULL;
+		}
+		free(result);
+		result = NULL;
+		return (0);
+	}
+	result[old_size + 1] = NULL;
+	return (1);
+}
 
-    // Null-terminate the array
-    result[i + 1] = NULL;
+char	**append_string_to_array(char *new_str, char **args)
+{
+	int		old_size;
+	char	**result;
 
-    // Free the old array
-    free_string_array(args);
-
-    return result;
+	old_size = get_array_size(args);
+	result = allocate_and_copy(args, old_size);
+	if (!result)
+		return (NULL);
+	if (!append_new_string(result, new_str, old_size))
+		return (NULL);
+	free_string_array(args);
+	return (result);
 }
