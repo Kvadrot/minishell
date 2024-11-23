@@ -53,7 +53,6 @@ SRC = main.c env.c \
 	error_handler/error_handling.c \
 	debug_functions/parsing_debuger.c \
 	common_tools/append_string_to_array.c \
-	common_tools/ft_get_size_arr_of_str.c \
 	common_tools/ft_join_with_delimeter.c \
 	common_tools/ft_strcmp.c \
 
