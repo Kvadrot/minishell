@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:52:26 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/17 13:34:03 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/23 18:08:50 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,9 @@ static bool	ft_quotes_are_closed(char *str, int *i)
 */
 bool	ft_input_is_valid(char *input_str)
 {
-	int i;
-	// char	searchable_quote;
+	int	i;
 
 	i = 0;
-
 	if (input_str[0] == '|')
 		return (false);
 	else if (ft_quotes_are_closed(input_str, &i) == false)
@@ -66,9 +64,3 @@ bool	ft_input_is_valid(char *input_str)
 	else
 		return (true);
 }
-
-
-
-// check for pipe at the beginning and at the end
-// check for > and >> at the end
-// check for < << at the beginning 
