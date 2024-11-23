@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/23 18:32:11 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/23 18:39:28 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,12 +181,14 @@ void	ft_helper_handle_redirection(t_command_full **cmd, t_redir **redir,
 	(*redir)->value = temp_str;
 }
 
-int	ft_set_redirection_properties(t_redir *redir, t_tokens *token, t_data **shell)
+int	ft_set_redirection_properties(t_redir *redir, t_tokens *token,
+		t_data **shell)
 {
 	if (token->prev)
 		redir->type = token->prev->type;
 	else
-		return (ft_handle_error(true, "Token has no prev node\n", 448, shell), 0);
+		return (ft_handle_error(true, "Token has no prev node\n", 448, shell),
+			0);
 	if (token->value)
 		redir->file_name = ft_strdup(token->value);
 	else
@@ -194,8 +196,8 @@ int	ft_set_redirection_properties(t_redir *redir, t_tokens *token, t_data **shel
 	return (1);
 }
 
-
-void	ft_handle_redirection(t_command_full *cmd, t_tokens *token, t_data **shell)
+void	ft_handle_redirection(t_command_full *cmd, t_tokens *token,
+		t_data **shell)
 {
 	t_redir	*new_redir;
 	t_redir	*prev_redir;
@@ -213,7 +215,6 @@ void	ft_handle_redirection(t_command_full *cmd, t_tokens *token, t_data **shell)
 	else
 		cmd->redir_list_head = new_redir;
 }
-
 
 /** TODO: init_cmd
 * @brief: initialize cmd
@@ -252,11 +253,47 @@ t_command_full	*init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 //=======================================================================//
 * @returns: t_command_full * - the head of the command list
 */
+
+void	ft_process_pipe(t_command_full **temp_cmd, t_tokens *temp_token,
+		t_data **minishell)
+{
+	t_command_full	*new_command;
+
+	new_command = init_cmd(*temp_cmd, temp_token);
+	if (!new_command)
+	{
+		ft_handle_error(true, "malloc error\n", 444, minishell);
+		return ;
+	}
+	(*temp_cmd)->next = new_command;
+	*temp_cmd = (*temp_cmd)->next;
+}
+
+int	ft_process_token(t_command_full **temp_cmd, t_tokens **temp_token,
+		t_data **minishell)
+{
+	if ((*temp_token)->type == T_WORD)
+		ft_handle_word(temp_cmd, *temp_token, minishell);
+	else if ((*temp_token)->type == T_LESS || (*temp_token)->type == T_GREAT
+		|| (*temp_token)->type == T_DLESS || (*temp_token)->type == T_DGREAT)
+	{
+		*temp_token = (*temp_token)->next;
+		if (!*temp_token)
+		{
+			ft_handle_error(true, "Unexpected end of tokens\n", 445, minishell);
+			return (0);
+		}
+		ft_handle_redirection(*temp_cmd, *temp_token, minishell);
+	}
+	else if ((*temp_token)->type == T_PIPE)
+		ft_process_pipe(temp_cmd, *temp_token, minishell);
+	return (1);
+}
+
 t_command_full	*ft_parse_tokens(t_data **minishell)
 {
 	t_command_full	*cmd_head;
 	t_command_full	*temp_command;
-	t_command_full	*new_command;
 	t_tokens		*temp_token;
 
 	cmd_head = init_cmd(NULL, (*minishell)->tokens);
@@ -268,24 +305,8 @@ t_command_full	*ft_parse_tokens(t_data **minishell)
 	(*minishell)->commands = cmd_head;
 	while (temp_token != NULL)
 	{
-		if (temp_token->type == T_WORD)
-		{
-			ft_handle_word(&temp_command, temp_token, minishell);
-		}
-		else if (temp_token->type == T_LESS || temp_token->type == T_GREAT
-			|| temp_token->type == T_DLESS || temp_token->type == T_DGREAT)
-		{
-			temp_token = temp_token->next;
-			ft_handle_redirection(temp_command, temp_token, minishell);
-		}
-		else if (temp_token->type == T_PIPE)
-		{
-			new_command = init_cmd(temp_command, temp_token);
-			if (!new_command)
-				ft_handle_error(true, "malloc error\n", 444, minishell);
-			temp_command->next = new_command;
-			temp_command = temp_command->next;
-		}
+		if (!ft_process_token(&temp_command, &temp_token, minishell))
+			break ;
 		temp_token = temp_token->next;
 	}
 	temp_command->next = NULL;
