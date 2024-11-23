@@ -50,6 +50,7 @@ SRC = main.c env.c \
 	parsing/redirection_handler.c  \
 	tokens/tokens_semi_tested.c	tokens/tokens_utils.c \
 	validation/validation.c \
+	error_handler/error_handler_helpers.c \
 	error_handler/error_handling.c \
 	debug_functions/parsing_debuger.c \
 	common_tools/append_string_to_array.c \
