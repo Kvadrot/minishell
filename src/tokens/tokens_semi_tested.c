@@ -6,57 +6,43 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/23 12:41:33 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/23 12:08:23 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	skip_quotes(const char *input, int i)
+t_tokens	*update_token_word(t_tokens *token, char *input, int type)
 {
+	int		i;
 	char	quote;
 
-	quote = input[i];
-	i++;
-	while (input[i] && input[i] != quote)
-		i++;
-	if (input[i])
-		i++;
-	return (i);
-}
-
-int	process_word(const char *input, int i)
-{
+	i = 0;
 	while (input[i])
 	{
 		if (input[i] == '\"' || input[i] == '\'')
-			return (skip_quotes(input, i));
-		else if (ft_is_whitespace(input[i]) || ft_strchr("><|", input[i]))
+		{
+			quote = input[i];
+			i++;
+			while (input[i] && input[i] != quote)
+				i++;
+			if (input[i])
+				i++;
+		}
+		else if (ft_is_whitespace(input[i]))
 			break ;
-		i++;
+		else
+		{
+			i++;
+			if (ft_strchr("><|", input[i]))
+				break ;
+		}
 	}
-	return (i);
-}
-
-t_tokens	*allocate_token_value(t_tokens *token, const char *input,
-		int length)
-{
-	token->value = (char *)malloc(length + 1);
+	token->value = (char *)malloc(i + 1);
 	if (!token->value)
 		return (NULL);
-	ft_strncpy(token->value, (char *)input, length);
-	token->value[length] = '\0';
-	return (token);
-}
-
-t_tokens	*update_token_word(t_tokens *token, char *input, int type)
-{
-	int	i;
-
-	i = 0;
-	i = process_word(input, i);
-	if (!allocate_token_value(token, input, i))
-		return (NULL);
+	ft_strncpy(token->value, input, i);
+	token->value[i] = '\0';
 	token->type = type;
 	return (token);
 }
