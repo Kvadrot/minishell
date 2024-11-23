@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:19:59 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/23 19:04:52 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/23 19:06:17 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,6 @@ int	ft_process_redirection_for_command(t_command_full *temp_cmd)
 	return (0);
 }
 
-// Main function to process the redirection list
 int	ft_process_redirection_list(t_data **minishell)
 {
 	t_command_full	*cmd_head;
