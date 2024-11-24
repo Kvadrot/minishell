@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/24 17:32:41 by mbudkevi         ###   ########.fr       */
+/*   Created: 2024/11/24 17:40:15 by mbudkevi          #+#    #+#             */
+/*   Updated: 2024/11/24 18:13:27 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
-// DRBUG_FIELD
-// DELETE ME befor release
-//======================================//
-//# include "../src/debug_functions/debuger.h"
-//======================================//
-
 // common tools
 char			**append_string_to_array(char *new_str, char **args);
 char			*ft_join_with_delimeter(char *s1, char *s2, char *delimiter);
@@ -94,7 +88,10 @@ void			init_environment(t_data **minishell, char **envir);
 void			environment_free_list(t_env *head);
 void			add_to_env(t_data **minishell, char *key, char *new_value);
 void			delete_node(t_env **head_ref, t_env *node_to_delete);
+
 //tokens
+t_tokens		*update_token_word(t_tokens *token, char *input, int type);
+t_tokens		*update_token(t_tokens *token, char *input, int type);
 int				init_tokens(t_data **minishell);
 void			ft_free_token_list(t_tokens **token_list);
 int				validate_tokens(t_tokens *tokens);
@@ -106,6 +103,25 @@ bool			ft_is_whitespace(char c);
 int				ft_is_only_whitespace(char *str);
 
 //Parsing
+int				ft_handle_less(char *filename);
+void			ft_helper_handle_redirection(t_command_full **cmd,
+					t_redir **redir, t_data **minishell);
+int				ft_get_arg_len(char *string);
+int				ft_set_redirection_properties(t_redir *redir, t_tokens *token,
+					t_data **shell);
+char			*ft_insert_str(char *src, int old_part_len,
+					char *insertable_str, int insert_ind);
+char			*create_arg_duplicate(char **full_arg, int start_index);
+int				handle_exit_status_substitution(char **full_arg,
+					char *arg_duplicate, int start_index);
+t_redir			*ft_scroll_redir_list_to_last(t_redir *redir_list_head);
+void			ft_handle_word(t_command_full **temp_command,
+					t_tokens *temp_token, t_data **minishell);
+char			*ft_handle_here_doc(t_redir *current_redir);
+int				ft_handle_output(t_redir *redir);
+void			ft_close_all_redirections(t_command_full *cmd,
+					t_redir *redirect_list);
+t_redir			*ft_init_redir(void);
 t_command_full	*ft_parse_tokens(t_data **minishell);
 void			ft_expand_input(t_data **minishell);
 char			*ft_errase_quote(t_data **minishell, char **temp_arg);
