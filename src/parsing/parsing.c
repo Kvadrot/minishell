@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/23 18:39:28 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:48:39 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,7 @@ char	*ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
 //=======================================================================//
 * @returns: t_redir * - obj t_redir || NULL
 */
-t_redir	*ft_init_redir(t_tokens *prev_token, t_tokens *token,
-		t_command_full *cmd)
+t_redir	*ft_init_redir(void)
 {
 	t_redir	*redirection;
 
@@ -203,7 +202,7 @@ void	ft_handle_redirection(t_command_full *cmd, t_tokens *token,
 	t_redir	*prev_redir;
 
 	prev_redir = ft_scroll_redir_list_to_last(cmd->redir_list_head);
-	new_redir = ft_init_redir(token->prev, token, cmd);
+	new_redir = ft_init_redir();
 	if (!new_redir)
 		return (ft_handle_error(true, "Malloc error\n", 447, shell));
 	if (!ft_set_redirection_properties(new_redir, token, shell))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:04:00 by itykhono          #+#    #+#             */
-/*   Updated: 2024/11/22 19:13:49 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:13:36 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	minishell_loop(t_data **minishell)
 {
 	while (1)
 	{
-		(*minishell)->tokens = NULL;
+		ft_free_token_list(&(*minishell)->tokens);
+		ft_free_commands(minishell);
 		reset_echoctl();
 		(*minishell)->input = readline(PROMPT);
 		if (handle_empty_input(minishell))
@@ -41,6 +42,8 @@ static void	init_minishell(t_data **minishell, char **env)
 	(*minishell)->stdout = dup(1);
 	tcgetattr(STDIN_FILENO, &(*minishell)->terminal);
 	(*minishell)->tokens = NULL;
+	(*minishell)->commands = NULL;
+	(*minishell)->input = NULL;
 }
 
 /** disable_echoctl

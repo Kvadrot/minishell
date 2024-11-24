@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/23 18:04:03 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:00:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	delete_node(t_env **head_ref, t_env *node_to_delete);
 void				print_environment(t_env *node);
 
 // tokens
-int					init_tokens(t_data *minishell);
+int					init_tokens(t_data **minishell);
 void				ft_free_token_list(t_tokens **token_list);
 int					validate_tokens(t_tokens *tokens);
 
@@ -107,6 +107,8 @@ int		ft_process_redirection_list(t_data **minishell);
 
 // error handling
 void	ft_free_commands(t_data **minishell);
+void	ft_free_commands(t_data **minishell);
+void	ft_free_token_list(t_tokens **token_list);
 void	ft_free_minishell(t_data **minishell, bool is_crash);
 void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell);
 
