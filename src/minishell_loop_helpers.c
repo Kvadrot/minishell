@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_loop.c                                   :+:      :+:    :+:   */
+/*   minishell_loop_helpers.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:09:05 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/22 19:10:17 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:09:26 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	handle_whitespace_or_syntax(t_data **minishell)
 
 bool	process_tokens(t_data **minishell)
 {
-	init_tokens(*minishell);
+	init_tokens(minishell);
 	if (validate_tokens((*minishell)->tokens) < 0)
 	{
 		ft_handle_error(false, NULL, -400, minishell);

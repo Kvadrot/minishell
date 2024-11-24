@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler_helpers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:01:04 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/23 18:03:25 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:02:48 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	ft_free_commands(t_data **minishell)
 	t_command_full	*temp_cmd;
 	t_command_full	*cmd_pt_holder;
 
+	if (!*minishell)
+		return ;
 	temp_cmd = (*minishell)->commands;
 	while (temp_cmd != NULL)
 	{
