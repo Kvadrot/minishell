@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/24 13:48:39 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:41:20 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token,
 * @returns: char * - heredoc content || NULL
 */
 
-// char *
-
-char	*ft_handle_handle_here_doc_helper(char **here_doc_next_line,
+void	ft_handle_handle_here_doc_helper(char **here_doc_next_line,
 		char **result_text, char **temp_copy)
 {
 	if (*here_doc_next_line)
@@ -90,7 +88,7 @@ char	*ft_handle_handle_here_doc_helper(char **here_doc_next_line,
 	}
 }
 
-char	*ft_handle_here_doc(t_command_full *current_cmd, t_redir *current_redir)
+char	*ft_handle_here_doc(t_redir *current_redir)
 {
 	char	*here_doc_next_line;
 	char	*result_text;
@@ -163,7 +161,7 @@ void	ft_helper_handle_redirection(t_command_full **cmd, t_redir **redir,
 
 	if ((*redir)->type != T_DLESS)
 		return ;
-	temp_str = ft_handle_here_doc(*cmd, *redir);
+	temp_str = ft_handle_here_doc(*redir);
 	if (!temp_str)
 	{
 		if ((*redir)->prev)
@@ -225,7 +223,7 @@ void	ft_handle_redirection(t_command_full *cmd, t_tokens *token,
 //=======================================================================//
 * @returns: new_cmd connected to the cmd_list
 */
-t_command_full	*init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
+t_command_full	*init_cmd(t_command_full *prev_cmd)
 {
 	t_command_full	*new_command;
 
@@ -253,12 +251,11 @@ t_command_full	*init_cmd(t_command_full *prev_cmd, t_tokens *token_info)
 * @returns: t_command_full * - the head of the command list
 */
 
-void	ft_process_pipe(t_command_full **temp_cmd, t_tokens *temp_token,
-		t_data **minishell)
+void	ft_process_pipe(t_command_full **temp_cmd, t_data **minishell)
 {
 	t_command_full	*new_command;
 
-	new_command = init_cmd(*temp_cmd, temp_token);
+	new_command = init_cmd(*temp_cmd);
 	if (!new_command)
 	{
 		ft_handle_error(true, "malloc error\n", 444, minishell);
@@ -285,7 +282,7 @@ int	ft_process_token(t_command_full **temp_cmd, t_tokens **temp_token,
 		ft_handle_redirection(*temp_cmd, *temp_token, minishell);
 	}
 	else if ((*temp_token)->type == T_PIPE)
-		ft_process_pipe(temp_cmd, *temp_token, minishell);
+		ft_process_pipe(temp_cmd, minishell);
 	return (1);
 }
 
@@ -295,7 +292,7 @@ t_command_full	*ft_parse_tokens(t_data **minishell)
 	t_command_full	*temp_command;
 	t_tokens		*temp_token;
 
-	cmd_head = init_cmd(NULL, (*minishell)->tokens);
+	cmd_head = init_cmd(NULL);
 	if (!cmd_head)
 		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n",
 			444, minishell);

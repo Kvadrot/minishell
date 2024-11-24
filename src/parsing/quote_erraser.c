@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:44:48 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/23 18:58:17 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:41:44 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ char	*ft_malloc_cleaned_arg(char *temp_arg, t_data **minishell)
 void	ft_process_arg(char **temp_arg, char *cleaned_arg, int *old_counter,
 		int *clean_counter)
 {
-	char	quote_char;
-
-	quote_char = '\0';
 	while ((*temp_arg)[*old_counter] != '\0')
 	{
 		if ((*temp_arg)[*old_counter] == '\''
