@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/24 17:55:12 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:43:33 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_substitude(t_data **minishell, char **full_arg, int start_index)
 		return (0);
 	if (ft_strcmp(arg_duplicate, "$?") == 0)
 		insertable_str_len = handle_exit_status_substitution(full_arg,
-				arg_duplicate, start_index);
+				start_index);
 	else
 		insertable_str_len = handle_env_var_substitution(minishell, full_arg,
 				arg_duplicate, start_index);

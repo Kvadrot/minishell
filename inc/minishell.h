@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:40:15 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/24 18:13:27 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:43:22 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char			*ft_insert_str(char *src, int old_part_len,
 					char *insertable_str, int insert_ind);
 char			*create_arg_duplicate(char **full_arg, int start_index);
 int				handle_exit_status_substitution(char **full_arg,
-					char *arg_duplicate, int start_index);
+					int start_index);
 t_redir			*ft_scroll_redir_list_to_last(t_redir *redir_list_head);
 void			ft_handle_word(t_command_full **temp_command,
 					t_tokens *temp_token, t_data **minishell);

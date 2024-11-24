@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:54:44 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/24 18:09:41 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:45:07 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,7 @@ char	*create_arg_duplicate(char **full_arg, int start_index)
 				+ start_index) + 1));
 }
 
-int	handle_exit_status_substitution(char **full_arg, char *arg_duplicate,
-		int start_index)
+int	handle_exit_status_substitution(char **full_arg, int start_index)
 {
 	char	*insertable_str;
 	int		insertable_str_len;
@@ -135,6 +134,5 @@ int	handle_exit_status_substitution(char **full_arg, char *arg_duplicate,
 	insertable_str_len = ft_strlen(insertable_str);
 	*full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg + start_index)
 			+ 1, insertable_str, start_index);
-	free(arg_duplicate);
 	return (insertable_str_len);
 }
