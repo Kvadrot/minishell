@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/23 18:04:03 by mbudkevi         ###   ########.fr       */
+/*   Created: 2024/11/24 16:28:34 by mbudkevi          #+#    #+#             */
+/*   Updated: 2024/11/24 16:31:00 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int g_last_exit_status;
 # include <stdbool.h>
 # include <signal.h>
 # include <stdlib.h>
@@ -32,10 +31,14 @@ extern int g_last_exit_status;
 # include "tokens.h"
 # include "parsing.h"
 
-# include "../src/common_tools/common_tools.h"
-# include "../src/signals/signals.h"
 # define PROMPT "Mini_hell > "
 # define HEREDOC_PROMPT "> "
+
+# ifndef ECHOCTL
+#  define ECHOCTL 0001000
+# endif
+
+extern int	g_last_exit_status;
 
 typedef struct s_env
 {
@@ -57,57 +60,86 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
-# include "../src/built_in/built_in.h"
-# include "../src/execution/execution.h"
-
 // DRBUG_FIELD
 // DELETE ME befor release
-//========================================================================================//
-# include "../src/debug_functions/debuger.h"
-//========================================================================================//
+//======================================//
+//# include "../src/debug_functions/debuger.h"
+//======================================//
+
+// common tools
+char			**append_string_to_array(char *new_str, char **args);
+char			*ft_join_with_delimeter(char *s1, char *s2, char *delimiter);
+int				ft_strcmp(const char *str1, const char *str2);
 
 // LifeCycle
-void	reset_echoctl(void);
-bool	handle_empty_input(t_data **minishell);
-bool	handle_whitespace_or_syntax(t_data **minishell);
-bool	process_tokens(t_data **minishell);
-void	execute_commands(t_data **minishell);
-void	minishell_loop(t_data **minishell);
+void			reset_echoctl(void);
+bool			handle_empty_input(t_data **minishell);
+bool			handle_whitespace_or_syntax(t_data **minishell);
+bool			process_tokens(t_data **minishell);
+void			execute_commands(t_data **minishell);
+void			minishell_loop(t_data **minishell);
+
+// signals
+void			setup_signal_handlers(void);
+int				termios_change(bool echo_ctl_chr);
 
 // Validate_input
-bool				ft_input_is_valid(char *input_str);
+bool			ft_input_is_valid(char *input_str);
 
-t_env	*environment_new_node(char *key, char *value);
-void	environment_new_node_end(t_data *minishell, char *key, char *value);
-void	init_environment(t_data **minishell, char **envir);
-void	environment_free_list(t_env *head);
-void	add_to_env(t_data **minishell, char *key, char *new_value);
-void	delete_node(t_env **head_ref, t_env *node_to_delete);
+// environment
+t_env			*environment_new_node(char *key, char *value);
+void			environment_new_node_end(t_data *minishell, char *key,
+					char *value);
+void			init_environment(t_data **minishell, char **envir);
+void			environment_free_list(t_env *head);
+void			add_to_env(t_data **minishell, char *key, char *new_value);
+void			delete_node(t_env **head_ref, t_env *node_to_delete);
 
-// tester functions
-void				print_environment(t_env *node);
-
-// tokens
-int					init_tokens(t_data *minishell);
-void				ft_free_token_list(t_tokens **token_list);
-int					validate_tokens(t_tokens *tokens);
+//tokens
+int				init_tokens(t_data *minishell);
+void			ft_free_token_list(t_tokens **token_list);
+int				validate_tokens(t_tokens *tokens);
 
 //	new potential libft function
-char				*ft_strncpy(char *dest, char *src, int num);
-void				ft_skip_whitespace(char **s);
-bool				ft_is_whitespace(char c);
-int					ft_is_only_whitespace(char *str);
-
+char			*ft_strncpy(char *dest, char *src, int num);
+void			ft_skip_whitespace(char **s);
+bool			ft_is_whitespace(char c);
+int				ft_is_only_whitespace(char *str);
 
 //Parsing
-t_command_full *ft_parse_tokens(t_data **minishell);
-void	ft_expand_input(t_data **minishell);
-char	*ft_errase_quote(t_data **minishell, char **temp_arg);
-int		ft_process_redirection_list(t_data **minishell);
+t_command_full	*ft_parse_tokens(t_data **minishell);
+void			ft_expand_input(t_data **minishell);
+char			*ft_errase_quote(t_data **minishell, char **temp_arg);
+int				ft_process_redirection_list(t_data **minishell);
 
-// error handling
-void	ft_free_commands(t_data **minishell);
-void	ft_free_minishell(t_data **minishell, bool is_crash);
-void	ft_handle_error(bool is_crashable, char *error_text, int err_status, t_data **minishell);
+//# include "../inc/error_handler.h"
+//error handling
+void			ft_free_commands(t_data **minishell);
+void			ft_free_minishell(t_data **minishell, bool is_crash);
+void			ft_handle_error(bool is_crashable, char *error_text,
+					int err_status, t_data **minishell);
+
+//built-ins
+bool			is_builtin(t_command_full *cmd);
+int				handle_builtins(t_data **minishell);
+int				builtin_echo(char **args, int fd_out);
+int				builtin_pwd(void);
+int				builtin_env(t_env *node);
+int				builtin_cd(t_data **minishell);
+int				builtin_export(t_data **minishell);
+int				builtin_unset(t_data **minishell);
+int				builtin_exit(t_data **minishell);
+void			swap(t_env *a, t_env *b);
+void			sort_env_list(t_env **head);
+char			*format_env_entry(t_env *node);
+
+// execution
+void			execute(char **envp, t_command_full *cmd);
+void			child_process(t_command_full *cmd, char **envp);
+void			handle_1_cmd(t_command_full *cmd, char **envp,
+					t_data **minishell);
+void			exec_pipeline(t_command_full *cmd_list, char **envp,
+					t_data **minishell);
+void			setup_heredoc(t_command_full *cmd);
 
 #endif

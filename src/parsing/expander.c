@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/23 19:16:48 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:31:42 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 /** TODO: ft_get_arg_len
 * @brief: counts len of given $ARG ($ + amount of signs after it)
 * @takes: char * = $ start pointer of our ->$<- ARG
