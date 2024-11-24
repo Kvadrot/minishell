@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:44:17 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/23 12:41:33 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/24 12:58:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,13 +169,13 @@ int	validate_tokens(t_tokens *tokens)
 	return (200);
 }
 
-int	init_tokens(t_data *minishell)
+int	init_tokens(t_data **minishell)
 {
 	char		*string;
 	t_tokens	*token;
 
 	token = NULL;
-	string = minishell->input;
+	string = (*minishell)->input;
 	if (!string || ft_strlen(string) == 0 || ft_is_only_whitespace(string))
 		return (200);
 	while (string && *string)
@@ -184,7 +184,7 @@ int	init_tokens(t_data *minishell)
 		token = get_token(string);
 		if (token)
 		{
-			append_token(&minishell->tokens, token);
+			append_token(&((*minishell)->tokens), token);
 			string += ft_strlen(token->value);
 		}
 	}

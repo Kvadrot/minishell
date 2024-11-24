@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/24 16:31:42 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:33:44 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,8 +243,6 @@ char	*ft_expand_arg(t_data **minishell, char **temp_arg)
 {
 	int		counter;
 	int		temp_arg_len;
-	int		substituted_str_len;
-	char	super_quote;
 
 	counter = 0;
 	temp_arg_len = 0;
@@ -258,8 +256,7 @@ char	*ft_expand_arg(t_data **minishell, char **temp_arg)
 				if (ft_is_able_to_substitude(*temp_arg,
 						&(*temp_arg)[counter]) == true)
 				{
-					substituted_str_len = ft_substitude(minishell, temp_arg,
-							counter);
+					ft_substitude(minishell, temp_arg, counter);
 				}
 			}
 		}

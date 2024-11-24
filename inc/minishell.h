@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 16:28:34 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/24 16:31:00 by mbudkevi         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/24 17:32:41 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,8 @@ void			init_environment(t_data **minishell, char **envir);
 void			environment_free_list(t_env *head);
 void			add_to_env(t_data **minishell, char *key, char *new_value);
 void			delete_node(t_env **head_ref, t_env *node_to_delete);
-
 //tokens
-int				init_tokens(t_data *minishell);
+int				init_tokens(t_data **minishell);
 void			ft_free_token_list(t_tokens **token_list);
 int				validate_tokens(t_tokens *tokens);
 
@@ -112,9 +111,9 @@ void			ft_expand_input(t_data **minishell);
 char			*ft_errase_quote(t_data **minishell, char **temp_arg);
 int				ft_process_redirection_list(t_data **minishell);
 
-//# include "../inc/error_handler.h"
 //error handling
 void			ft_free_commands(t_data **minishell);
+void			ft_free_token_list(t_tokens **token_list);
 void			ft_free_minishell(t_data **minishell, bool is_crash);
 void			ft_handle_error(bool is_crashable, char *error_text,
 					int err_status, t_data **minishell);
