@@ -6,11 +6,11 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:47:02 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/23 17:12:28 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:31:55 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./common_tools.h"
+#include "../../inc/minishell.h"
 
 /** TODO: ft_join_with_delimeter
 * @brief: merges s1 + delimiter + s2 + delimiter

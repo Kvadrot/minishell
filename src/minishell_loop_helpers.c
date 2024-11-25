@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop_helpers.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:09:05 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/24 14:09:26 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:47:19 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ bool	process_tokens(t_data **minishell)
 void	execute_commands(t_data **minishell)
 {
 	if ((*minishell)->commands != NULL)
-		exec_pipeline((*minishell)->commands, (*minishell)->envir, minishell);
+		exec_pipeline((*minishell)->commands,
+			convert_env_to_array((*minishell)->env), minishell);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:20:55 by itykhono          #+#    #+#             */
-/*   Updated: 2024/10/17 13:33:08 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:34:25 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <unistd.h>
 # include <stdint.h>
 
-#define FDOUT 13242
+# define FDOUT 13242
 
-int ft_printf_full(const char *format, int output_fd, va_list args);
+int	ft_printf_full(const char *format, int output_fd, va_list args);
 int	ft_printf(const char *format, ...);
 int	ft_putnbr(int n, int fd_out);
 int	ft_put_chr(char ch, int fd_out);
