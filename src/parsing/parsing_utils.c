@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:52:49 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/24 18:00:38 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:04:22 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_redir	*ft_scroll_redir_list_to_last(t_redir *redir_list_head)
 	// Otherwise, appends the token value to the argument list.
 //=======================================================================//
 */
-void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token,
+void	ft_handle_word(t_command_full **temp_command, t_tokens **temp_token,
 		t_data **minishell)
 {
 	char	**new_args;
@@ -48,9 +48,10 @@ void	ft_handle_word(t_command_full **temp_command, t_tokens *temp_token,
 	new_args = NULL;
 	if ((*temp_command)->cmd_name == NULL)
 	{
-		(*temp_command)->cmd_name = ft_strdup(temp_token->value);
+		(*temp_command)->cmd_name = ft_strdup((*temp_token)->value);
 	}
-	new_args = append_string_to_array(temp_token->value, (*temp_command)->args);
+	new_args = append_string_to_array(&(*temp_token)->value,
+			(*temp_command)->args);
 	if (new_args == NULL)
 	{
 		ft_handle_error(true, "malloc error - printed by ft_parse_tokens\n",

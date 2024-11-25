@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/24 18:43:33 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:11:45 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	handle_env_var_substitution(t_data **minishell, char **full_arg,
 	t_env	*temp_env;
 	char	*insertable_str;
 	int		insertable_str_len;
+	char	*result_arg;
 
 	temp_env = (*minishell)->env;
 	while (temp_env)
@@ -26,14 +27,18 @@ int	handle_env_var_substitution(t_data **minishell, char **full_arg,
 		{
 			insertable_str = temp_env->value;
 			insertable_str_len = ft_strlen(insertable_str);
-			*full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg
+			result_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg
 						+ start_index) + 1, insertable_str, start_index);
+			free(*full_arg);
+			*full_arg = result_arg;
 			return (insertable_str_len);
 		}
 		temp_env = temp_env->next;
 	}
-	*full_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg + start_index)
-			+ 1, "", start_index);
+	result_arg = ft_insert_str(*full_arg, ft_get_arg_len(*full_arg
+				+ start_index) + 1, "", start_index);
+	free(*full_arg);
+	*full_arg = result_arg;
 	return (0);
 }
 
@@ -108,8 +113,8 @@ bool	ft_is_able_to_substitude(char *full_arg, char *dollar_pointer)
 */
 char	*ft_expand_arg(t_data **minishell, char **temp_arg)
 {
-	int		counter;
-	int		temp_arg_len;
+	int	counter;
+	int	temp_arg_len;
 
 	counter = 0;
 	temp_arg_len = 0;
