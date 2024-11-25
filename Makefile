@@ -28,6 +28,7 @@ OBJ_DIR11 = obj/environment/
 
 # Default sources
 SRC = main.c \
+	convert_env.c \
 	environment/env_helpers.c \
 	environment/env.c \
 	minishell_loop_helpers.c \

@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:45:22 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/22 18:42:46 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:09:12 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	builtin_unset(t_data **minishell)
 		while (tmp != NULL)
 		{
 			if (ft_strncmp(tmp->key, (*minishell)->commands->args[i],
-					ft_strlen((*minishell)->commands->args[i]) + 1) == 0)
+					ft_strlen((*minishell)->commands->args[i])) == 0)
 			{
 				delete_node(&(*minishell)->env, tmp);
 				break ;
