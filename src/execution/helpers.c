@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/25 17:45:38 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:04:56 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,29 @@ void	free_array(char **array)
 // or NULL if the command is not found
 */
 
+static char	**get_paths_from_env(char **envp)
+{
+	char	**paths;
+	int		i;
+
+	i = 0;
+	while (envp[i] && ft_strnstr(envp[i], "PATH", 4) == 0)
+		i++;
+	if (!envp[i])
+	{
+		ft_putstr_fd("Error: PATH envir var not found\n", 2);
+		return (NULL);
+	}
+	paths = ft_split(envp[i] + 5, ':');
+	if (!paths || !paths[0])
+	{
+		ft_putstr_fd("Error: PATH envir var is empty or invalid\n", 2);
+		free_array(paths);
+		return (NULL);
+	}
+	return (paths);
+}
+
 char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
@@ -48,10 +71,9 @@ char	*find_path(char *cmd, char **envp)
 	int		i;
 	char	*part_path;
 
-	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = get_paths_from_env(envp);
+	if (!paths)
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{

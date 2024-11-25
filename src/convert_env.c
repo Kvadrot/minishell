@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:50:44 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/25 17:56:48 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:58:41 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,21 @@ static int	get_env_list_size(t_env *env)
 	return (size);
 }
 
-static char	*join_key_value(const char *key, const char *value)
+static char	*join_key_value(char *key, char *value)
 {
+	int		key_len;
+	int		value_len;
 	char	*joined;
-	int		len;
 
-	len = strlen(key) + strlen(value) + 2;
-	joined = malloc(len);
+	key_len = ft_strlen(key);
+	value_len = ft_strlen(value);
+	joined = malloc(key_len + value_len + 2);
 	if (!joined)
 		return (NULL);
+	ft_strncpy(joined, key, key_len);
+	joined[key_len] = '=';
+	joined[key_len + 1] = '\0';
+	ft_strlcat(joined, value, key_len + value_len + 2);
 	return (joined);
 }
 
