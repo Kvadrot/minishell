@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:09:05 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/25 18:47:19 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:22:16 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,12 @@ bool	process_tokens(t_data **minishell)
 
 void	execute_commands(t_data **minishell)
 {
+	char	**res;
+
+	res = convert_env_to_array((*minishell)->env);
 	if ((*minishell)->commands != NULL)
-		exec_pipeline((*minishell)->commands,
-			convert_env_to_array((*minishell)->env), minishell);
+	{
+		exec_pipeline((*minishell)->commands, res, minishell);
+		free_array(res);
+	}
 }
