@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:40:15 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/25 14:08:10 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:03:50 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,9 @@ void			ft_free_token_list(t_tokens **token_list);
 void			ft_free_minishell(t_data **minishell, bool is_crash);
 void			ft_handle_error(bool is_crashable, char *error_text,
 					int err_status, t_data **minishell);
+
+//convert environment
+char			**convert_env_to_array(t_env *env);
 
 //built-ins
 bool			is_builtin(t_command_full *cmd);
