@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:50:28 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/26 17:17:06 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:24:47 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,10 @@ bool	ft_is_able_to_substitude(char *full_arg, char *dollar_pointer)
 
 	super_quote = 'n';
 	counter = 0;
-
-	// ft_printf("fullarg = %s++\n", &full_arg[counter]);
-	// ft_printf("dollar_pointer = %s++\n", &dollar_pointer[counter]);
-	if (!dollar_pointer || !*dollar_pointer || !ft_isprint(*(++dollar_pointer)) || *dollar_pointer == '\'' || *dollar_pointer == '\"')
-    	return (false);
+	if (!dollar_pointer || !*dollar_pointer
+		|| ft_isprint(*(++dollar_pointer)) == 0 || *dollar_pointer == '\''
+		|| *dollar_pointer == '\"')
+		return (false);
 	while (&full_arg[counter] != dollar_pointer)
 	{
 		if (full_arg[counter] == '\'' || full_arg[counter] == '\"')
