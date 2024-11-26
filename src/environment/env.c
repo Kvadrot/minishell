@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:24:45 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/23 18:18:49 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:33:49 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,19 @@ void	delete_node(t_env **head, t_env *node_to_delete)
 void	add_to_env(t_data **minishell, char *key, char *new_value)
 {
 	t_env	*tmp;
+	t_env	*next;
 
 	tmp = (*minishell)->env;
 	while (tmp != NULL)
 	{
+		next = tmp->next;
 		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
+		{
 			delete_node(&(*minishell)->env, tmp);
-		tmp = tmp->next;
+			tmp = next;
+			continue ;
+		}
+		tmp = next;
 	}
 	environment_new_node_end(*minishell, key, new_value);
 }
