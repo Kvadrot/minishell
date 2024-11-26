@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:40:15 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/26 13:23:34 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:06:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_data
 }					t_data;
 
 // common tools
-char			**append_string_to_array(char *new_str, char **args);
+char			**append_string_to_array(char **new_str, char **args);
 char			*ft_join_with_delimeter(char *s1, char *s2, char *delimiter);
 int				ft_strcmp(const char *str1, const char *str2);
 
@@ -116,7 +116,7 @@ int				handle_exit_status_substitution(char **full_arg,
 					int start_index);
 t_redir			*ft_scroll_redir_list_to_last(t_redir *redir_list_head);
 void			ft_handle_word(t_command_full **temp_command,
-					t_tokens *temp_token, t_data **minishell);
+					t_tokens **temp_token, t_data **minishell);
 char			*ft_handle_here_doc(t_redir *current_redir);
 int				ft_handle_output(t_redir *redir);
 void			ft_close_all_redirections(t_command_full *cmd,

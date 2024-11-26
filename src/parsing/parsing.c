@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:26:01 by ssuchane          #+#    #+#             */
-/*   Updated: 2024/11/24 17:53:50 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:37:40 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_process_token(t_command_full **temp_cmd, t_tokens **temp_token,
 		t_data **minishell)
 {
 	if ((*temp_token)->type == T_WORD)
-		ft_handle_word(temp_cmd, *temp_token, minishell);
+		ft_handle_word(temp_cmd, temp_token, minishell);
 	else if ((*temp_token)->type == T_LESS || (*temp_token)->type == T_GREAT
 		|| (*temp_token)->type == T_DLESS || (*temp_token)->type == T_DGREAT)
 	{

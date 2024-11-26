@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append_string_to_array.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:38:33 by ufo               #+#    #+#             */
-/*   Updated: 2024/11/24 16:31:51 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:56:51 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ static char	**allocate_and_copy(char **args, int old_size)
 	return (result);
 }
 
-static int	append_new_string(char **result, char *new_str, int old_size)
+static int	append_new_string(char **result, char **new_str, int old_size)
 {
-	result[old_size] = ft_strdup(new_str);
+	result[old_size] = ft_strdup(*new_str);
 	if (!result[old_size])
 	{
 		while (old_size-- > 0)
@@ -93,11 +93,16 @@ static int	append_new_string(char **result, char *new_str, int old_size)
 		result = NULL;
 		return (0);
 	}
+	if (new_str)
+	{
+		free(*new_str);
+		*new_str = NULL;
+	}
 	result[old_size + 1] = NULL;
 	return (1);
 }
 
-char	**append_string_to_array(char *new_str, char **args)
+char	**append_string_to_array(char **new_str, char **args)
 {
 	int		old_size;
 	char	**result;
@@ -106,8 +111,11 @@ char	**append_string_to_array(char *new_str, char **args)
 	result = allocate_and_copy(args, old_size);
 	if (!result)
 		return (NULL);
-	if (!append_new_string(result, new_str, old_size))
-		return (NULL);
 	free_string_array(args);
+	if (append_new_string(result, new_str, old_size) != 1)
+	{
+		free_string_array(result);
+		return (NULL);
+	}
 	return (result);
 }
