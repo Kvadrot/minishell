@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:40:15 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/26 16:03:50 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:06:58 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void			sort_env_list(t_env **head);
 char			*format_env_entry(t_env *node);
 
 // execution
+void			free_array(char **array);
 void			execute(char **envp, t_command_full *cmd);
 void			child_process(t_command_full *cmd, char **envp);
 void			handle_1_cmd(t_command_full *cmd, char **envp,
