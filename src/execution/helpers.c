@@ -6,7 +6,7 @@
 /*   By: mbudkevi <mbudkevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:45:19 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/25 19:04:56 by mbudkevi         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:22:01 by mbudkevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_array(char **array)
 {
 	int	i;
 
+	if (!array)
+		return ;
 	i = 0;
 	while (array[i])
 	{

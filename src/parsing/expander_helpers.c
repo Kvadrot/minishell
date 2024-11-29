@@ -6,7 +6,7 @@
 /*   By: itykhono <itykhono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:54:44 by mbudkevi          #+#    #+#             */
-/*   Updated: 2024/11/25 17:20:02 by itykhono         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:21:23 by itykhono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	ft_get_arg_len(char *string)
 	int	len;
 
 	len = 0;
+	if (string[1] == '\0')
+		return (0);
 	string++;
 	if (string[len++] == '?')
 		return (len);
